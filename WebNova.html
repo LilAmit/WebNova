@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebNova - בניית אתרים מקצועית</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 32px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 24px;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1.4s ease;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        .section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        #why-us {
+            background: url('WebNovaWallpaper.jpg') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        #why-us::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(102, 126, 234, 0.1);
+            z-index: 0;
+        }
+
+        #why-us .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        #contact {
+            background: url('WebNovaWallpaper3.jpg') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        #contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(102, 126, 234, 0.1);
+            z-index: 0;
+        }
+
+        #contact .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        #contact .section-title {
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+            font-weight: bold;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+            font-weight: bold;
+        }
+
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .reason-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .reason-card.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reason-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .reason-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 30px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .reason-card:hover .reason-icon {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .reason-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .reason-card p {
+            color: #555;
+        }
+
+        .payment-section {
+            background: url('WebNovaWallpaper2.jpg') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            padding: 60px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .payment-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(102, 126, 234, 0.1);
+            z-index: 0;
+        }
+
+        .payment-section .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .payment-section .section-title {
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+            font-weight: bold;
+        }
+
+        .payment-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .payment-container.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .payment-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .contact-form.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .success-message {
+            display: none;
+            background: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            pointer-events: none;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            left: 100px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-float svg {
+            width: 35px;
+            height: 35px;
+            fill: white;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .scroll-to-top {
+                bottom: 100px;
+                left: 20px;
+            }
+
+            .whatsapp-float {
+                bottom: 30px;
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="WebNovaLogo.jpg" alt="WebNova Logo" loading="lazy">
+                    <span class="logo-text">WebNova</span>
+                </div>
+                <a href="https://wa.me/972584549087" class="btn btn-primary" target="_blank">📱 WhatsApp</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>בניית אתרים מקצועית ומותאמת אישית</h1>
+            <p>הפתרון המושלם לעסק שלך באינטרנט</p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">צור קשר</a>
+                <a href="#why-us" class="btn btn-secondary">למה לבחור בנו?</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="why-us" class="section">
+        <div class="container">
+            <h2 class="section-title">למה לבחור ב-WebNova?</h2>
+            <div class="reasons-grid">
+                <div class="reason-card">
+                    <div class="reason-icon">🎨</div>
+                    <h3>עיצוב מותאם אישית</h3>
+                    <p>אנחנו יוצרים אתרים ייחודיים שמשקפים את המותג שלך ומתאימים בדיוק לצרכים שלך</p>
+                </div>
+                <div class="reason-card">
+                    <div class="reason-icon">⚡</div>
+                    <h3>ביצועים מעולים</h3>
+                    <p>אתרים מהירים, מאובטחים ומותאמים לכל המכשירים - מובייל, טאבלט ומחשב</p>
+                </div>
+                <div class="reason-card">
+                    <div class="reason-icon">💼</div>
+                    <h3>ניסיון מוכח</h3>
+                    <p>שנים של ניסיון בבניית אתרים לעסקים מכל הסוגים והגדלים</p>
+                </div>
+                <div class="reason-card">
+                    <div class="reason-icon">🚀</div>
+                    <h3>SEO מובנה</h3>
+                    <p>האתרים שלנו מותאמים למנועי חיפוש כדי שהלקוחות שלך ימצאו אותך בקלות</p>
+                </div>
+                <div class="reason-card">
+                    <div class="reason-icon">💬</div>
+                    <h3>תמיכה מלאה</h3>
+                    <p>אנחנו כאן בשבילך גם אחרי השקת האתר - תמיכה ועדכונים שוטפים</p>
+                </div>
+                <div class="reason-card">
+                    <div class="reason-icon">💰</div>
+                    <h3>מחירים הוגנים</h3>
+                    <p>פתרונות איכותיים במחירים תחרותיים שמתאימים לכל תקציב</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="payment-section">
+        <div class="container">
+            <h2 class="section-title">תשלום בביט</h2>
+            <div class="payment-container">
+                <p style="margin-bottom: 15px; font-size: 18px;">סרוק את הברקוד לתשלום מהיר ובטוח</p>
+                <img src="MyBit.jpg" alt="תשלום בביט" loading="lazy">
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">צור קשר</h2>
+            <form class="contact-form" id="contactForm">
+                <div class="success-message" id="successMessage">
+                    תודה! הפרטים נשלחו בהצלחה. ניצור איתך קשר בהקדם!
+                </div>
+                
+                <div class="form-group">
+                    <label for="fullName">שם מלא *</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">אימייל *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">מספר טלפון *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="businessType">סוג העסק *</label>
+                    <select id="businessType" name="businessType" required>
+                        <option value="">בחר סוג עסק</option>
+                        <option value="מסעדה">מסעדה</option>
+                        <option value="חנות">חנות</option>
+                        <option value="שירותים מקצועיים">שירותים מקצועיים</option>
+                        <option value="עסק קטן">עסק קטן</option>
+                        <option value="תאגיד">תאגיד</option>
+                        <option value="אחר">אחר</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">פרטים נוספים</label>
+                    <textarea id="message" name="message" placeholder="ספר לנו על הפרויקט שלך..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">שלח פנייה</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p><strong>WebNova</strong> - בניית אתרים מקצועית</p>
+            <p>📞 טלפון: 0584549087 | ✉️ אימייל: amit.mozapi@icloud.com</p>
+            <p>עמית מוצפי © 2024</p>
+        </div>
+    </footer>
+
+    <div class="scroll-to-top" id="scrollToTop">↑</div>
+    <a href="https://wa.me/972584549087" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.737 5.607 2.137 8.048l-2.137 7.952 7.933-2.127c2.42 1.37 5.173 2.127 8.067 2.127 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.467c-2.482 0-4.908-0.646-7.07-1.87l-0.507-0.292-5.247 1.407 1.407-5.235-0.321-0.532c-1.346-2.22-2.063-4.757-2.063-7.413 0-7.72 6.28-14 14-14s14 6.28 14 14-6.28 14-14 14zM23.108 19.725c-0.413-0.213-2.44-1.203-2.817-1.34-0.377-0.14-0.651-0.213-0.927 0.213s-1.067 1.34-1.307 1.616-0.483 0.32-0.897 0.107c-2.007-1.003-3.327-1.79-4.65-4.057-0.35-0.6 0.35-0.557 1.003-1.853 0.107-0.273 0.053-0.507-0.027-0.713-0.08-0.213-0.927-2.227-1.267-3.053-0.333-0.803-0.673-0.693-0.927-0.707-0.24-0.013-0.513-0.013-0.787-0.013s-0.72 0.107-1.097 0.533c-0.377 0.427-1.443 1.41-1.443 3.437s1.477 3.99 1.683 4.263c0.207 0.273 2.913 4.447 7.053 6.233 2.601 1.123 3.62 1.21 4.917 1.020 0.787-0.12 2.44-0.997 2.787-1.96s0.347-1.787 0.24-1.96c-0.093-0.187-0.36-0.293-0.773-0.507z"/>
+        </svg>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS
+        (function() {
+            emailjs.init("mrvxMulPJ4TcR7BFJ");
+        })();
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('animate');
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reason-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        const paymentContainer = document.querySelector('.payment-container');
+        if (paymentContainer) {
+            observer.observe(paymentContainer);
+        }
+
+        const contactForm = document.querySelector('.contact-form');
+        if (contactForm) {
+            observer.observe(contactForm);
+        }
+
+        // Scroll to top button
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'שולח...';
+            submitBtn.disabled = true;
+
+            const templateParams = {
+                from_name: document.getElementById('fullName').value,
+                from_email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                business_type: document.getElementById('businessType').value,
+                message: document.getElementById('message').value
+            };
+
+            emailjs.send('service_4gvk08g', 'template_amc3bab', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('contactForm').reset();
+                    
+                    setTimeout(() => {
+                        document.getElementById('successMessage').style.display = 'none';
+                    }, 5000);
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    alert('אופס! משהו השתבש. אנא נסה שוב או צור קשר דרך WhatsApp.');
+                })
+                .finally(function() {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Lazy loading for images
+        if ('loading' in HTMLImageElement.prototype) {
+            const images = document.querySelectorAll('img[loading="lazy"]');
+            images.forEach(img => {
+                img.src = img.src;
+            });
+        } else {
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
+            document.body.appendChild(script);
+        }
+    </script>
+</body>
+</html>
