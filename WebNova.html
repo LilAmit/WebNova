@@ -135,10 +135,18 @@
         }
 
         #why-us {
-            background: url('WebNovaWallpaper.jpg') no-repeat center center;
-            background-size: cover;
-            background-attachment: fixed;
             position: relative;
+            overflow: hidden;
+        }
+
+        #why-us video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
         }
 
         #why-us::before {
@@ -149,19 +157,27 @@
             width: 100%;
             height: 100%;
             background: rgba(102, 126, 234, 0.1);
-            z-index: 0;
+            z-index: 1;
         }
 
         #why-us .container {
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
         #contact {
-            background: url('WebNovaWallpaper3.jpg') no-repeat center center;
-            background-size: cover;
-            background-attachment: fixed;
             position: relative;
+            overflow: hidden;
+        }
+
+        #contact video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
         }
 
         #contact::before {
@@ -172,12 +188,12 @@
             width: 100%;
             height: 100%;
             background: rgba(102, 126, 234, 0.1);
-            z-index: 0;
+            z-index: 1;
         }
 
         #contact .container {
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
         #contact .section-title {
@@ -252,12 +268,20 @@
         }
 
         .payment-section {
-            background: url('WebNovaWallpaper2.jpg') no-repeat center center;
-            background-size: cover;
-            background-attachment: fixed;
             padding: 60px 0;
             text-align: center;
             position: relative;
+            overflow: hidden;
+        }
+
+        .payment-section video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
         }
 
         .payment-section::before {
@@ -268,12 +292,12 @@
             width: 100%;
             height: 100%;
             background: rgba(102, 126, 234, 0.1);
-            z-index: 0;
+            z-index: 1;
         }
 
         .payment-section .container {
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
         .payment-section .section-title {
@@ -626,13 +650,6 @@
                 height: 28px;
             }
 
-            /* Fix for mobile background images */
-            #why-us,
-            #contact,
-            .payment-section {
-                background-attachment: scroll;
-            }
-
             /* Better touch targets */
             .btn,
             .submit-btn,
@@ -708,7 +725,6 @@
                     <img src="WebNovaLogo.jpg" alt="WebNova Logo" loading="lazy">
                     <span class="logo-text">WebNova</span>
                 </div>
-                <a href="https://wa.me/972584549087" class="btn btn-primary" target="_blank">📱 WhatsApp</a>
             </div>
         </div>
     </header>
@@ -725,6 +741,9 @@
     </section>
 
     <section id="why-us" class="section">
+        <video autoplay muted loop playsinline>
+            <source src="WebNovaVideo.mp4" type="video/mp4">
+        </video>
         <div class="container">
             <h2 class="section-title">למה לבחור ב-WebNova?</h2>
             <div class="reasons-grid">
@@ -763,6 +782,9 @@
     </section>
 
     <section class="payment-section">
+        <video autoplay muted loop playsinline>
+            <source src="WebNovaVideo2.mp4" type="video/mp4">
+        </video>
         <div class="container">
             <h2 class="section-title">תשלום בביט</h2>
             <div class="payment-container">
@@ -773,6 +795,9 @@
     </section>
 
     <section id="contact" class="section">
+        <video autoplay muted loop playsinline>
+            <source src="WebNovaVideo3.mp4" type="video/mp4">
+        </video>
         <div class="container">
             <h2 class="section-title">צור קשר</h2>
             <form class="contact-form" id="contactForm">
