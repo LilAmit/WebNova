@@ -1404,6 +1404,256 @@
             opacity: 0.9;
         }
 
+        /* Work Process Timeline Section */
+        .process-section {
+            padding: 80px 0;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .process-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 60px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .timeline-item.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+            margin-right: 50%;
+            padding-right: 40px;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-right: auto;
+            margin-left: 50%;
+            padding-left: 40px;
+            text-align: left;
+        }
+
+        .timeline-content {
+            position: relative;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.15);
+            width: 45%;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.25);
+        }
+
+        .timeline-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 0 0 8px white;
+            z-index: 2;
+        }
+
+        .timeline-step {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .timeline-content h3 {
+            font-size: 22px;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .timeline-content p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .stat-item.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-10px);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        /* Tech Stack Section */
+        .tech-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .tech-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .code-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .code-card {
+            background: #1e1e1e;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .code-card.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .code-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .code-header {
+            background: #2d2d2d;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .code-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .code-dot:nth-child(1) { background: #ff5f57; }
+        .code-dot:nth-child(2) { background: #ffbd2e; }
+        .code-dot:nth-child(3) { background: #28ca42; }
+
+        .code-title {
+            color: #888;
+            font-size: 12px;
+            margin-right: auto;
+        }
+
+        .code-body {
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #d4d4d4;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .code-keyword { color: #569cd6; }
+        .code-string { color: #ce9178; }
+        .code-function { color: #dcdcaa; }
+        .code-comment { color: #6a9955; font-style: italic; }
+        .code-tag { color: #4ec9b0; }
+        .code-attr { color: #9cdcfe; }
+
         @media (max-width: 768px) {
             header {
                 padding: 12px 0;
@@ -1528,6 +1778,69 @@
                 font-size: 26px;
                 margin-bottom: 30px;
                 padding: 0 15px;
+            }
+
+            /* Timeline mobile */
+            .process-title {
+                font-size: 26px;
+                margin-bottom: 40px;
+                padding: 0 15px;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                width: calc(100% - 80px);
+                margin-left: 80px;
+                margin-right: 0;
+                padding-left: 20px;
+                padding-right: 20px;
+                text-align: right;
+            }
+
+            .timeline-icon {
+                left: 30px;
+                transform: translate(-50%, -50%);
+            }
+
+            .timeline-content h3 {
+                font-size: 18px;
+            }
+
+            /* Stats mobile */
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+                padding: 0 15px;
+            }
+
+            .stat-number {
+                font-size: 36px;
+            }
+
+            .stat-label {
+                font-size: 16px;
+            }
+
+            /* Tech mobile */
+            .tech-title {
+                font-size: 26px;
+                margin-bottom: 30px;
+                padding: 0 15px;
+            }
+
+            .code-showcase {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 0 15px;
+            }
+
+            .code-body {
+                font-size: 11px;
+                padding: 15px;
             }
 
             .reasons-grid {
@@ -2090,6 +2403,146 @@
         </div>
     </section>
 
+    <!-- Work Process Timeline Section -->
+    <section class="process-section">
+        <div class="container">
+            <h2 class="process-title">תהליך העבודה שלנו</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-icon">📞</div>
+                    <div class="timeline-content">
+                        <span class="timeline-step">שלב 1</span>
+                        <h3>פגישת היכרות טלפונית</h3>
+                        <p>נתחיל בשיחה קצרה להבנת הצרכים, החזון והמטרות שלך. נקשיב, נייעץ ונציע את הפתרון המתאים ביותר לעסק שלך.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon">🎨</div>
+                    <div class="timeline-content">
+                        <span class="timeline-step">שלב 2</span>
+                        <h3>עיצוב האתר</h3>
+                        <p>נעצב עבורך אתר ייחודי ומותאם אישית שמשקף את המותג שלך. תקבל תצוגה מקדימה ונוכל לבצע שינויים עד שתהיה מרוצה ב-100%.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon">💻</div>
+                    <div class="timeline-content">
+                        <span class="timeline-step">שלב 3</span>
+                        <h3>פיתוח האתר</h3>
+                        <p>נתחיל לבנות את האתר שלך עם הטכנולוגיות המתקדמות ביותר. האתר יהיה מהיר, מאובטח ומותאם למובייל באופן מושלם.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon">🚀</div>
+                    <div class="timeline-content">
+                        <span class="timeline-step">שלב 4</span>
+                        <h3>השקת האתר</h3>
+                        <p>האתר שלך עולה לאוויר! נדאג לכל הפרטים הטכניים, נעשה בדיקות מקיפות ונוודא שהכל עובד בצורה מושלמת לפני ההשקה.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-icon">📈</div>
+                    <div class="timeline-content">
+                        <span class="timeline-step">שלב 5</span>
+                        <h3>רק לכם נשאר לצמוח ולגדול!</h3>
+                        <p>עכשיו זה הזמן שלכם לזרוח! האתר החדש שלכם מוכן למשוך לקוחות חדשים ולהצמיח את העסק. אנחנו כאן לתמיכה מתמשכת.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">3+</div>
+                    <div class="stat-label">שנות ניסיון בקוד</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">ניסיון בפרויקטים מכל הסוגים</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">מענה מקצועי ולעניין בלבד</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section class="tech-section">
+        <div class="container">
+            <h2 class="tech-title">הטכנולוגיות שאיתן אנחנו עובדים</h2>
+            <div class="code-showcase">
+                <div class="code-card">
+                    <div class="code-header">
+                        <div class="code-dot"></div>
+                        <div class="code-dot"></div>
+                        <div class="code-dot"></div>
+                        <span class="code-title">index.html</span>
+                    </div>
+                    <div class="code-body">
+<span class="code-comment">&lt;!-- HTML5 --&gt;</span>
+<span class="code-tag">&lt;div</span> <span class="code-attr">class</span>=<span class="code-string">"hero"</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;h1&gt;</span>Welcome<span class="code-tag">&lt;/h1&gt;</span>
+  <span class="code-tag">&lt;p&gt;</span>Modern Web<span class="code-tag">&lt;/p&gt;</span>
+  <span class="code-tag">&lt;button</span> <span class="code-attr">id</span>=<span class="code-string">"cta"</span><span class="code-tag">&gt;</span>
+    Get Started
+  <span class="code-tag">&lt;/button&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span>
+                    </div>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-header">
+                        <div class="code-dot"></div>
+                        <div class="code-dot"></div>
+                        <div class="code-dot"></div>
+                        <span class="code-title">styles.css</span>
+                    </div>
+                    <div class="code-body">
+<span class="code-comment">/* CSS3 Styling */</span>
+<span class="code-tag">.hero</span> {
+  <span class="code-attr">display</span>: flex;
+  <span class="code-attr">background</span>: <span class="code-function">linear-gradient</span>(
+    <span class="code-string">135deg</span>, 
+    <span class="code-string">#667eea</span>, 
+    <span class="code-string">#764ba2</span>
+  );
+  <span class="code-attr">animation</span>: <span class="code-string">fadeIn 1s</span>;
+}
+                    </div>
+                </div>
+
+                <div class="code-card">
+                    <div class="code-header">
+                        <div class="code-dot"></div>
+                        <div class="code-dot"></div>
+                        <div class="code-dot"></div>
+                        <span class="code-title">script.js</span>
+                    </div>
+                    <div class="code-body">
+<span class="code-comment">// JavaScript ES6+</span>
+<span class="code-keyword">const</span> <span class="code-function">init</span> = <span class="code-keyword">async</span> () <span class="code-keyword">=&gt;</span> {
+  <span class="code-keyword">const</span> data = <span class="code-keyword">await</span> <span class="code-function">fetch</span>(<span class="code-string">'/api'</span>);
+  <span class="code-keyword">const</span> result = <span class="code-keyword">await</span> data.<span class="code-function">json</span>();
+  <span class="code-function">console</span>.<span class="code-function">log</span>(result);
+};
+
+<span class="code-function">init</span>();
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="payment" class="payment-section">
         <div class="video-background">
             <video autoplay muted loop playsinline preload="auto">
@@ -2348,7 +2801,23 @@
             });
         }, observerOptions);
 
+        // Observe existing elements
         document.querySelectorAll('.reason-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Observe timeline items
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        // Observe stat items
+        document.querySelectorAll('.stat-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        // Observe code cards
+        document.querySelectorAll('.code-card').forEach(card => {
             observer.observe(card);
         });
 
