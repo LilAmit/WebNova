@@ -134,19 +134,35 @@
             background: white;
         }
 
-        #why-us {
-            position: relative;
-            overflow: hidden;
-        }
-
-        #why-us video {
+        /* Video Background Styles */
+        .video-background {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            overflow: hidden;
             z-index: 0;
+        }
+
+        .video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            /* Optimizations for faster loading */
+            will-change: transform;
+            pointer-events: none;
+        }
+
+        #why-us {
+            position: relative;
+            overflow: hidden;
         }
 
         #why-us::before {
@@ -168,16 +184,6 @@
         #contact {
             position: relative;
             overflow: hidden;
-        }
-
-        #contact video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
         }
 
         #contact::before {
@@ -272,16 +278,6 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-        }
-
-        .payment-section video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
         }
 
         .payment-section::before {
@@ -741,9 +737,11 @@
     </section>
 
     <section id="why-us" class="section">
-        <video autoplay muted loop playsinline>
-            <source src="WebNovaVideo.mp4" type="video/mp4">
-        </video>
+        <div class="video-background">
+            <video autoplay muted loop playsinline preload="auto">
+                <source src="WebNovaVideo.mp4" type="video/mp4">
+            </video>
+        </div>
         <div class="container">
             <h2 class="section-title">למה לבחור ב-WebNova?</h2>
             <div class="reasons-grid">
@@ -782,9 +780,11 @@
     </section>
 
     <section class="payment-section">
-        <video autoplay muted loop playsinline>
-            <source src="WebNovaVideo2.mp4" type="video/mp4">
-        </video>
+        <div class="video-background">
+            <video autoplay muted loop playsinline preload="auto">
+                <source src="WebNovaVideo2.mp4" type="video/mp4">
+            </video>
+        </div>
         <div class="container">
             <h2 class="section-title">תשלום בביט</h2>
             <div class="payment-container">
@@ -795,9 +795,11 @@
     </section>
 
     <section id="contact" class="section">
-        <video autoplay muted loop playsinline>
-            <source src="WebNovaVideo3.mp4" type="video/mp4">
-        </video>
+        <div class="video-background">
+            <video autoplay muted loop playsinline preload="auto">
+                <source src="WebNovaVideo3.mp4" type="video/mp4">
+            </video>
+        </div>
         <div class="container">
             <h2 class="section-title">צור קשר</h2>
             <form class="contact-form" id="contactForm">
@@ -864,6 +866,28 @@
         (function() {
             emailjs.init("mrvxMulPJ4TcR7BFJ");
         })();
+
+        // Optimized video loading
+        document.addEventListener('DOMContentLoaded', function() {
+            const videos = document.querySelectorAll('video');
+            
+            videos.forEach(video => {
+                // Force video to load immediately
+                video.load();
+                
+                // Ensure video plays
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.log('Video autoplay prevented:', error);
+                        // Try to play on user interaction
+                        document.addEventListener('click', () => {
+                            video.play();
+                        }, { once: true });
+                    });
+                }
+            });
+        });
 
         // Scroll animations
         const observerOptions = {
