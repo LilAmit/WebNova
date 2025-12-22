@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -1404,6 +1404,38 @@
             opacity: 0.9;
         }
 
+        .price-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .price-item:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateX(-5px);
+        }
+
+        .price-label {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .price-value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
         /* Work Process Timeline Section */
         .process-section {
             padding: 80px 0;
@@ -2073,6 +2105,26 @@
                 font-size: 32px;
             }
 
+            .price-list {
+                gap: 12px;
+            }
+
+            .price-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                padding: 15px;
+            }
+
+            .price-label {
+                font-size: 15px;
+            }
+
+            .price-value {
+                font-size: 24px;
+                align-self: flex-end;
+            }
+
             /* Chatbot mobile */
             .chatbot-button {
                 width: 50px;
@@ -2589,42 +2641,25 @@
         </div>
         <div class="container">
             <div class="calculator-container">
-                <h2 class="calculator-title">💰 מחשבון מחיר</h2>
-                <p class="calculator-subtitle">בואו נחשב יחד כמה יעלה האתר שלכם</p>
-                
-                <div class="calc-option">
-                    <label>סוג האתר:</label>
-                    <div class="calc-radio-group">
-                        <label class="radio-option">
-                            <input type="radio" name="websiteType" value="landing" data-min="500" data-max="1000" checked>
-                            <div class="radio-content">
-                                <span class="radio-text">דף נחיתה</span>
-                                <span class="radio-price">₪500-1,000</span>
-                            </div>
-                            <div class="radio-checkmark"></div>
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="websiteType" value="interactive" data-min="1000" data-max="2500">
-                            <div class="radio-content">
-                                <span class="radio-text">אתר אינטראקטיבי</span>
-                                <span class="radio-price">₪1,000-2,500</span>
-                            </div>
-                            <div class="radio-checkmark"></div>
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="websiteType" value="full" data-min="2500" data-max="5000">
-                            <div class="radio-content">
-                                <span class="radio-text">אתר מלא עם דפים נוספים</span>
-                                <span class="radio-price">₪2,500-5,000</span>
-                            </div>
-                            <div class="radio-checkmark"></div>
-                        </label>
-                    </div>
-                </div>
+                <h2 class="calculator-title">💰 מחירון</h2>
+                <p class="calculator-subtitle">המחירים שלנו לבניית אתרים</p>
 
                 <div class="price-result">
-                    <h3>מחיר משוער:</h3>
-                    <div class="price-amount" id="priceAmount">₪500-1,000</div>
+                    <h3>מחירון:</h3>
+                    <div class="price-list">
+                        <div class="price-item">
+                            <span class="price-label">💼 דף נחיתה:</span>
+                            <span class="price-value">₪500-1,000</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-label">🌐 אתר אינטראקטיבי:</span>
+                            <span class="price-value">₪1,000-2,500</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-label">🚀 אתר מלא עם דפים נוספים:</span>
+                            <span class="price-value">₪2,500-5,000</span>
+                        </div>
+                    </div>
                     <p class="price-note">* המחיר הסופי ייקבע לאחר פגישת התאמה</p>
                 </div>
             </div>
@@ -3014,22 +3049,6 @@
             }
         }
 
-        // Price Calculator
-        const websiteTypeRadios = document.querySelectorAll('input[name="websiteType"]');
-        const priceAmount = document.getElementById('priceAmount');
-
-        function updatePrice() {
-            const selectedType = document.querySelector('input[name="websiteType"]:checked');
-            const minPrice = parseInt(selectedType.dataset.min);
-            const maxPrice = parseInt(selectedType.dataset.max);
-            
-            priceAmount.textContent = `₪${minPrice.toLocaleString()}-${maxPrice.toLocaleString()}`;
-        }
-
-        websiteTypeRadios.forEach(radio => {
-            radio.addEventListener('change', updatePrice);
-        });
-
         // Chatbot
         const chatbotBtn = document.getElementById('chatbotBtn');
         const chatbotWindow = document.getElementById('chatbotWindow');
@@ -3094,4 +3113,4 @@
         });
     </script>
 </body>
-</html>
+                        </html>
