@@ -1,4 +1,4 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -1709,8 +1709,9 @@
             }
 
             .header-content {
-                flex-wrap: wrap;
+                flex-direction: column;
                 gap: 15px;
+                align-items: center;
             }
 
             .logo {
@@ -1730,62 +1731,56 @@
                 font-size: 14px;
             }
 
-            /* Hide desktop menu on mobile */
+            /* Show desktop menu on mobile */
             .nav-menu {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: white;
-                flex-direction: column;
-                gap: 0;
-                padding: 20px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-                border-radius: 0 0 20px 20px;
-            }
-
-            .nav-menu.active {
                 display: flex;
-                animation: slideDown 0.3s ease;
-            }
-
-            @keyframes slideDown {
-                from {
-                    opacity: 0;
-                    transform: translateY(-10px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+                width: 100%;
+                padding: 0;
             }
 
             .nav-item {
-                width: 100%;
-                text-align: center;
-                padding: 12px 0;
-                border-bottom: 1px solid #f0f0f0;
-            }
-
-            .nav-item:last-child {
+                padding: 0;
                 border-bottom: none;
             }
 
             .nav-link {
-                font-size: 18px;
-                display: block;
+                font-size: 14px;
+                padding: 8px 15px;
+                background: rgba(102, 126, 234, 0.1);
+                border-radius: 20px;
+                transition: all 0.3s ease;
             }
 
-            /* Show mobile menu toggle */
+            .nav-link:hover {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+            }
+
+            .nav-link::before {
+                display: none;
+            }
+
+            /* Hide mobile menu toggle */
             .mobile-menu-toggle {
-                display: flex;
-                order: 3;
+                display: none;
             }
 
-            /* Header CTA buttons mobile */
+            /* Hide header CTA buttons on mobile */
             .header-cta {
-                display: none; /* Hide in mobile, use hamburger menu instead */
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+                gap: 10px;
+            }
+
+            .header-btn {
+                padding: 8px 20px;
+                font-size: 14px;
             }
 
             .btn {
@@ -2258,6 +2253,17 @@
                 font-size: 15px;
             }
 
+            /* Extra small header */
+            .nav-link {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            .header-btn {
+                padding: 6px 15px;
+                font-size: 12px;
+            }
+
             /* Extra small floating buttons */
             .scroll-to-top,
             .whatsapp-float,
@@ -2409,7 +2415,7 @@
                 </nav>
 
                 <div class="header-cta">
-                    <a href="#calculator" class="header-btn header-btn-secondary">מחשבון מחיר</a>
+                    <a href="#calculator" class="header-btn header-btn-secondary">מחירון</a>
                     <a href="#contact" class="header-btn header-btn-primary">בואו נתחיל 🚀</a>
                 </div>
 
@@ -2797,31 +2803,6 @@
                 }
             });
 
-            // Mobile menu toggle
-            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-            const navMenu = document.getElementById('navMenu');
-            
-            mobileMenuToggle.addEventListener('click', () => {
-                mobileMenuToggle.classList.toggle('active');
-                navMenu.classList.toggle('active');
-            });
-
-            // Close mobile menu when clicking on a link
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenuToggle.classList.remove('active');
-                    navMenu.classList.remove('active');
-                });
-            });
-
-            // Close mobile menu when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!mobileMenuToggle.contains(e.target) && !navMenu.contains(e.target)) {
-                    mobileMenuToggle.classList.remove('active');
-                    navMenu.classList.remove('active');
-                }
-            });
-
             const videos = document.querySelectorAll('video');
             
             videos.forEach(video => {
@@ -3113,4 +3094,4 @@
         });
     </script>
 </body>
-                        </html>
+</html>
