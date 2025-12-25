@@ -4,2433 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>WebNova - בניית אתרים מקצועית</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            transition: filter 0.3s ease, font-size 0.3s ease;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Animated Background */
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
-        }
-
-        @keyframes gradientShift {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        /* Floating Shapes */
-        .floating-shapes {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .shape {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-        }
-
-        .shape:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            top: 10%;
-            left: 10%;
-            animation: float 20s infinite;
-        }
-
-        .shape:nth-child(2) {
-            width: 60px;
-            height: 60px;
-            top: 60%;
-            left: 80%;
-            animation: float 15s infinite reverse;
-        }
-
-        .shape:nth-child(3) {
-            width: 100px;
-            height: 100px;
-            top: 80%;
-            left: 20%;
-            animation: float 25s infinite;
-        }
-
-        .shape:nth-child(4) {
-            width: 50px;
-            height: 50px;
-            top: 30%;
-            left: 70%;
-            animation: float 18s infinite reverse;
-        }
-
-        .shape:nth-child(5) {
-            width: 70px;
-            height: 70px;
-            top: 50%;
-            left: 50%;
-            animation: float 22s infinite;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) translateX(0) rotate(0deg);
-            }
-            25% {
-                transform: translateY(-50px) translateX(50px) rotate(90deg);
-            }
-            50% {
-                transform: translateY(-100px) translateX(0) rotate(180deg);
-            }
-            75% {
-                transform: translateY(-50px) translateX(-50px) rotate(270deg);
-            }
-        }
-
-        /* Loading Screen */
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-
-        .loading-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .loading-logo {
-            font-size: 48px;
-            font-weight: bold;
-            color: white;
-            margin-bottom: 30px;
-            animation: logoFloat 2s ease-in-out infinite;
-        }
-
-        @keyframes logoFloat {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-
-        .loading-bar-container {
-            width: 300px;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .loading-bar {
-            height: 100%;
-            background: white;
-            border-radius: 10px;
-            animation: loading 2s ease-in-out infinite;
-        }
-
-        @keyframes loading {
-            0% {
-                width: 0%;
-            }
-            50% {
-                width: 70%;
-            }
-            100% {
-                width: 100%;
-            }
-        }
-
-        .loading-text {
-            color: white;
-            margin-top: 20px;
-            font-size: 16px;
-        }
-
-        /* Accessibility Styles */
-        body.high-contrast {
-            filter: contrast(1.5);
-        }
-
-        body.large-text {
-            font-size: 120%;
-        }
-
-        body.larger-text {
-            font-size: 140%;
-        }
-
-        body.grayscale {
-            filter: grayscale(100%);
-        }
-
-        body.invert-colors {
-            filter: invert(1);
-        }
-
-        body.highlight-links a {
-            background-color: yellow !important;
-            color: black !important;
-            padding: 2px 4px;
-            border-radius: 3px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        header {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 249, 250, 0.98) 100%);
-            backdrop-filter: blur(20px);
-            padding: 15px 0;
-            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 2px solid transparent;
-            background-image: 
-                linear-gradient(white, white),
-                linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-origin: padding-box, border-box;
-            background-clip: padding-box, border-box;
-            transition: all 0.3s ease;
-        }
-
-        header.scrolled {
-            padding: 10px 0;
-            box-shadow: 0 6px 30px rgba(102, 126, 234, 0.25);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 30px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover {
-            transform: scale(1.05);
-        }
-
-        .logo img {
-            height: 50px;
-            width: auto;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-        }
-
-        .logo-text {
-            font-size: 32px;
-            font-weight: bold;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            position: relative;
-        }
-
-        .logo-text::after {
-            content: '✨';
-            position: absolute;
-            right: -25px;
-            top: -5px;
-            font-size: 16px;
-            animation: sparkle 2s ease-in-out infinite;
-        }
-
-        @keyframes sparkle {
-            0%, 100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.5;
-                transform: scale(1.2);
-            }
-        }
-
-        /* Navigation Menu */
-        .nav-menu {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav-item {
-            position: relative;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            padding: 8px 0;
-            display: inline-block;
-            position: relative;
-        }
-
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
-
-        .nav-link:hover {
-            color: #667eea;
-        }
-
-        .nav-link:hover::before {
-            width: 100%;
-        }
-
-        /* Header CTA Buttons */
-        .header-cta {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .header-btn {
-            padding: 10px 25px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            display: inline-block;
-            white-space: nowrap;
-        }
-
-        .header-btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .header-btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .header-btn-secondary {
-            border: 2px solid #667eea;
-            color: #667eea;
-            background: transparent;
-        }
-
-        .header-btn-secondary:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        /* Mobile Menu Toggle */
-        .mobile-menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        .mobile-menu-toggle span {
-            width: 25px;
-            height: 3px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(8px, 8px);
-        }
-
-        .mobile-menu-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .mobile-menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
-        }
-
-        .hero {
-            padding: 100px 0;
-            text-align: center;
-            color: white;
-        }
-
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero p {
-            font-size: 24px;
-            margin-bottom: 40px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-            animation: fadeInUp 1.2s ease;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 1.4s ease;
-        }
-
-        .btn {
-            padding: 15px 40px;
-            font-size: 18px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            font-weight: bold;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-        }
-
-        .btn-primary {
-            background: white;
-            color: #667eea;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid white;
-        }
-
-        .btn-secondary:hover {
-            background: white;
-            color: #667eea;
-        }
-
-        .section {
-            padding: 80px 0;
-            background: white;
-        }
-
-        /* Video Background Styles */
-        .video-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 0;
-        }
-
-        .video-background video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-            /* Optimizations for faster loading */
-            will-change: transform;
-            pointer-events: none;
-        }
-
-        #why-us {
-            position: relative;
-            overflow: hidden;
-        }
-
-        #why-us::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(102, 126, 234, 0.1);
-            z-index: 1;
-        }
-
-        #why-us .container {
-            position: relative;
-            z-index: 2;
-        }
-
-        #contact {
-            position: relative;
-            overflow: hidden;
-        }
-
-        #contact::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(102, 126, 234, 0.1);
-            z-index: 1;
-        }
-
-        #contact .container {
-            position: relative;
-            z-index: 2;
-        }
-
-        #contact .section-title {
-            color: white;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-            font-weight: bold;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 50px;
-            color: white;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-            font-weight: bold;
-        }
-
-        .reasons-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .reason-card {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transition: all 0.4s ease;
-            backdrop-filter: blur(10px);
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .reason-card.animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .reason-card:hover {
-            transform: translateY(-15px) scale(1.03);
-            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
-        }
-
-        .reason-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 30px;
-            color: white;
-            transition: all 0.3s ease;
-        }
-
-        .reason-card:hover .reason-icon {
-            transform: rotate(360deg) scale(1.1);
-        }
-
-        .reason-card h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #667eea;
-        }
-
-        .reason-card p {
-            color: #555;
-        }
-
-        .payment-section {
-            padding: 60px 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .payment-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(102, 126, 234, 0.1);
-            z-index: 1;
-        }
-
-        .payment-section .container {
-            position: relative;
-            z-index: 2;
-        }
-
-        .payment-section .section-title {
-            color: white;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-            font-weight: bold;
-        }
-
-        .payment-container {
-            max-width: 400px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .payment-container.animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .payment-container img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            margin-top: 20px;
-        }
-
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .contact-form.animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        footer {
-            background: #2c3e50;
-            color: white;
-            text-align: center;
-            padding: 30px 0;
-        }
-
-        .success-message {
-            display: none;
-            background: #4CAF50;
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .scroll-to-top {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            cursor: pointer;
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            pointer-events: none;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-        }
-
-        .scroll-to-top::before {
-            content: '';
-            position: absolute;
-            top: -3px;
-            left: -3px;
-            right: -3px;
-            bottom: -3px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            border-top-color: white;
-            transition: transform 0.3s ease;
-        }
-
-        .scroll-to-top.visible::before {
-            transform: rotate(var(--scroll-progress, 0deg));
-        }
-
-        .scroll-to-top.visible {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .scroll-to-top:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
-        }
-
-        .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            left: 100px;
-            background: #25D366;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            animation: pulse 2s infinite;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-        }
-
-        .whatsapp-float svg {
-            width: 35px;
-            height: 35px;
-            fill: white;
-        }
-
-        .whatsapp-float:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
-        }
-
-        /* Accessibility Button */
-        .accessibility-button {
-            position: fixed;
-            bottom: 30px;
-            left: 170px;
-            background: linear-gradient(135deg, #FF6B6B 0%, #EE5A6F 100%);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-            border: none;
-            font-size: 28px;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-            animation: pulse 2s infinite;
-        }
-
-        .accessibility-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
-        }
-
-        /* Accessibility Menu */
-        .accessibility-menu {
-            position: fixed;
-            bottom: 100px;
-            left: 30px;
-            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15), 0 0 0 1px rgba(102, 126, 234, 0.1);
-            z-index: 1000;
-            display: none;
-            min-width: 280px;
-            max-width: 320px;
-            backdrop-filter: blur(10px);
-        }
-
-        .accessibility-menu.show {
-            display: block;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .accessibility-menu h3 {
-            color: #667eea;
-            margin-bottom: 20px;
-            font-size: 20px;
-            text-align: center;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .accessibility-menu h3::before {
-            content: '♿';
-            font-size: 24px;
-        }
-
-        .accessibility-option {
-            padding: 14px 18px;
-            margin: 10px 0;
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            cursor: pointer;
-            width: 100%;
-            text-align: right;
-            font-size: 15px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            color: #333;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .accessibility-option::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 0;
-            background: linear-gradient(90deg, rgba(102, 126, 234, 0.1) 0%, transparent 100%);
-            transition: width 0.3s ease;
-        }
-
-        .accessibility-option:hover::before {
-            width: 100%;
-        }
-
-        .accessibility-option:hover {
-            border-color: #667eea;
-            transform: translateX(-5px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
-        }
-
-        .accessibility-option.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-color: #667eea;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .accessibility-option.active::after {
-            content: '✓';
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .accessibility-option[data-action="reset"] {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
-            color: white;
-            border-color: #ff6b6b;
-            margin-top: 15px;
-            font-weight: 600;
-        }
-
-        .accessibility-option[data-action="reset"]:hover {
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-            border-color: #ff6b6b;
-        }
-
-        .accessibility-option[data-action="reset"]::after {
-            content: '🔄';
-            font-size: 16px;
-        }
-
-        /* Chatbot */
-        .chatbot-button {
-            position: fixed;
-            bottom: 30px;
-            left: 240px;
-            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-            border: none;
-            font-size: 28px;
-            animation: pulse 2s infinite;
-        }
-
-        .chatbot-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.5);
-        }
-
-        .chatbot-window {
-            position: fixed;
-            bottom: 100px;
-            left: 30px;
-            width: 350px;
-            max-width: calc(100vw - 60px);
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            z-index: 1000;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .chatbot-window.show {
-            display: flex;
-            animation: slideUp 0.3s ease;
-        }
-
-        .chatbot-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .chatbot-header h3 {
-            margin: 0;
-            font-size: 18px;
-        }
-
-        .chatbot-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 0;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .chatbot-messages {
-            flex: 1;
-            padding: 20px;
-            max-height: 300px;
-            overflow-y: auto;
-            background: #f8f9fa;
-        }
-
-        .chat-message {
-            margin-bottom: 15px;
-            animation: messageSlide 0.3s ease;
-        }
-
-        @keyframes messageSlide {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .chat-message.bot {
-            text-align: right;
-        }
-
-        .message-bubble {
-            display: inline-block;
-            padding: 12px 16px;
-            border-radius: 18px;
-            max-width: 80%;
-            word-wrap: break-word;
-        }
-
-        .chat-message.bot .message-bubble {
-            background: white;
-            color: #333;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .chat-message.user .message-bubble {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .chat-options {
-            padding: 20px;
-            background: white;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        .chat-option-btn {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            background: #f5f5f5;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 14px;
-            text-align: right;
-            color: #333;
-        }
-
-        .chat-option-btn:hover {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-            transform: translateX(-5px);
-        }
-
-        /* Chatbot Contact Form */
-        .chat-form-container {
-            padding: 20px;
-            background: white;
-            border-top: 1px solid #e0e0e0;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .chat-form h4 {
-            text-align: center;
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-
-        .chat-form input,
-        .chat-form textarea {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-            font-family: inherit;
-            transition: border-color 0.3s ease;
-            box-sizing: border-box;
-        }
-
-        .chat-form input:focus,
-        .chat-form textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .chat-form textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-
-        .chat-submit-btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 8px;
-        }
-
-        .chat-submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        }
-
-        .chat-back-btn {
-            width: 100%;
-            padding: 10px;
-            background: #f5f5f5;
-            color: #666;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .chat-back-btn:hover {
-            background: #e0e0e0;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
-        /* Price Calculator Section */
-        .calculator-section {
-            padding: 80px 0;
-            background: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .calculator-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(102, 126, 234, 0.1);
-            z-index: 1;
-        }
-
-        .calculator-section .container {
-            position: relative;
-            z-index: 2;
-        }
-
-        .calculator-container {
-            max-width: 700px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-
-        .calculator-title {
-            text-align: center;
-            font-size: 32px;
-            margin-bottom: 10px;
-            color: #667eea;
-            font-weight: bold;
-        }
-
-        .calculator-subtitle {
-            text-align: center;
-            font-size: 16px;
-            margin-bottom: 30px;
-            color: #666;
-        }
-
-        .calc-option {
-            margin-bottom: 25px;
-        }
-
-        .calc-option label {
-            display: block;
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: #333;
-        }
-
-        .calc-radio-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .radio-option {
-            position: relative;
-            padding: 15px 20px;
-            background: #f8f9fa;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .radio-option:hover {
-            border-color: #667eea;
-            background: #f0f4ff;
-        }
-
-        .radio-option input[type="radio"] {
-            position: absolute;
-            opacity: 0;
-        }
-
-        .radio-option input[type="radio"]:checked + .radio-content {
-            color: #667eea;
-        }
-
-        .radio-option input[type="radio"]:checked ~ .radio-checkmark {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .radio-option input[type="radio"]:checked ~ .radio-checkmark::after {
-            display: block;
-        }
-
-        .radio-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-right: 40px;
-            transition: color 0.3s ease;
-        }
-
-        .radio-text {
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        .radio-price {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .radio-checkmark {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            border: 2px solid #ddd;
-            background: white;
-            transition: all 0.3s ease;
-        }
-
-        .radio-checkmark::after {
-            content: '✓';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 14px;
-            font-weight: bold;
-            display: none;
-        }
-
-        .calc-checkbox-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 12px;
-        }
-
-        .checkbox-option {
-            position: relative;
-            padding: 12px 15px;
-            background: #f8f9fa;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .checkbox-option:hover {
-            border-color: #667eea;
-            background: #f0f4ff;
-        }
-
-        .checkbox-option input[type="checkbox"] {
-            position: absolute;
-            opacity: 0;
-        }
-
-        .checkbox-option input[type="checkbox"]:checked + .checkbox-label {
-            color: white;
-        }
-
-        .checkbox-option input[type="checkbox"]:checked ~ .checkbox-bg {
-            opacity: 1;
-        }
-
-        .checkbox-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 8px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 0;
-        }
-
-        .checkbox-label {
-            position: relative;
-            z-index: 1;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .price-result {
-            margin-top: 30px;
-            padding: 25px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
-            text-align: center;
-            color: white;
-        }
-
-        .price-result h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .price-amount {
-            font-size: 42px;
-            font-weight: bold;
-            margin-bottom: 5px;
-            animation: priceUpdate 0.5s ease;
-        }
-
-        @keyframes priceUpdate {
-            0% {
-                transform: scale(1.2);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        .price-note {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        .price-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .price-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .price-item:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateX(-5px);
-        }
-
-        .price-label {
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        .price-value {
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        /* Work Process Timeline Section */
-        .process-section {
-            padding: 80px 0;
-            background: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .process-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(102, 126, 234, 0.1);
-            z-index: 1;
-        }
-
-        .process-section .container {
-            position: relative;
-            z-index: 2;
-        }
-
-        .process-title {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 60px;
-            color: white;
-            font-weight: bold;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-        }
-
-        .timeline {
-            position: relative;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px 0;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 50px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .timeline-item.animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .timeline-item:nth-child(odd) .timeline-content {
-            margin-left: auto;
-            margin-right: 50%;
-            padding-right: 40px;
-            text-align: right;
-        }
-
-        .timeline-item:nth-child(even) .timeline-content {
-            margin-right: auto;
-            margin-left: 50%;
-            padding-left: 40px;
-            text-align: left;
-        }
-
-        .timeline-content {
-            position: relative;
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.15);
-            width: 45%;
-            transition: all 0.3s ease;
-        }
-
-        .timeline-content:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.25);
-        }
-
-        .timeline-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            box-shadow: 0 0 0 8px white;
-            z-index: 2;
-        }
-
-        .timeline-step {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .timeline-content h3 {
-            font-size: 22px;
-            color: #667eea;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .timeline-content p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        /* Stats Section */
-        .stats-section {
-            padding: 80px 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-align: center;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .stat-item {
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .stat-item.animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .stat-item:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-10px);
-        }
-
-        .stat-number {
-            font-size: 48px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-label {
-            font-size: 18px;
-            opacity: 0.9;
-        }
-
-        /* Tech Stack Section */
-        .tech-section {
-            padding: 80px 0;
-            background: white;
-        }
-
-        .tech-title {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 50px;
-            color: #667eea;
-            font-weight: bold;
-        }
-
-        .code-showcase {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .code-card {
-            background: #1e1e1e;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .code-card.animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .code-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-        }
-
-        .code-header {
-            background: #2d2d2d;
-            padding: 12px 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .code-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .code-dot:nth-child(1) { background: #ff5f57; }
-        .code-dot:nth-child(2) { background: #ffbd2e; }
-        .code-dot:nth-child(3) { background: #28ca42; }
-
-        .code-title {
-            color: #888;
-            font-size: 12px;
-            margin-right: auto;
-        }
-
-        .code-body {
-            padding: 20px;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            line-height: 1.6;
-            color: #d4d4d4;
-            direction: ltr;
-            text-align: left;
-        }
-
-        .code-keyword { color: #569cd6; }
-        .code-string { color: #ce9178; }
-        .code-function { color: #dcdcaa; }
-        .code-comment { color: #6a9955; font-style: italic; }
-        .code-tag { color: #4ec9b0; }
-        .code-attr { color: #9cdcfe; }
-
-        @media (max-width: 768px) {
-            header {
-                padding: 12px 0;
-            }
-
-            .header-content {
-                flex-direction: column;
-                gap: 15px;
-                align-items: center;
-            }
-
-            .logo {
-                gap: 10px;
-            }
-
-            .logo img {
-                height: 40px;
-            }
-
-            .logo-text {
-                font-size: 24px;
-            }
-
-            .logo-text::after {
-                right: -20px;
-                font-size: 14px;
-            }
-
-            /* Show desktop menu on mobile */
-            .nav-menu {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
-                width: 100%;
-                padding: 0;
-            }
-
-            .nav-item {
-                padding: 0;
-                border-bottom: none;
-            }
-
-            .nav-link {
-                font-size: 14px;
-                padding: 8px 15px;
-                background: rgba(102, 126, 234, 0.1);
-                border-radius: 20px;
-                transition: all 0.3s ease;
-            }
-
-            .nav-link:hover {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-            }
-
-            .nav-link::before {
-                display: none;
-            }
-
-            /* Hide mobile menu toggle */
-            .mobile-menu-toggle {
-                display: none;
-            }
-
-            .btn {
-                padding: 12px 25px;
-                font-size: 16px;
-            }
-
-            .hero {
-                padding: 60px 0;
-            }
-
-            .hero h1 {
-                font-size: 28px;
-                line-height: 1.3;
-                margin-bottom: 15px;
-            }
-
-            .hero p {
-                font-size: 18px;
-                margin-bottom: 30px;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                gap: 15px;
-                padding: 0 20px;
-            }
-
-            .cta-buttons .btn {
-                width: 100%;
-                max-width: 100%;
-            }
-
-            .section {
-                padding: 50px 0;
-            }
-
-            .section-title {
-                font-size: 26px;
-                margin-bottom: 30px;
-                padding: 0 15px;
-            }
-
-            /* Timeline mobile */
-            .process-title {
-                font-size: 26px;
-                margin-bottom: 40px;
-                padding: 0 15px;
-            }
-
-            .timeline::before {
-                left: 30px;
-            }
-
-            .timeline-item:nth-child(odd) .timeline-content,
-            .timeline-item:nth-child(even) .timeline-content {
-                width: calc(100% - 80px);
-                margin-left: 80px;
-                margin-right: 0;
-                padding-left: 20px;
-                padding-right: 20px;
-                text-align: right;
-            }
-
-            .timeline-icon {
-                left: 30px;
-                transform: translate(-50%, -50%);
-            }
-
-            .timeline-content h3 {
-                font-size: 18px;
-            }
-
-            /* Stats mobile */
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 25px;
-                padding: 0 15px;
-            }
-
-            .stat-number {
-                font-size: 36px;
-            }
-
-            .stat-label {
-                font-size: 16px;
-            }
-
-            /* Tech mobile */
-            .tech-title {
-                font-size: 26px;
-                margin-bottom: 30px;
-                padding: 0 15px;
-            }
-
-            .code-showcase {
-                grid-template-columns: 1fr;
-                gap: 20px;
-                padding: 0 15px;
-            }
-
-            .code-body {
-                font-size: 11px;
-                padding: 15px;
-            }
-
-            .reasons-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-                padding: 0 10px;
-            }
-
-            .reason-card {
-                padding: 25px 20px;
-            }
-
-            .reason-card h3 {
-                font-size: 20px;
-            }
-
-            .reason-card p {
-                font-size: 15px;
-            }
-
-            .reason-icon {
-                width: 50px;
-                height: 50px;
-                font-size: 24px;
-            }
-
-            .payment-section {
-                padding: 40px 0;
-            }
-
-            .payment-container {
-                padding: 25px 20px;
-                margin: 0 15px;
-            }
-
-            .payment-container p {
-                font-size: 16px;
-            }
-
-            .contact-form {
-                padding: 30px 20px;
-                margin: 0 15px;
-            }
-
-            .form-group label {
-                font-size: 15px;
-            }
-
-            .form-group input,
-            .form-group textarea,
-            .form-group select {
-                font-size: 16px;
-                padding: 12px;
-            }
-
-            .submit-btn {
-                font-size: 16px;
-                padding: 14px;
-            }
-
-            footer {
-                padding: 25px 15px;
-                font-size: 14px;
-            }
-
-            footer p {
-                margin-bottom: 8px;
-            }
-
-            .scroll-to-top {
-                width: 50px;
-                height: 50px;
-                bottom: 110px;
-                left: 15px;
-                font-size: 20px;
-            }
-
-            .whatsapp-float {
-                width: 50px;
-                height: 50px;
-                bottom: 50px;
-                left: 15px;
-            }
-
-            .whatsapp-float svg {
-                width: 28px;
-                height: 28px;
-            }
-
-            .accessibility-button {
-                width: 50px;
-                height: 50px;
-                bottom: 50px;
-                left: 75px;
-                font-size: 22px;
-            }
-
-            .accessibility-menu {
-                left: 15px;
-                bottom: 110px;
-                min-width: calc(100vw - 30px);
-                max-width: calc(100vw - 30px);
-                padding: 20px;
-            }
-
-            .accessibility-menu h3 {
-                font-size: 18px;
-                margin-bottom: 15px;
-            }
-
-            .accessibility-option {
-                font-size: 14px;
-                padding: 12px 15px;
-                margin: 8px 0;
-            }
-
-            /* Better touch targets */
-            .btn,
-            .submit-btn,
-            .scroll-to-top,
-            .whatsapp-float,
-            .accessibility-button,
-            .chatbot-button {
-                min-height: 44px;
-                min-width: 44px;
-            }
-
-            /* Prevent text overflow */
-            .reason-card h3,
-            .section-title,
-            .hero h1 {
-                word-wrap: break-word;
-                overflow-wrap: break-word;
-            }
-
-            /* Mobile-friendly spacing */
-            .container {
-                padding: 0 15px;
-            }
-
-            /* Enhanced mobile navigation */
-            .hero {
-                padding: 50px 0;
-            }
-
-            /* Improve form usability on mobile */
-            .form-group input:focus,
-            .form-group textarea:focus,
-            .form-group select:focus {
-                font-size: 16px; /* Prevents zoom on iOS */
-            }
-
-            /* Optimize video backgrounds for mobile */
-            .video-background video {
-                min-height: 100%;
-                object-position: center;
-            }
-
-            /* Better button spacing on mobile */
-            .scroll-to-top,
-            .whatsapp-float,
-            .accessibility-button,
-            .chatbot-button {
-                box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            }
-
-            /* Improve accessibility menu on mobile */
-            .accessibility-menu {
-                max-height: 70vh;
-                overflow-y: auto;
-            }
-
-            /* Better chatbot on mobile */
-            .chatbot-window {
-                max-height: 60vh;
-            }
-
-            .chatbot-messages {
-                max-height: 200px;
-            }
-
-            /* Calculator mobile */
-            .calculator-container {
-                padding: 25px 20px;
-                margin: 0 15px;
-            }
-
-            .calculator-title {
-                font-size: 26px;
-            }
-
-            .calculator-subtitle {
-                font-size: 14px;
-            }
-
-            .calc-option label {
-                font-size: 16px;
-            }
-
-            .radio-text {
-                font-size: 14px;
-            }
-
-            .radio-price {
-                font-size: 12px;
-            }
-
-            .calc-checkbox-group {
-                grid-template-columns: 1fr;
-            }
-
-            .price-amount {
-                font-size: 32px;
-            }
-
-            .price-list {
-                gap: 12px;
-            }
-
-            .price-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-                padding: 15px;
-            }
-
-            .price-label {
-                font-size: 15px;
-            }
-
-            .price-value {
-                font-size: 24px;
-                align-self: flex-end;
-            }
-
-            /* Chatbot mobile */
-            .chatbot-button {
-                width: 50px;
-                height: 50px;
-                bottom: 50px;
-                left: 145px;
-                font-size: 22px;
-            }
-
-            .chatbot-window {
-                bottom: 110px;
-                left: 15px;
-                width: calc(100vw - 30px);
-            }
-
-            .chatbot-header {
-                padding: 15px;
-            }
-
-            .chatbot-header h3 {
-                font-size: 16px;
-            }
-
-            .chatbot-messages {
-                padding: 15px;
-                max-height: 250px;
-            }
-
-            .chat-options {
-                padding: 15px;
-            }
-
-            .chat-option-btn {
-                font-size: 13px;
-                padding: 10px;
-            }
-
-            /* Loading screen mobile */
-            .loading-logo {
-                font-size: 36px;
-            }
-
-            .loading-bar-container {
-                width: 250px;
-            }
-
-            .loading-text {
-                font-size: 14px;
-            }
-        }
-
-        /* Tablet styles */
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .container {
-                padding: 0 30px;
-            }
-
-            .hero h1 {
-                font-size: 40px;
-            }
-
-            .hero p {
-                font-size: 20px;
-            }
-
-            .section-title {
-                font-size: 30px;
-            }
-
-            .reasons-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 25px;
-            }
-
-            .calculator-container {
-                max-width: 600px;
-            }
-
-            .chatbot-window {
-                width: 400px;
-            }
-
-            /* Floating buttons for tablet */
-            .scroll-to-top {
-                left: 40px;
-                bottom: 40px;
-            }
-
-            .whatsapp-float {
-                left: 110px;
-                bottom: 40px;
-            }
-
-            .accessibility-button {
-                left: 180px;
-                bottom: 40px;
-            }
-
-            .chatbot-button {
-                left: 250px;
-                bottom: 40px;
-            }
-        }
-
-        /* Extra small devices */
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 24px;
-                line-height: 1.4;
-            }
-
-            .hero p {
-                font-size: 16px;
-            }
-
-            .logo-text {
-                font-size: 20px;
-            }
-
-            .section-title {
-                font-size: 22px;
-                line-height: 1.3;
-            }
-
-            .reason-card h3 {
-                font-size: 18px;
-            }
-
-            .btn {
-                padding: 12px 20px;
-                font-size: 15px;
-            }
-
-            /* Extra small header */
-            .nav-link {
-                font-size: 11px;
-                padding: 6px 10px;
-            }
-
-            /* Extra small floating buttons */
-            .scroll-to-top,
-            .whatsapp-float,
-            .accessibility-button,
-            .chatbot-button {
-                width: 45px;
-                height: 45px;
-            }
-
-            .scroll-to-top {
-                bottom: 110px;
-                left: 10px;
-            }
-
-            .whatsapp-float {
-                bottom: 50px;
-                left: 10px;
-            }
-
-            .accessibility-button {
-                bottom: 50px;
-                left: 65px;
-            }
-
-            .chatbot-button {
-                bottom: 50px;
-                left: 120px;
-            }
-
-            /* Extra small calculator */
-            .calculator-title {
-                font-size: 22px;
-            }
-
-            .radio-text {
-                font-size: 13px;
-            }
-
-            .price-amount {
-                font-size: 28px;
-            }
-
-            /* Extra small chatbot */
-            .chatbot-messages {
-                max-height: 180px;
-            }
-
-            .message-bubble {
-                max-width: 85%;
-                font-size: 14px;
-            }
-        }
-
-        /* Landscape mobile */
-        @media (max-width: 768px) and (orientation: landscape) {
-            .hero {
-                padding: 30px 0;
-            }
-
-            .hero h1 {
-                font-size: 22px;
-            }
-
-            .hero p {
-                font-size: 15px;
-            }
-
-            .cta-buttons {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .cta-buttons .btn {
-                max-width: 45%;
-                flex: 0 0 45%;
-            }
-
-            .section {
-                padding: 40px 0;
-            }
-
-            /* Adjust floating buttons for landscape */
-            .scroll-to-top,
-            .whatsapp-float,
-            .accessibility-button,
-            .chatbot-button {
-                width: 45px;
-                height: 45px;
-            }
-
-            /* Better chatbot positioning in landscape */
-            .chatbot-window {
-                max-height: 50vh;
-                bottom: 60px;
-            }
-
-            .chatbot-messages {
-                max-height: 150px;
-            }
-        }
-    </style>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loading-logo">WebNova</div>
-        <div class="loading-bar-container">
-            <div class="loading-bar"></div>
+    <!-- Loading Skeleton -->
+    <div class="loading-skeleton" id="loadingSkeleton">
+        <div class="skeleton-header">
+            <div class="skeleton-logo"></div>
+            <div class="skeleton-nav">
+                <div class="skeleton-item"></div>
+                <div class="skeleton-item"></div>
+                <div class="skeleton-item"></div>
+                <div class="skeleton-item"></div>
+            </div>
         </div>
-        <div class="loading-text">טוען את האתר...</div>
+        <div class="skeleton-hero">
+            <div class="skeleton-title"></div>
+            <div class="skeleton-subtitle"></div>
+            <div class="skeleton-buttons">
+                <div class="skeleton-button"></div>
+                <div class="skeleton-button"></div>
+            </div>
+        </div>
+        <div class="skeleton-content">
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+        </div>
     </div>
 
     <!-- Animated Background -->
@@ -2499,32 +105,44 @@
             <h2 class="section-title">למה לבחור ב-WebNova?</h2>
             <div class="reasons-grid">
                 <div class="reason-card">
-                    <div class="reason-icon">🎨</div>
+                    <div class="reason-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
                     <h3>עיצוב מותאם אישית</h3>
                     <p>אנחנו יוצרים אתרים ייחודיים שמשקפים את המותג שלך ומתאימים בדיוק לצרכים שלך</p>
                 </div>
                 <div class="reason-card">
-                    <div class="reason-icon">⚡</div>
+                    <div class="reason-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
                     <h3>ביצועים מעולים</h3>
                     <p>אתרים מהירים, מאובטחים ומותאמים לכל המכשירים - מובייל, טאבלט ומחשב</p>
                 </div>
                 <div class="reason-card">
-                    <div class="reason-icon">💼</div>
+                    <div class="reason-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
                     <h3>ניסיון מוכח</h3>
                     <p>שנים של ניסיון בבניית אתרים לעסקים מכל הסוגים והגדלים</p>
                 </div>
                 <div class="reason-card">
-                    <div class="reason-icon">🚀</div>
+                    <div class="reason-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
                     <h3>SEO מובנה</h3>
                     <p>האתרים שלנו מותאמים למנועי חיפוש כדי שהלקוחות שלך ימצאו אותך בקלות</p>
                 </div>
                 <div class="reason-card">
-                    <div class="reason-icon">💬</div>
+                    <div class="reason-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
                     <h3>תמיכה מלאה</h3>
                     <p>אנחנו כאן בשבילך גם אחרי השקת האתר - תמיכה ועדכונים שוטפים</p>
                 </div>
                 <div class="reason-card">
-                    <div class="reason-icon">💰</div>
+                    <div class="reason-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
                     <h3>מחירים הוגנים</h3>
                     <p>פתרונות איכותיים במחירים תחרותיים שמתאימים לכל תקציב</p>
                 </div>
@@ -2543,7 +161,9 @@
             <h2 class="process-title">תהליך העבודה שלנו</h2>
             <div class="timeline">
                 <div class="timeline-item">
-                    <div class="timeline-icon">📞</div>
+                    <div class="timeline-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
                     <div class="timeline-content">
                         <span class="timeline-step">שלב 1</span>
                         <h3>פגישת היכרות טלפונית</h3>
@@ -2552,7 +172,9 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-icon">🎨</div>
+                    <div class="timeline-icon">
+                        <i class="fas fa-pencil-ruler"></i>
+                    </div>
                     <div class="timeline-content">
                         <span class="timeline-step">שלב 2</span>
                         <h3>עיצוב האתר</h3>
@@ -2561,7 +183,9 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-icon">💻</div>
+                    <div class="timeline-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
                     <div class="timeline-content">
                         <span class="timeline-step">שלב 3</span>
                         <h3>פיתוח האתר</h3>
@@ -2570,7 +194,9 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-icon">🚀</div>
+                    <div class="timeline-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
                     <div class="timeline-content">
                         <span class="timeline-step">שלב 4</span>
                         <h3>השקת האתר</h3>
@@ -2579,7 +205,9 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-icon">📈</div>
+                    <div class="timeline-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
                     <div class="timeline-content">
                         <span class="timeline-step">שלב 5</span>
                         <h3>רק לכם נשאר לצמוח ולגדול!</h3>
@@ -2685,9 +313,38 @@
         </div>
         <div class="container">
             <h2 class="section-title">תשלום בביט</h2>
+            
+            <!-- Payment Security Badges -->
+            <div class="payment-security">
+                <div class="security-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>תשלום מאובטח 100%</span>
+                </div>
+                <div class="security-badge">
+                    <i class="fas fa-lock"></i>
+                    <span>הצפנת SSL</span>
+                </div>
+            </div>
+            
             <div class="payment-container">
                 <p style="margin-bottom: 15px; font-size: 18px;">סרוק את הברקוד לתשלום מהיר ובטוח</p>
                 <img src="MyBit.jpg" alt="תשלום בביט" loading="lazy">
+                
+                <!-- Payment info -->
+                <div class="payment-info">
+                    <div class="info-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>תשלום מיידי ומאובטח</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>פשוט לסרוק ולשלם</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-receipt"></i>
+                        <span>קבלה אוטומטית</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -2700,29 +357,137 @@
             </video>
         </div>
         <div class="container">
-            <div class="calculator-container">
-                <h2 class="calculator-title">💰 מחירון</h2>
-                <p class="calculator-subtitle">המחירים שלנו לבניית אתרים</p>
-
-                <div class="price-result">
-                    <h3>מחירון:</h3>
-                    <div class="price-list">
-                        <div class="price-item">
-                            <span class="price-label">💼 דף נחיתה:</span>
-                            <span class="price-value">₪500-1,000</span>
+            <h2 class="section-title" style="color: white; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);">💰 בחר את החבילה המושלמת עבורך</h2>
+            <p class="section-subtitle">כל החבילות כוללות עיצוב מקצועי, קוד נקי ותמיכה מלאה</p>
+            
+            <!-- Pricing Comparison Table -->
+            <div class="pricing-table">
+                <!-- Basic Package -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <div class="pricing-icon">
+                            <i class="fas fa-file-alt"></i>
                         </div>
-                        <div class="price-item">
-                            <span class="price-label">🌐 אתר אינטראקטיבי:</span>
-                            <span class="price-value">₪1,000-2,500</span>
-                        </div>
-                        <div class="price-item">
-                            <span class="price-label">🚀 אתר מלא עם דפים נוספים:</span>
-                            <span class="price-value">₪2,500-5,000</span>
-                        </div>
+                        <h3 class="pricing-title">דף נחיתה</h3>
+                        <p class="pricing-subtitle">מושלם לעסקים קטנים</p>
                     </div>
-                    <p class="price-note">* המחיר הסופי ייקבע לאחר פגישת התאמה</p>
+                    <div class="pricing-price">
+                        <span class="currency">₪</span>
+                        <span class="amount">500-1,000</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> דף יחיד מעוצב</li>
+                        <li><i class="fas fa-check"></i> עיצוב רספונסיבי</li>
+                        <li><i class="fas fa-check"></i> טופס יצירת קשר</li>
+                        <li><i class="fas fa-check"></i> אופטימיזציה בסיסית</li>
+                        <li><i class="fas fa-check"></i> אינטגרציה עם רשתות חברתיות</li>
+                        <li class="feature-disabled"><i class="fas fa-times"></i> אינטגרציות מתקדמות</li>
+                        <li class="feature-disabled"><i class="fas fa-times"></i> דפים נוספים</li>
+                        <li class="feature-disabled"><i class="fas fa-times"></i> פאנל ניהול</li>
+                    </ul>
+                    <button class="pricing-btn">בחר חבילה</button>
+                </div>
+
+                <!-- Popular Package -->
+                <div class="pricing-card popular">
+                    <div class="popular-badge">
+                        <i class="fas fa-star"></i> הכי פופולרי
+                    </div>
+                    <div class="pricing-header">
+                        <div class="pricing-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <h3 class="pricing-title">אתר אינטראקטיבי</h3>
+                        <p class="pricing-subtitle">המומלץ ביותר!</p>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="currency">₪</span>
+                        <span class="amount">1,000-2,500</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> עד 5 דפים</li>
+                        <li><i class="fas fa-check"></i> עיצוב מתקדם</li>
+                        <li><i class="fas fa-check"></i> אנימציות ואפקטים</li>
+                        <li><i class="fas fa-check"></i> SEO מתקדם</li>
+                        <li><i class="fas fa-check"></i> אינטגרציה עם רשתות</li>
+                        <li><i class="fas fa-check"></i> גלריית תמונות</li>
+                        <li><i class="fas fa-check"></i> טפסים מתקדמים</li>
+                        <li class="feature-disabled"><i class="fas fa-times"></i> פאנל ניהול מלא</li>
+                    </ul>
+                    <button class="pricing-btn popular-btn">בחר חבילה</button>
+                </div>
+
+                <!-- Premium Package -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <div class="pricing-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="pricing-title">אתר מלא</h3>
+                        <p class="pricing-subtitle">פתרון מקיף</p>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="currency">₪</span>
+                        <span class="amount">2,500-5,000</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> דפים ללא הגבלה</li>
+                        <li><i class="fas fa-check"></i> עיצוב ייחודי לחלוטין</li>
+                        <li><i class="fas fa-check"></i> אנימציות ואפקטים ברמה מתקדמת</li>
+                        <li><i class="fas fa-check"></i> SEO מתקדם + ביצועים</li>
+                        <li><i class="fas fa-check"></i> כל האינטגרציות</li>
+                        <li><i class="fas fa-check"></i> גלריות ומדיה מתקדמת</li>
+                        <li><i class="fas fa-check"></i> אזור ניהול תוכן</li>
+                        <li><i class="fas fa-check"></i> פאנל ניהול מלא</li>
+                    </ul>
+                    <button class="pricing-btn">בחר חבילה</button>
                 </div>
             </div>
+
+            <!-- Trust Badges -->
+            <div class="trust-badges">
+                <div class="trust-badge">
+                    <div class="badge-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="badge-content">
+                        <h4>תשלום מאובטח</h4>
+                        <p>כל התשלומים מוצפנים</p>
+                    </div>
+                </div>
+                <div class="trust-badge">
+                    <div class="badge-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="badge-content">
+                        <h4>SSL מאובטח</h4>
+                        <p>הגנה מלאה על המידע</p>
+                    </div>
+                </div>
+                <div class="trust-badge">
+                    <div class="badge-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="badge-content">
+                        <h4>תמיכה 24/7</h4>
+                        <p>זמינים תמיד לעזרה</p>
+                    </div>
+                </div>
+                <div class="trust-badge">
+                    <div class="badge-icon">
+                        <i class="fas fa-undo-alt"></i>
+                    </div>
+                    <div class="badge-content">
+                        <h4>שביעות רצון מובטחת</h4>
+                        <p>נעבוד עד שתהיו מרוצים</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="pricing-note">
+                <i class="fas fa-info-circle"></i>
+                המחיר הסופי ייקבע לאחר פגישת התאמה אישית. כל חבילה ניתנת להתאמה מלאה לפי הצרכים שלך.
+            </p>
         </div>
     </section>
 
@@ -2735,42 +500,75 @@
         <div class="container">
             <h2 class="section-title">צור קשר</h2>
             <form class="contact-form" id="contactForm">
+                <!-- Progress Bar -->
+                <div class="form-progress">
+                    <div class="form-progress-bar" id="formProgressBar"></div>
+                </div>
+                
                 <div class="form-group">
                     <label for="fullName">שם מלא *</label>
-                    <input type="text" id="fullName" name="fullName" required>
+                    <div class="input-wrapper">
+                        <input type="text" id="fullName" name="fullName" required>
+                        <i class="fas fa-user input-icon"></i>
+                        <span class="input-validation"></span>
+                    </div>
+                    <span class="error-message" id="fullNameError"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="email">אימייל *</label>
-                    <input type="email" id="email" name="email" required>
+                    <div class="input-wrapper">
+                        <input type="email" id="email" name="email" required>
+                        <i class="fas fa-envelope input-icon"></i>
+                        <span class="input-validation"></span>
+                    </div>
+                    <span class="error-message" id="emailError"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="phone">מספר טלפון *</label>
-                    <input type="tel" id="phone" name="phone" required>
+                    <div class="input-wrapper">
+                        <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}">
+                        <i class="fas fa-phone input-icon"></i>
+                        <span class="input-validation"></span>
+                    </div>
+                    <span class="error-message" id="phoneError"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="businessType">סוג העסק *</label>
-                    <select id="businessType" name="businessType" required>
-                        <option value="">בחר סוג עסק</option>
-                        <option value="מסעדה">מסעדה</option>
-                        <option value="חנות">חנות</option>
-                        <option value="שירותים מקצועיים">שירותים מקצועיים</option>
-                        <option value="עסק קטן">עסק קטן</option>
-                        <option value="תאגיד">תאגיד</option>
-                        <option value="אחר">אחר</option>
-                    </select>
+                    <div class="input-wrapper">
+                        <select id="businessType" name="businessType" required>
+                            <option value="">בחר סוג עסק</option>
+                            <option value="מסעדה">מסעדה</option>
+                            <option value="חנות">חנות</option>
+                            <option value="שירותים מקצועיים">שירותים מקצועיים</option>
+                            <option value="עסק קטן">עסק קטן</option>
+                            <option value="תאגיד">תאגיד</option>
+                            <option value="אחר">אחר</option>
+                        </select>
+                        <i class="fas fa-building input-icon"></i>
+                        <span class="input-validation"></span>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="message">פרטים נוספים</label>
-                    <textarea id="message" name="message" placeholder="ספר לנו על הפרויקט שלך..."></textarea>
+                    <div class="input-wrapper">
+                        <textarea id="message" name="message" placeholder="ספר לנו על הפרויקט שלך..."></textarea>
+                        <i class="fas fa-comment-dots input-icon"></i>
+                    </div>
                 </div>
 
-                <button type="submit" class="submit-btn">שלח פנייה</button>
+                <button type="submit" class="submit-btn ripple-btn">
+                    <span class="btn-text">שלח פנייה</span>
+                    <span class="btn-loading" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i> שולח...
+                    </span>
+                </button>
                 
                 <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i>
                     תודה! הפרטים נשלחו בהצלחה. ניצור איתך קשר בהקדם!
                 </div>
             </form>
@@ -2780,7 +578,7 @@
     <footer>
         <div class="container">
             <p><strong>WebNova</strong> - בניית אתרים מקצועית</p>
-            <p>📞 טלפון: 0584549087 | ✉️ אימייל: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bedfd3d7ca90d3d1c4dfced7fed7ddd2d1cbda90ddd1d3">[email&#160;protected]</a></p>
+            <p>📞 טלפון: 0584549087 | ✉️ אימייל: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c4adaaa2ab84b3a1a6aaabb2a5eaa7abeaada8">[email&#160;protected]</a></p>
             <p>עמית מוצפי © 2024</p>
         </div>
     </footer>
@@ -2849,376 +647,6 @@
     </div>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script>
-        // Initialize EmailJS
-        (function() {
-            emailjs.init("mrvxMulPJ4TcR7BFJ");
-        })();
-
-        // Optimized video loading
-        document.addEventListener('DOMContentLoaded', function() {
-            // Hide loading screen
-            setTimeout(() => {
-                document.getElementById('loadingScreen').classList.add('hidden');
-            }, 1500);
-
-            // Header scroll effect
-            const header = document.getElementById('header');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-            });
-
-            const videos = document.querySelectorAll('video');
-            
-            videos.forEach(video => {
-                // Force video to load immediately
-                video.load();
-                
-                // Ensure video plays
-                const playPromise = video.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch(error => {
-                        console.log('Video autoplay prevented:', error);
-                        // Try to play on user interaction
-                        document.addEventListener('click', () => {
-                            video.play();
-                        }, { once: true });
-                    });
-                }
-            });
-        });
-
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('animate');
-                    }, index * 100);
-                }
-            });
-        }, observerOptions);
-
-        // Observe existing elements
-        document.querySelectorAll('.reason-card').forEach(card => {
-            observer.observe(card);
-        });
-
-        // Observe timeline items
-        document.querySelectorAll('.timeline-item').forEach(item => {
-            observer.observe(item);
-        });
-
-        // Observe stat items
-        document.querySelectorAll('.stat-item').forEach(item => {
-            observer.observe(item);
-        });
-
-        // Observe code cards
-        document.querySelectorAll('.code-card').forEach(card => {
-            observer.observe(card);
-        });
-
-        const paymentContainer = document.querySelector('.payment-container');
-        if (paymentContainer) {
-            observer.observe(paymentContainer);
-        }
-
-        const contactForm = document.querySelector('.contact-form');
-        if (contactForm) {
-            observer.observe(contactForm);
-        }
-
-        // Scroll to top button with progress
-        const scrollToTopBtn = document.getElementById('scrollToTop');
-        
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.pageYOffset;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = (scrollTop / docHeight) * 100;
-            const scrollDegrees = (scrollPercent / 100) * 360;
-            
-            scrollToTopBtn.style.setProperty('--scroll-progress', scrollDegrees + 'deg');
-            
-            if (scrollTop > 300) {
-                scrollToTopBtn.classList.add('visible');
-            } else {
-                scrollToTopBtn.classList.remove('visible');
-            }
-        });
-
-        scrollToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // Form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.querySelector('.submit-btn');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'שולח...';
-            submitBtn.disabled = true;
-
-            const templateParams = {
-                from_name: document.getElementById('fullName').value,
-                from_email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                business_type: document.getElementById('businessType').value,
-                message: document.getElementById('message').value
-            };
-
-            emailjs.send('service_4gvk08g', 'template_amc3bab', templateParams)
-                .then(function(response) {
-                    console.log('SUCCESS!', response.status, response.text);
-                    document.getElementById('successMessage').style.display = 'block';
-                    document.getElementById('contactForm').reset();
-                    
-                    setTimeout(() => {
-                        document.getElementById('successMessage').style.display = 'none';
-                    }, 5000);
-                }, function(error) {
-                    console.log('FAILED...', error);
-                    alert('אופס! משהו השתבש. אנא נסה שוב או צור קשר דרך WhatsApp.');
-                })
-                .finally(function() {
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                });
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-
-        // Lazy loading for images
-        if ('loading' in HTMLImageElement.prototype) {
-            const images = document.querySelectorAll('img[loading="lazy"]');
-            images.forEach(img => {
-                img.src = img.src;
-            });
-        } else {
-            const script = document.createElement('script');
-            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
-            document.body.appendChild(script);
-        }
-
-        // Accessibility functionality
-        const accessibilityBtn = document.getElementById('accessibilityBtn');
-        const accessibilityMenu = document.getElementById('accessibilityMenu');
-        let activeAccessibilityOptions = new Set();
-
-        // Toggle accessibility menu
-        accessibilityBtn.addEventListener('click', () => {
-            accessibilityMenu.classList.toggle('show');
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!accessibilityBtn.contains(e.target) && !accessibilityMenu.contains(e.target)) {
-                accessibilityMenu.classList.remove('show');
-            }
-        });
-
-        // Handle accessibility options
-        document.querySelectorAll('.accessibility-option').forEach(option => {
-            option.addEventListener('click', function() {
-                const action = this.getAttribute('data-action');
-                
-                if (action === 'reset') {
-                    // Reset all accessibility options
-                    document.body.classList.remove('high-contrast', 'large-text', 'larger-text', 'grayscale', 'invert-colors', 'highlight-links');
-                    document.querySelectorAll('.accessibility-option').forEach(opt => {
-                        opt.classList.remove('active');
-                    });
-                    activeAccessibilityOptions.clear();
-                    localStorage.removeItem('accessibility-options');
-                } else {
-                    // Handle text size options (only one can be active)
-                    if (action === 'large-text' || action === 'larger-text') {
-                        document.body.classList.remove('large-text', 'larger-text');
-                        document.querySelectorAll('[data-action="large-text"], [data-action="larger-text"]').forEach(opt => {
-                            opt.classList.remove('active');
-                        });
-                        activeAccessibilityOptions.delete('large-text');
-                        activeAccessibilityOptions.delete('larger-text');
-                    }
-                    
-                    // Toggle the selected option
-                    const className = action;
-                    if (document.body.classList.contains(className)) {
-                        document.body.classList.remove(className);
-                        this.classList.remove('active');
-                        activeAccessibilityOptions.delete(action);
-                    } else {
-                        document.body.classList.add(className);
-                        this.classList.add('active');
-                        activeAccessibilityOptions.add(action);
-                    }
-                    
-                    // Save to localStorage
-                    localStorage.setItem('accessibility-options', JSON.stringify([...activeAccessibilityOptions]));
-                }
-            });
-        });
-
-        // Load saved accessibility options
-        const savedOptions = localStorage.getItem('accessibility-options');
-        if (savedOptions) {
-            try {
-                const options = JSON.parse(savedOptions);
-                options.forEach(option => {
-                    document.body.classList.add(option);
-                    const optionBtn = document.querySelector(`[data-action="${option}"]`);
-                    if (optionBtn) {
-                        optionBtn.classList.add('active');
-                        activeAccessibilityOptions.add(option);
-                    }
-                });
-            } catch (e) {
-                console.error('Error loading accessibility options:', e);
-            }
-        }
-
-        // Chatbot
-        const chatbotBtn = document.getElementById('chatbotBtn');
-        const chatbotWindow = document.getElementById('chatbotWindow');
-        const chatbotClose = document.getElementById('chatbotClose');
-        const chatbotMessages = document.getElementById('chatbotMessages');
-        const chatOptions = document.getElementById('chatOptions');
-
-        let chatbotShown = false;
-
-        // Show chatbot after 10 seconds
-        setTimeout(() => {
-            if (!chatbotShown) {
-                chatbotBtn.style.animation = 'pulse 1s ease 3';
-            }
-        }, 10000);
-
-        chatbotBtn.addEventListener('click', () => {
-            chatbotWindow.classList.toggle('show');
-            chatbotShown = true;
-        });
-
-        chatbotClose.addEventListener('click', () => {
-            chatbotWindow.classList.remove('show');
-        });
-
-        // Close chatbot when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!chatbotBtn.contains(e.target) && !chatbotWindow.contains(e.target)) {
-                chatbotWindow.classList.remove('show');
-            }
-        });
-
-        // Chatbot responses
-        const responses = {
-            'כמה זמן לוקח לבנות אתר?': 'בדרך כלל לוקח בין שבועיים לחודש, תלוי במורכבות האתר. דף נחיתה פשוט יכול להיות מוכן תוך שבוע!',
-            'מה כלול במחיר?': 'המחיר כולל: עיצוב מותאם אישית, פיתוח מלא, אופטימיזציה למובייל.',
-            'איך זה עובד?': 'תהליך העבודה שלנו כולל 5 שלבים:\n\n📞 פגישת היכרות טלפונית\n🎨 עיצוב האתר\n💻 פיתוח האתר\n🚀 השקת האתר\n📈 רק לכם נשאר לצמוח ולגדול!\n\nכל שלב מתוכנן בקפידה כדי להבטיח את הצלחת הפרויקט שלכם!'
-        };
-
-        const chatFormContainer = document.getElementById('chatFormContainer');
-        const chatContactForm = document.getElementById('chatContactForm');
-        const chatBackBtn = document.getElementById('chatBackBtn');
-
-        document.querySelectorAll('.chat-option-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const question = this.dataset.response;
-                const action = this.dataset.action;
-                
-                // Add user message
-                const userMsg = document.createElement('div');
-                userMsg.className = 'chat-message user';
-                userMsg.innerHTML = `<div class="message-bubble">${question}</div>`;
-                chatbotMessages.appendChild(userMsg);
-                
-                // Check if this button should show the form
-                if (action === 'show-form') {
-                    setTimeout(() => {
-                        const botMsg = document.createElement('div');
-                        botMsg.className = 'chat-message bot';
-                        botMsg.innerHTML = `<div class="message-bubble">מעולה! אשמח למלא איתך טופס קצר 📝</div>`;
-                        chatbotMessages.appendChild(botMsg);
-                        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-                        
-                        // Show form after another delay
-                        setTimeout(() => {
-                            chatOptions.style.display = 'none';
-                            chatFormContainer.style.display = 'block';
-                        }, 500);
-                    }, 500);
-                } else {
-                    // Add bot response after delay
-                    setTimeout(() => {
-                        const botMsg = document.createElement('div');
-                        botMsg.className = 'chat-message bot';
-                        botMsg.innerHTML = `<div class="message-bubble">${responses[question]}</div>`;
-                        chatbotMessages.appendChild(botMsg);
-                        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-                    }, 500);
-                }
-                
-                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-            });
-        });
-
-        // Handle chat form submission
-        chatContactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const submitBtn = this.querySelector('.chat-submit-btn');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'שולח...';
-            submitBtn.disabled = true;
-
-            emailjs.sendForm('service_4gvk08g', 'template_amc3bab', this)
-                .then(function() {
-                    // Show success message
-                    const successMsg = document.createElement('div');
-                    successMsg.className = 'chat-message bot';
-                    successMsg.innerHTML = `<div class="message-bubble">תודה רבה! קיבלנו את הפנייה ונחזור אליך בהקדם 🎉</div>`;
-                    chatbotMessages.appendChild(successMsg);
-                    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-                    
-                    // Reset and hide form
-                    chatContactForm.reset();
-                    chatFormContainer.style.display = 'none';
-                    chatOptions.style.display = 'block';
-                }, function(error) {
-                    alert('אופס! משהו השתבש. אנא נסה שוב או צור קשר דרך WhatsApp.');
-                })
-                .finally(function() {
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                });
-        });
-
-        // Handle back button
-        chatBackBtn.addEventListener('click', () => {
-            chatFormContainer.style.display = 'none';
-            chatOptions.style.display = 'block';
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
