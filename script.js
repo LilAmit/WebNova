@@ -5,9 +5,9 @@
 
 // Optimized video loading
 document.addEventListener('DOMContentLoaded', function() {
-    // Hide loading screen
+    // Hide skeleton loader
     setTimeout(() => {
-        document.getElementById('loadingScreen').classList.add('hidden');
+        document.getElementById('loadingSkeleton').classList.add('hidden');
     }, 1500);
 
     // Header scroll effect
@@ -19,6 +19,9 @@ document.addEventListener('DOMContentLoaded', function() {
             header.classList.remove('scrolled');
         }
     });
+
+    // Parallax disabled for better performance
+    // initParallax();
 
     const videos = document.querySelectorAll('video');
     
@@ -39,6 +42,34 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Parallax Scrolling
+function initParallax() {
+    const parallaxElements = document.querySelectorAll('.reason-card, .timeline-item, .stat-item');
+    
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        
+        parallaxElements.forEach(element => {
+            if (!element.classList.contains('animate')) return; // Only apply to animated elements
+            
+            const rect = element.getBoundingClientRect();
+            const elementTop = rect.top + scrolled;
+            const elementHeight = element.offsetHeight;
+            
+            if (scrolled + window.innerHeight > elementTop && scrolled < elementTop + elementHeight) {
+                const speed = 0.02; // Reduced speed for subtlety
+                const yPos = -(scrolled - elementTop) * speed;
+                
+                // Preserve existing transforms
+                const currentTransform = window.getComputedStyle(element).transform;
+                if (currentTransform === 'none') {
+                    element.style.transform = `translateY(${yPos}px)`;
+                }
+            }
+        });
+    });
+}
 
 // Scroll animations
 const observerOptions = {
@@ -116,8 +147,11 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
     const submitBtn = document.querySelector('.submit-btn');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'שולח...';
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoading = submitBtn.querySelector('.btn-loading');
+    
+    btnText.style.display = 'none';
+    btnLoading.style.display = 'flex';
     submitBtn.disabled = true;
 
     const templateParams = {
@@ -133,6 +167,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
             console.log('SUCCESS!', response.status, response.text);
             document.getElementById('successMessage').style.display = 'block';
             document.getElementById('contactForm').reset();
+            updateFormProgress();
             
             setTimeout(() => {
                 document.getElementById('successMessage').style.display = 'none';
@@ -142,9 +177,136 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
             alert('אופס! משהו השתבש. אנא נסה שוב או צור קשר דרך WhatsApp.');
         })
         .finally(function() {
-            submitBtn.textContent = originalText;
+            btnText.style.display = 'inline';
+            btnLoading.style.display = 'none';
             submitBtn.disabled = false;
         });
+});
+
+// Real-time Form Validation
+const formInputs = document.querySelectorAll('#contactForm input[required], #contactForm select[required]');
+
+formInputs.forEach(input => {
+    input.addEventListener('input', function() {
+        validateField(this);
+        updateFormProgress();
+    });
+    
+    input.addEventListener('blur', function() {
+        validateField(this);
+    });
+});
+
+function validateField(field) {
+    const value = field.value.trim();
+    const fieldName = field.name;
+    let isValid = true;
+    let errorMessage = '';
+    
+    // Check if field is empty
+    if (field.hasAttribute('required') && !value) {
+        isValid = false;
+        errorMessage = 'שדה חובה';
+    }
+    
+    // Email validation
+    if (fieldName === 'email' && value) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+            isValid = false;
+            errorMessage = 'כתובת אימייל לא תקינה';
+        }
+    }
+    
+    // Phone validation
+    if (fieldName === 'phone' && value) {
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!phoneRegex.test(value.replace(/\s+/g, ''))) {
+            isValid = false;
+            errorMessage = 'מספר טלפון לא תקין (10 ספרות)';
+        }
+    }
+    
+    // Name validation
+    if (fieldName === 'fullName' && value) {
+        if (value.length < 2) {
+            isValid = false;
+            errorMessage = 'שם חייב להכיל לפחות 2 תווים';
+        }
+    }
+    
+    // Update field visual state
+    if (isValid && value) {
+        field.classList.remove('invalid');
+        field.classList.add('valid');
+    } else if (!isValid) {
+        field.classList.remove('valid');
+        field.classList.add('invalid');
+    } else {
+        field.classList.remove('valid', 'invalid');
+    }
+    
+    // Show/hide error message
+    const errorElement = document.getElementById(fieldName + 'Error');
+    if (errorElement) {
+        errorElement.textContent = errorMessage;
+        if (errorMessage) {
+            errorElement.classList.add('show');
+        } else {
+            errorElement.classList.remove('show');
+        }
+    }
+    
+    return isValid;
+}
+
+// Update form progress bar
+function updateFormProgress() {
+    const totalFields = formInputs.length;
+    let filledFields = 0;
+    
+    formInputs.forEach(input => {
+        if (input.value.trim() && input.classList.contains('valid')) {
+            filledFields++;
+        }
+    });
+    
+    const progress = (filledFields / totalFields) * 100;
+    document.getElementById('formProgressBar').style.width = progress + '%';
+}
+
+// Pricing buttons - scroll to contact form
+document.querySelectorAll('.pricing-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const pricingCard = this.closest('.pricing-card');
+        const packageName = pricingCard.querySelector('.pricing-title').textContent;
+        
+        // Add ripple effect
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple-effect');
+        this.appendChild(ripple);
+        
+        setTimeout(() => {
+            ripple.remove();
+        }, 600);
+        
+        // Scroll to contact form
+        const contactForm = document.getElementById('contact');
+        contactForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+        // Pre-fill message with package selection
+        setTimeout(() => {
+            const messageField = document.getElementById('message');
+            messageField.value = `שלום, אני מעוניין/ת בחבילת "${packageName}". אשמח לקבל פרטים נוספים.`;
+            messageField.focus();
+            
+            // Add highlight animation
+            messageField.style.animation = 'fieldHighlight 1s ease';
+            setTimeout(() => {
+                messageField.style.animation = '';
+            }, 1000);
+        }, 800);
+    });
 });
 
 // Smooth scroll for anchor links
