@@ -13,29 +13,53 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Loading Skeleton -->
-    <div class="loading-skeleton" id="loadingSkeleton">
-        <div class="skeleton-header">
-            <div class="skeleton-logo"></div>
-            <div class="skeleton-nav">
-                <div class="skeleton-item"></div>
-                <div class="skeleton-item"></div>
-                <div class="skeleton-item"></div>
-                <div class="skeleton-item"></div>
+    <!-- Professional Loading Screen -->
+    <div class="loading-screen-overlay" id="loadingScreen">
+        <div class="loading-content">
+            <!-- Animated Logo -->
+            <div class="loading-logo-container">
+                <div class="loading-circle"></div>
+                <div class="loading-circle-inner"></div>
+                <div class="loading-logo-text">WebNova</div>
             </div>
-        </div>
-        <div class="skeleton-hero">
-            <div class="skeleton-title"></div>
-            <div class="skeleton-subtitle"></div>
-            <div class="skeleton-buttons">
-                <div class="skeleton-button"></div>
-                <div class="skeleton-button"></div>
+            
+            <!-- Loading Text -->
+            <div class="loading-text-container">
+                <h2 class="loading-title">טוען את האתר שלך...</h2>
+                <p class="loading-subtitle" id="loadingSubtitle">מכין את החוויה המושלמת</p>
             </div>
-        </div>
-        <div class="skeleton-content">
-            <div class="skeleton-card"></div>
-            <div class="skeleton-card"></div>
-            <div class="skeleton-card"></div>
+            
+            <!-- Progress Bar -->
+            <div class="loading-progress-container">
+                <div class="loading-progress-bar" id="loadingProgress"></div>
+                <div class="loading-percentage" id="loadingPercentage">0%</div>
+            </div>
+            
+            <!-- Loading Steps -->
+            <div class="loading-steps">
+                <div class="loading-step" id="step1">
+                    <i class="fas fa-check-circle"></i>
+                    <span>טוען משאבים...</span>
+                </div>
+                <div class="loading-step" id="step2">
+                    <i class="fas fa-circle"></i>
+                    <span>טוען סרטונים...</span>
+                </div>
+                <div class="loading-step" id="step3">
+                    <i class="fas fa-circle"></i>
+                    <span>מכין את האתר...</span>
+                </div>
+            </div>
+            
+            <!-- Animated Particles -->
+            <div class="loading-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
         </div>
     </div>
 
