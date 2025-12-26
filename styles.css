@@ -1557,6 +1557,8 @@ footer {
     border-radius: 18px;
     max-width: 80%;
     word-wrap: break-word;
+    white-space: pre-line;
+    line-height: 1.6;
 }
 
 .chat-message.bot .message-bubble {
