@@ -33,7 +33,7 @@
     <link rel="canonical" href="https://www.webnova.co.il/">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/jpeg" href="WebNovaLogo.jpg">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -80,7 +80,7 @@
       },
       "sameAs": [
         "https://wa.me/972584549087"
-      ],
+      ],     
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
         "name": "שירותי בניית אתרים",
@@ -292,8 +292,8 @@
         {
           "@type": "ListItem",
           "position": 4,
-          "name": "מחירון",
-          "item": "https://www.webnova.co.il#calculator"
+          "name": "תשלום",
+          "item": "https://www.webnova.co.il/payment.html"
         },
         {
           "@type": "ListItem",
@@ -356,6 +356,18 @@
     </script>
 </head>
 <body>
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+    </div>
+
+    <!-- Morphing Background Blobs -->
+    <div class="blob-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
     <!-- Professional Loading Screen -->
     <div class="loading-screen-overlay" id="loadingScreen">
         <div class="loading-content">
@@ -386,7 +398,7 @@
                 </div>
                 <div class="loading-step" id="step2">
                     <i class="fas fa-circle"></i>
-                    <span>טוען סרטונים...</span>
+                    <span>טוען עיצובים...</span>
                 </div>
                 <div class="loading-step" id="step3">
                     <i class="fas fa-circle"></i>
@@ -429,19 +441,16 @@
                 <nav>
                     <ul class="nav-menu" id="navMenu">
                         <li class="nav-item">
-                            <a href="#why-us" class="nav-link">למה אנחנו?</a>
+                            <a href="index.html" class="nav-link active">בית</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#process" class="nav-link">תהליך עבודה</a>
+                            <a href="how-it-works.html" class="nav-link">איך זה עובד?</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#tech" class="nav-link">הטכנולוגיות שלנו</a>
+                            <a href="payment.html" class="nav-link">תשלום</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#payment" class="nav-link">תשלום</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#contact" class="nav-link">צור קשר</a>
+                            <a href="contact.html" class="nav-link">צור קשר</a>
                         </li>
                     </ul>
                 </nav>
@@ -459,486 +468,171 @@
         <div class="container">
             <h1>בניית אתרים מקצועית ומותאמת אישית</h1>
             <p>הפתרון המושלם לעסק שלך באינטרנט</p>
+
+            <div class="hero-cta">
+                <a href="payment.html#calculator" class="btn btn-primary btn-lg">
+                    <i class="fas fa-rocket"></i>
+                    צפה במחירים
+                </a>
+                <a href="contact.html" class="btn btn-secondary btn-lg">
+                    <i class="fas fa-envelope"></i>
+                    צור קשר!
+                </a>
+            </div>
+
+            <div class="hero-features">
+                <div class="hero-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>מחירים נוחים</span>
+                </div>
+                <div class="hero-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>מהיר ואמין</span>
+                </div>
+                <div class="hero-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>שירות אישי</span>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section id="why-us" class="section">
-        <div class="video-background">
-            <video autoplay muted loop playsinline preload="auto">
-                <source src="WebNovaVideo.mp4" type="video/mp4">
-            </video>
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio-section">
+        <div class="tech-animated-bg">
+            <div class="tech-grid"></div>
+            <div class="floating-particles">
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
         </div>
         <div class="container">
-            <h2 class="section-title">למה לבחור ב-WebNova?</h2>
-            <div class="reasons-grid">
-                <div class="reason-card">
-                    <div class="reason-icon">
-                        <i class="fas fa-palette"></i>
+            <h2 class="section-title">תיק עבודות</h2>
+            <p class="section-subtitle">אתרים שבנינו ללקוחות מרוצים</p>
+
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="sunrisespa-screenshot.jpg" alt="Sunrise Spa - אתר ספא ועיסויים" loading="lazy">
                     </div>
-                    <h3>עיצוב מותאם אישית</h3>
-                    <p>אנחנו יוצרים אתרים ייחודיים שמשקפים את המותג שלך ומתאימים בדיוק לצרכים שלך</p>
-                </div>
-                <div class="reason-card">
-                    <div class="reason-icon">
-                        <i class="fas fa-bolt"></i>
+                    <div class="portfolio-info">
+                        <h3>סאנרייז ספא</h3>
+                        <span class="portfolio-category">ספא ועיסויים</span>
+                        <p class="portfolio-description">אתר ספא ועיסויים מקצועי עם עיצוב מודרני ונקי</p>
+                        <a href="https://sunrisespa.biz" target="_blank" class="portfolio-btn">
+                            <i class="fas fa-external-link-alt"></i>
+                            צפה באתר
+                        </a>
                     </div>
-                    <h3>ביצועים מעולים</h3>
-                    <p>אתרים מהירים, מאובטחים ומותאמים לכל המכשירים - מובייל, טאבלט ומחשב</p>
                 </div>
-                <div class="reason-card">
-                    <div class="reason-icon">
-                        <i class="fas fa-briefcase"></i>
+
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="shaygaz-screenshot.jpg" alt="ShayGaz - שירותי גז" loading="lazy">
                     </div>
-                    <h3>ניסיון מוכח</h3>
-                    <p>שנים של ניסיון בבניית אתרים לעסקים מכל הסוגים והגדלים</p>
-                </div>
-                <div class="reason-card">
-                    <div class="reason-icon">
-                        <i class="fas fa-rocket"></i>
+                    <div class="portfolio-info">
+                        <h3>שי בן חלילי טכנאי גז</h3>
+                        <span class="portfolio-category">שירותי גז</span>
+                        <p class="portfolio-description">אתר שירותי גז מקצועיים עם מידע מלא ויצירת קשר</p>
+                        <a href="https://shaygaz.com" target="_blank" class="portfolio-btn">
+                            <i class="fas fa-external-link-alt"></i>
+                            צפה באתר
+                        </a>
                     </div>
-                    <h3>SEO מובנה</h3>
-                    <p>האתרים שלנו מותאמים למנועי חיפוש כדי שהלקוחות שלך ימצאו אותך בקלות</p>
                 </div>
-                <div class="reason-card">
-                    <div class="reason-icon">
+            </div>
+
+            <div class="portfolio-cta">
+                <p>רוצים גם אתר מקצועי כזה?</p>
+                <a href="payment.html#calculator" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    צפה במחירים
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Overview Section -->
+    <section class="services-overview">
+        <div class="container">
+            <h2 class="section-title">השירותים שלנו</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>בניית אתרים</h3>
+                    <p>אתרי תדמית, דפי נחיתה ואתרים מלאים בעיצוב מותאם אישית</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>התאמה למובייל</h3>
+                    <p>כל האתרים מותאמים לצפייה מושלמת בכל מכשיר</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>קידום SEO</h3>
+                    <p>אופטימיזציה למנועי חיפוש כדי שימצאו אתכם בגוגל</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
                         <i class="fas fa-headset"></i>
                     </div>
                     <h3>תמיכה מלאה</h3>
-                    <p>אנחנו כאן בשבילך גם אחרי השקת האתר - תמיכה ועדכונים שוטפים</p>
-                </div>
-                <div class="reason-card">
-                    <div class="reason-icon">
-                        <i class="fas fa-dollar-sign"></i>
-                    </div>
-                    <h3>מחירים הוגנים</h3>
-                    <p>פתרונות איכותיים במחירים תחרותיים שמתאימים לכל תקציב</p>
+                    <p>ליווי מקצועי לאורך כל הדרך ותמיכה לאחר ההשקה</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Work Process Timeline Section -->
-    <section id="process" class="process-section">
-        <div class="video-background">
-            <video autoplay muted loop playsinline preload="auto">
-                <source src="WebNovaVideo5.mp4" type="video/mp4">
-            </video>
-        </div>
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
         <div class="container">
-            <h2 class="process-title">תהליך העבודה שלנו</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-icon">
-                        <i class="fas fa-phone-alt"></i>
+            <h2 class="section-title">מה הלקוחות אומרים</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
                     </div>
-                    <div class="timeline-content">
-                        <span class="timeline-step">שלב 1</span>
-                        <h3>פגישת היכרות טלפונית</h3>
-                        <p>נתחיל בשיחה קצרה להבנת הצרכים, החזון והמטרות שלך. נקשיב, נייעץ ונציע את הפתרון המתאים ביותר לעסק שלך.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-icon">
-                        <i class="fas fa-pencil-ruler"></i>
-                    </div>
-                    <div class="timeline-content">
-                        <span class="timeline-step">שלב 2</span>
-                        <h3>עיצוב האתר</h3>
-                        <p>נעצב עבורך אתר ייחודי ומותאם אישית שמשקף את המותג שלך. תקבל תצוגה מקדימה ונוכל לבצע שינויים עד שתהיה מרוצה ב-100%.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <div class="timeline-content">
-                        <span class="timeline-step">שלב 3</span>
-                        <h3>פיתוח האתר</h3>
-                        <p>נתחיל לבנות את האתר שלך עם הטכנולוגיות המתקדמות ביותר. האתר יהיה מהיר, מאובטח ומותאם למובייל באופן מושלם.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <div class="timeline-content">
-                        <span class="timeline-step">שלב 4</span>
-                        <h3>השקת האתר</h3>
-                        <p>האתר שלך עולה לאוויר! נדאג לכל הפרטים הטכניים, נעשה בדיקות מקיפות ונוודא שהכל עובד בצורה מושלמת לפני ההשקה.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="timeline-content">
-                        <span class="timeline-step">שלב 5</span>
-                        <h3>רק לכם נשאר לצמוח ולגדול!</h3>
-                        <p>עכשיו זה הזמן שלכם לזרוח! האתר החדש שלכם מוכן למשוך לקוחות חדשים ולהצמיח את העסק. אנחנו כאן לתמיכה מתמשכת.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats-section">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number">3+</div>
-                    <div class="stat-label">שנות ניסיון בקוד</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">ניסיון בפרויקטים מכל הסוגים</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">מענה מקצועי ולעניין בלבד</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Tech Stack Section -->
-    <section id="tech" class="tech-section">
-        <div class="container">
-            <h2 class="tech-title">הטכנולוגיות שאיתן אנחנו עובדים</h2>
-            <div class="code-showcase">
-                <div class="code-card">
-                    <div class="code-header">
-                        <div class="code-dot"></div>
-                        <div class="code-dot"></div>
-                        <div class="code-dot"></div>
-                        <span class="code-title">index.html</span>
-                    </div>
-                    <div class="code-body">
-<span class="code-comment">&lt;!-- HTML5 --&gt;</span>
-<span class="code-tag">&lt;div</span> <span class="code-attr">class</span>=<span class="code-string">"hero"</span><span class="code-tag">&gt;</span>
-  <span class="code-tag">&lt;h1&gt;</span>Welcome<span class="code-tag">&lt;/h1&gt;</span>
-  <span class="code-tag">&lt;p&gt;</span>Modern Web<span class="code-tag">&lt;/p&gt;</span>
-  <span class="code-tag">&lt;button</span> <span class="code-attr">id</span>=<span class="code-string">"cta"</span><span class="code-tag">&gt;</span>
-    Get Started
-  <span class="code-tag">&lt;/button&gt;</span>
-<span class="code-tag">&lt;/div&gt;</span>
-                    </div>
-                </div>
-
-                <div class="code-card">
-                    <div class="code-header">
-                        <div class="code-dot"></div>
-                        <div class="code-dot"></div>
-                        <div class="code-dot"></div>
-                        <span class="code-title">styles.css</span>
-                    </div>
-                    <div class="code-body">
-<span class="code-comment">/* CSS3 Styling */</span>
-<span class="code-tag">.hero</span> {
-  <span class="code-attr">display</span>: flex;
-  <span class="code-attr">background</span>: <span class="code-function">linear-gradient</span>(
-    <span class="code-string">135deg</span>, 
-    <span class="code-string">#667eea</span>, 
-    <span class="code-string">#764ba2</span>
-  );
-  <span class="code-attr">animation</span>: <span class="code-string">fadeIn 1s</span>;
-}
-                    </div>
-                </div>
-
-                <div class="code-card">
-                    <div class="code-header">
-                        <div class="code-dot"></div>
-                        <div class="code-dot"></div>
-                        <div class="code-dot"></div>
-                        <span class="code-title">script.js</span>
-                    </div>
-                    <div class="code-body">
-<span class="code-comment">// JavaScript ES6+</span>
-<span class="code-keyword">const</span> <span class="code-function">init</span> = <span class="code-keyword">async</span> () <span class="code-keyword">=&gt;</span> {
-  <span class="code-keyword">const</span> data = <span class="code-keyword">await</span> <span class="code-function">fetch</span>(<span class="code-string">'/api'</span>);
-  <span class="code-keyword">const</span> result = <span class="code-keyword">await</span> data.<span class="code-function">json</span>();
-  <span class="code-function">console</span>.<span class="code-function">log</span>(result);
-};
-
-<span class="code-function">init</span>();
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="payment" class="payment-section">
-        <div class="video-background">
-            <video autoplay muted loop playsinline preload="auto">
-                <source src="WebNovaVideo2.mp4" type="video/mp4">
-            </video>
-        </div>
-        <div class="container">
-            <h2 class="section-title">תשלום בביט</h2>
-            
-            <!-- Payment Security Badges -->
-            <div class="payment-security">
-                <div class="security-badge">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>תשלום מאובטח 100%</span>
-                </div>
-                <div class="security-badge">
-                    <i class="fas fa-lock"></i>
-                    <span>הצפנת SSL</span>
-                </div>
-            </div>
-            
-            <div class="payment-container">
-                <p style="margin-bottom: 15px; font-size: 18px;">סרוק את הברקוד לתשלום מהיר ובטוח</p>
-                <img src="MyBit.jpg" alt="תשלום בביט" loading="lazy">
-                
-                <!-- Payment info -->
-                <div class="payment-info">
-                    <div class="info-item">
-                        <i class="fas fa-check-circle"></i>
-                        <span>תשלום מיידי ומאובטח</span>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-mobile-alt"></i>
-                        <span>פשוט לסרוק ולשלם</span>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-receipt"></i>
-                        <span>קבלה אוטומטית</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Price Calculator Section -->
-    <section id="calculator" class="calculator-section">
-        <div class="video-background">
-            <video autoplay muted loop playsinline preload="auto">
-                <source src="WebNovaVideo4.mp4" type="video/mp4">
-            </video>
-        </div>
-        <div class="container">
-            <h2 class="section-title" style="color: white; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);">💰 בחר את החבילה המושלמת עבורך</h2>
-            <p class="section-subtitle">כל החבילות כוללות עיצוב מקצועי, קוד נקי ותמיכה מלאה</p>
-            
-            <!-- Pricing Comparison Table -->
-            <div class="pricing-table">
-                <!-- Basic Package -->
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <div class="pricing-icon">
-                            <i class="fas fa-file-alt"></i>
+                    <p class="testimonial-text">"שירות מעולה ומקצועי! האתר יצא מדהים והתהליך היה נעים ומהיר. ממליץ בחום!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
                         </div>
-                        <h3 class="pricing-title">דף נחיתה</h3>
-                        <p class="pricing-subtitle">מושלם לעסקים מתחילים/קטנים</p>
-                    </div>
-                    <div class="pricing-price">
-                        <span class="currency">₪</span>
-                        <span class="amount">500-1,000</span>
-                    </div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> דף יחיד מעוצב</li>
-                        <li><i class="fas fa-check"></i> עיצוב רספונסיבי</li>
-                        <li><i class="fas fa-check"></i> טופס יצירת קשר</li>
-                        <li><i class="fas fa-check"></i> אופטימיזציה בסיסית</li>
-                        <li><i class="fas fa-check"></i> אינטגרציה עם רשתות חברתיות</li>
-                        <li class="feature-disabled"><i class="fas fa-times"></i> אינטגרציות מתקדמות</li>
-                        <li class="feature-disabled"><i class="fas fa-times"></i> דפים נוספים</li>
-                        <li class="feature-disabled"><i class="fas fa-times"></i> פאנל ניהול</li>
-                    </ul>
-                    <button class="pricing-btn">בחר חבילה</button>
-                </div>
-
-                <!-- Popular Package -->
-                <div class="pricing-card popular">
-                    <div class="popular-badge">
-                        <i class="fas fa-star"></i> הכי פופולרי
-                    </div>
-                    <div class="pricing-header">
-                        <div class="pricing-icon">
-                            <i class="fas fa-layer-group"></i>
+                        <div class="author-info">
+                            <h4>לקוח מרוצה</h4>
+                            <span>בעל עסק</span>
                         </div>
-                        <h3 class="pricing-title">אתר אינטראקטיבי</h3>
-                        <p class="pricing-subtitle">המומלץ ביותר!</p>
                     </div>
-                    <div class="pricing-price">
-                        <span class="currency">₪</span>
-                        <span class="amount">1,000-2,500</span>
-                    </div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> עד 5 דפים</li>
-                        <li><i class="fas fa-check"></i> עיצוב מתקדם</li>
-                        <li><i class="fas fa-check"></i> אנימציות ואפקטים</li>
-                        <li><i class="fas fa-check"></i> SEO מתקדם</li>
-                        <li><i class="fas fa-check"></i> אינטגרציה עם רשתות</li>
-                        <li><i class="fas fa-check"></i> גלריית תמונות</li>
-                        <li><i class="fas fa-check"></i> טפסים מתקדמים</li>
-                        <li class="feature-disabled"><i class="fas fa-times"></i> פאנל ניהול מלא</li>
-                    </ul>
-                    <button class="pricing-btn popular-btn">בחר חבילה</button>
                 </div>
-
-                <!-- Premium Package -->
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <div class="pricing-icon">
-                            <i class="fas fa-rocket"></i>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"קיבלתי בדיוק את מה שרציתי ואפילו יותר. המחיר היה הוגן והתוצאה מרשימה."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
                         </div>
-                        <h3 class="pricing-title">אתר מלא</h3>
-                        <p class="pricing-subtitle">פתרון מקיף</p>
-                    </div>
-                    <div class="pricing-price">
-                        <span class="currency">₪</span>
-                        <span class="amount">2,500-5,000</span>
-                    </div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> דפים ללא הגבלה</li>
-                        <li><i class="fas fa-check"></i> עיצוב ייחודי לחלוטין</li>
-                        <li><i class="fas fa-check"></i> אנימציות ואפקטים ברמה מתקדמת</li>
-                        <li><i class="fas fa-check"></i> SEO מתקדם + ביצועים</li>
-                        <li><i class="fas fa-check"></i> כל האינטגרציות</li>
-                        <li><i class="fas fa-check"></i> גלריות ומדיה מתקדמת</li>
-                        <li><i class="fas fa-check"></i> אזור ניהול תוכן</li>
-                        <li><i class="fas fa-check"></i> פאנל ניהול מלא</li>
-                    </ul>
-                    <button class="pricing-btn">בחר חבילה</button>
-                </div>
-            </div>
-
-            <!-- Trust Badges -->
-            <div class="trust-badges">
-                <div class="trust-badge">
-                    <div class="badge-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div class="badge-content">
-                        <h4>תשלום מאובטח</h4>
-                        <p>כל התשלומים מוצפנים</p>
-                    </div>
-                </div>
-                <div class="trust-badge">
-                    <div class="badge-icon">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <div class="badge-content">
-                        <h4>SSL מאובטח</h4>
-                        <p>הגנה מלאה על המידע</p>
-                    </div>
-                </div>
-                <div class="trust-badge">
-                    <div class="badge-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <div class="badge-content">
-                        <h4>תמיכה 24/7</h4>
-                        <p>זמינים תמיד לעזרה</p>
-                    </div>
-                </div>
-                <div class="trust-badge">
-                    <div class="badge-icon">
-                        <i class="fas fa-undo-alt"></i>
-                    </div>
-                    <div class="badge-content">
-                        <h4>שביעות רצון מובטחת</h4>
-                        <p>נעבוד עד שתהיו מרוצים</p>
+                        <div class="author-info">
+                            <h4>לקוחה מרוצה</h4>
+                            <span>יזמית</span>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <p class="pricing-note">
-                <i class="fas fa-info-circle"></i>
-                המחיר הסופי ייקבע לאחר פגישת התאמה אישית. כל חבילה ניתנת להתאמה מלאה לפי הצרכים שלך.
-            </p>
-        </div>
-    </section>
-
-    <section id="contact" class="section">
-        <div class="video-background">
-            <video autoplay muted loop playsinline preload="auto">
-                <source src="WebNovaVideo3.mp4" type="video/mp4">
-            </video>
-        </div>
-        <div class="container">
-            <h2 class="section-title">צור קשר</h2>
-            <form class="contact-form" id="contactForm">
-                <!-- Progress Bar -->
-                <div class="form-progress">
-                    <div class="form-progress-bar" id="formProgressBar"></div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="fullName">שם מלא *</label>
-                    <div class="input-wrapper">
-                        <input type="text" id="fullName" name="fullName" required>
-                        <i class="fas fa-user input-icon"></i>
-                        <span class="input-validation"></span>
-                    </div>
-                    <span class="error-message" id="fullNameError"></span>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">אימייל *</label>
-                    <div class="input-wrapper">
-                        <input type="email" id="email" name="email" required>
-                        <i class="fas fa-envelope input-icon"></i>
-                        <span class="input-validation"></span>
-                    </div>
-                    <span class="error-message" id="emailError"></span>
-                </div>
-
-                <div class="form-group">
-                    <label for="phone">מספר טלפון *</label>
-                    <div class="input-wrapper">
-                        <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}">
-                        <i class="fas fa-phone input-icon"></i>
-                        <span class="input-validation"></span>
-                    </div>
-                    <span class="error-message" id="phoneError"></span>
-                </div>
-
-                <div class="form-group">
-                    <label for="businessType">סוג העסק *</label>
-                    <div class="input-wrapper">
-                        <select id="businessType" name="businessType" required>
-                            <option value="">בחר סוג עסק</option>
-                            <option value="מסעדה">מסעדה</option>
-                            <option value="חנות">חנות</option>
-                            <option value="שירותים מקצועיים">שירותים מקצועיים</option>
-                            <option value="עסק קטן">עסק קטן</option>
-                            <option value="תאגיד">תאגיד</option>
-                            <option value="אחר">אחר</option>
-                        </select>
-                        <i class="fas fa-building input-icon"></i>
-                        <span class="input-validation"></span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="message">פרטים נוספים</label>
-                    <div class="input-wrapper">
-                        <textarea id="message" name="message" placeholder="ספר לנו על הפרויקט שלך..."></textarea>
-                        <i class="fas fa-comment-dots input-icon"></i>
-                    </div>
-                </div>
-
-                <button type="submit" class="submit-btn ripple-btn">
-                    <span class="btn-text">שלח פנייה</span>
-                    <span class="btn-loading" style="display: none;">
-                        <i class="fas fa-spinner fa-spin"></i> שולח...
-                    </span>
-                </button>
-                
-                <div class="success-message" id="successMessage">
-                    <i class="fas fa-check-circle"></i>
-                    תודה! הפרטים נשלחו בהצלחה. ניצור איתך קשר בהקדם!
-                </div>
-            </form>
         </div>
     </section>
 
@@ -1012,10 +706,6 @@
             </div>
         </div>
     </div>
-
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script alse" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script src="script.js"></script>
-</body>
 
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="script.js"></script>
