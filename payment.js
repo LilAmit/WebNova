@@ -267,76 +267,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Accessibility functionality
-const accessibilityBtn = document.getElementById('accessibilityBtn');
-const accessibilityMenu = document.getElementById('accessibilityMenu');
-let activeAccessibilityOptions = new Set();
-
-accessibilityBtn.addEventListener('click', () => {
-    accessibilityMenu.classList.toggle('show');
-});
-
-document.addEventListener('click', (e) => {
-    if (!accessibilityBtn.contains(e.target) && !accessibilityMenu.contains(e.target)) {
-        accessibilityMenu.classList.remove('show');
-    }
-});
-
-document.querySelectorAll('.accessibility-option').forEach(option => {
-    option.addEventListener('click', function() {
-        const action = this.getAttribute('data-action');
-
-        if (action === 'reset') {
-            document.body.classList.remove('high-contrast', 'large-text', 'larger-text', 'grayscale', 'invert-colors', 'highlight-links');
-            document.querySelectorAll('.accessibility-option').forEach(opt => {
-                opt.classList.remove('active');
-            });
-            activeAccessibilityOptions.clear();
-            localStorage.removeItem('accessibility-options');
-        } else {
-            if (action === 'large-text' || action === 'larger-text') {
-                document.body.classList.remove('large-text', 'larger-text');
-                document.querySelectorAll('[data-action="large-text"], [data-action="larger-text"]').forEach(opt => {
-                    opt.classList.remove('active');
-                });
-                activeAccessibilityOptions.delete('large-text');
-                activeAccessibilityOptions.delete('larger-text');
-            }
-
-            const className = action;
-            if (document.body.classList.contains(className)) {
-                document.body.classList.remove(className);
-                this.classList.remove('active');
-                activeAccessibilityOptions.delete(action);
-            } else {
-                document.body.classList.add(className);
-                this.classList.add('active');
-                activeAccessibilityOptions.add(action);
-            }
-
-            localStorage.setItem('accessibility-options', JSON.stringify([...activeAccessibilityOptions]));
-        }
-    });
-});
-
-// Load saved accessibility options
-const savedOptions = localStorage.getItem('accessibility-options');
-if (savedOptions) {
-    try {
-        const options = JSON.parse(savedOptions);
-        options.forEach(option => {
-            document.body.classList.add(option);
-            const optionBtn = document.querySelector(`[data-action="${option}"]`);
-            if (optionBtn) {
-                optionBtn.classList.add('active');
-                activeAccessibilityOptions.add(option);
-            }
-        });
-    } catch (e) {
-        console.error('Error loading accessibility options:', e);
-    }
-}
-
 // Chatbot
 const chatbotBtn = document.getElementById('chatbotBtn');
 const chatbotWindow = document.getElementById('chatbotWindow');
@@ -369,9 +299,23 @@ document.addEventListener('click', (e) => {
 
 // Chatbot responses
 const responses = {
-    'כמה זמן לוקח לבנות אתר?': 'בדרך כלל לוקח בין שבועיים לחודש, תלוי במורכבות האתר. דף נחיתה פשוט יכול להיות מוכן תוך שבוע!',
-    'כמה עולה לבנות אתר?': `המחירים שלנו:\n\n💼 דף נחיתה: ₪500-1,000\nמושלם לעסקים קטנים ודפי נחיתה פשוטים\n\n🌐 אתר אינטראקטיבי (הכי פופולרי!): ₪1,000-2,500\nעד 5 דפים עם עיצוב מתקדם ואנימציות\n\n🚀 אתר מלא: ₪2,500-5,000\nדפים ללא הגבלה, עיצוב ייחודי ופאנל ניהול\n\nהמחיר הסופי נקבע לפי הצרכים המדויקים שלך!`,
-    'איך זה עובד?': 'תהליך העבודה שלנו כולל 5 שלבים:\n\n📞 פגישת היכרות טלפונית\n🎨 עיצוב האתר\n💻 פיתוח האתר\n🚀 השקת האתר\n📈 רק לכם נשאר לצמוח ולגדול!\n\nכל שלב מתוכנן בקפידה כדי להבטיח את הצלחת הפרויקט שלכם!'
+    'כמה זמן לוקח לבנות אתר?': '⏱️ זמני הפיתוח שלנו:\n\n• דף נחיתה: 3-7 ימים\n• אתר תדמית: 1-2 שבועות\n• אתר מלא: 2-4 שבועות\n\nאנחנו עובדים מהר אבל לא מתפשרים על איכות! 💪',
+    'כמה עולה לבנות אתר?': '💰 המחירים שלנו:\n\n💼 דף נחיתה: ₪500-1,000\nמושלם להשקות, קמפיינים ועסקים קטנים\n\n🌐 אתר תדמית: ₪1,000-2,500\nעד 5 דפים + עיצוב מתקדם + אנימציות\n\n🚀 אתר מלא: ₪2,500-5,000\nדפים ללא הגבלה + עיצוב ייחודי + פאנל ניהול\n\n✨ כל החבילות כוללות: עיצוב רספונסיבי, SEO בסיסי, ותמיכה טכנית!',
+    'איך זה עובד?': '🔄 תהליך העבודה ב-5 שלבים:\n\n1️⃣ פגישת היכרות - נבין את הצרכים שלך\n2️⃣ עיצוב - תקבל הצעה ויזואלית לאישור\n3️⃣ פיתוח - נבנה את האתר שלך\n4️⃣ בדיקות - נוודא שהכל עובד מושלם\n5️⃣ השקה - האתר עולה לאוויר! 🎉\n\nלאורך כל התהליך תקבל עדכונים ותוכל לראות את ההתקדמות.'
+};
+
+// Keywords for intelligent responses
+const keywordResponses = {
+    'מחיר|עלות|כסף|תקציב|עולה|כמה': responses['כמה עולה לבנות אתר?'],
+    'זמן|מהר|דחוף|לוקח|מתי': responses['כמה זמן לוקח לבנות אתר?'],
+    'עובד|תהליך|שלבים|איך': responses['איך זה עובד?'],
+    'וורדפרס|wordpress|קוד|טכנולוגיה': '💻 אנחנו עובדים עם טכנולוגיות מתקדמות:\n\n• HTML5/CSS3/JavaScript לביצועים מעולים\n• עיצוב רספונסיבי לכל מכשיר\n• אופטימיזציה למהירות טעינה\n• אבטחה ברמה גבוהה\n\nהאתר שלך יהיה מהיר, מאובטח ומודרני!',
+    'עיצוב|דיזיין|יפה|צבעים|לוגו': '🎨 העיצוב שלנו כולל:\n\n• עיצוב מותאם אישית לעסק שלך\n• צבעים ופונטים מקצועיים\n• אנימציות מרשימות\n• חוויית משתמש מעולה\n\nכל אתר מעוצב מאפס - לא תבניות משעממות!',
+    'תמיכה|עזרה|בעיה|תקלה|שאלה': '🛠️ התמיכה שלנו:\n\n• תמיכה טכנית מלאה\n• זמינות גבוהה\n• תיקון באגים מהיר\n• עדכונים שוטפים\n\nאנחנו כאן בשבילך גם אחרי ההשקה!',
+    'seo|קידום|גוגל|חיפוש': '📈 קידום אתרים (SEO):\n\n• אופטימיזציה למנועי חיפוש\n• מהירות טעינה גבוהה\n• תגיות מטא נכונות\n• מבנה אתר ידידותי לגוגל\n\nהאתר שלך יופיע בתוצאות החיפוש!',
+    'טלפון|ליצור קשר|לדבר|להתקשר': '📞 דרכי יצירת קשר:\n\n• טלפון: 058-454-9087\n• אימייל: contact@webnova.co.il\n• וואטסאפ: לחץ על הכפתור הירוק\n\nנשמח לשמוע ממך!',
+    'שלום|היי|הי|בוקר|ערב': '👋 שלום! נעים להכיר!\n\nאני הבוט של WebNova ואני כאן לעזור לך.\nאתה יכול לשאול אותי על מחירים, זמנים, או כל שאלה אחרת.\n\nאיך אוכל לעזור לך היום?',
+    'תודה|מעולה|אחלה|סבבה': '😊 בשמחה! אם יש עוד שאלות, אני כאן.\n\nרוצה לקבל הצעת מחיר? פשוט לחץ על הכפתור למטה!'
 };
 
 const chatFormContainer = document.getElementById('chatFormContainer');
@@ -448,6 +392,65 @@ chatBackBtn.addEventListener('click', () => {
     chatFormContainer.style.display = 'none';
     chatOptions.style.display = 'block';
 });
+
+// Handle free text input
+const chatTextInput = document.getElementById('chatTextInput');
+const chatSendBtn = document.getElementById('chatSendBtn');
+
+function getSmartResponse(message) {
+    const lowerMessage = message.toLowerCase();
+
+    // Check keyword patterns
+    for (const [pattern, response] of Object.entries(keywordResponses)) {
+        const keywords = pattern.split('|');
+        for (const keyword of keywords) {
+            if (lowerMessage.includes(keyword)) {
+                return response;
+            }
+        }
+    }
+
+    // Default response if no keywords match
+    return '🤔 תודה על השאלה!\n\nלא הצלחתי להבין בדיוק מה אתה מחפש, אבל אשמח לעזור!\n\nתוכל:\n• לבחור מהאפשרויות למעלה\n• ליצור קשר ישירות: 058-454-9087\n• להשאיר פרטים ונחזור אליך\n\nמה תעדיף?';
+}
+
+function sendChatMessage() {
+    if (!chatTextInput || !chatbotMessages) return;
+
+    const message = chatTextInput.value.trim();
+    if (!message) return;
+
+    // Add user message
+    const userMsg = document.createElement('div');
+    userMsg.className = 'chat-message user';
+    userMsg.innerHTML = `<div class="message-bubble">${message}</div>`;
+    chatbotMessages.appendChild(userMsg);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+
+    // Clear input
+    chatTextInput.value = '';
+
+    // Get and show bot response
+    setTimeout(() => {
+        const response = getSmartResponse(message);
+        const botMsg = document.createElement('div');
+        botMsg.className = 'chat-message bot';
+        botMsg.innerHTML = `<div class="message-bubble">${response.replace(/\n/g, '<br>')}</div>`;
+        chatbotMessages.appendChild(botMsg);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    }, 600);
+}
+
+if (chatTextInput && chatSendBtn) {
+    chatSendBtn.addEventListener('click', sendChatMessage);
+
+    chatTextInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            sendChatMessage();
+        }
+    });
+}
 
 // Counter Animation for pricing
 function animateCounters() {
