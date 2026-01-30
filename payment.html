@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+
+    <!-- Primary Meta Tags -->
+    <title>תשלום ומחירון - WebNova | ווב נובה</title>
+    <meta name="title" content="תשלום ומחירון - WebNova | ווב נובה">
+    <meta name="description" content="דף תשלום ומחירון שירותי בניית אתרים של WebNova. תשלום מאובטח בביט, חבילות מחירים מ-500 ש״ח.">
+    <meta name="keywords" content="תשלום, מחירון, בניית אתרים, WebNova, ווב נובה, ביט">
+    <meta name="author" content="WebNova - ווב נובה">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Hebrew">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.webnova.co.il/payment.html">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="WebNovaLogo.jpg">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="payment.css">
+</head>
+<body>
+    <!-- Professional Loading Screen -->
+    <div class="loading-screen-overlay" id="loadingScreen">
+        <div class="loading-content">
+            <!-- Animated Logo -->
+            <div class="loading-logo-container">
+                <div class="loading-circle"></div>
+                <div class="loading-circle-inner"></div>
+                <div class="loading-logo-text">WebNova</div>
+            </div>
+
+            <!-- Loading Text -->
+            <div class="loading-text-container">
+                <h2 class="loading-title">טוען את האתר שלך...</h2>
+                <p class="loading-subtitle" id="loadingSubtitle">מכין את החוויה המושלמת</p>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="loading-progress-container">
+                <div class="loading-progress-bar" id="loadingProgress"></div>
+                <div class="loading-percentage" id="loadingPercentage">0%</div>
+            </div>
+
+            <!-- Loading Steps -->
+            <div class="loading-steps">
+                <div class="loading-step" id="step1">
+                    <i class="fas fa-check-circle"></i>
+                    <span>טוען משאבים...</span>
+                </div>
+                <div class="loading-step" id="step2">
+                    <i class="fas fa-circle"></i>
+                    <span>טוען עיצובים...</span>
+                </div>
+                <div class="loading-step" id="step3">
+                    <i class="fas fa-circle"></i>
+                    <span>מכין את האתר...</span>
+                </div>
+            </div>
+
+            <!-- Animated Particles -->
+            <div class="loading-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Floating Shapes -->
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <!-- Floating 3D Elements -->
+    <div class="floating-3d-elements">
+        <div class="floating-cube">
+            <div class="cube-face front"></div>
+            <div class="cube-face back"></div>
+            <div class="cube-face right"></div>
+            <div class="cube-face left"></div>
+            <div class="cube-face top"></div>
+            <div class="cube-face bottom"></div>
+        </div>
+        <div class="floating-sphere"></div>
+        <div class="floating-ring"></div>
+    </div>
+
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="WebNovaLogo.jpg" alt="WebNova Logo" loading="lazy">
+                    <span class="logo-text">WebNova</span>
+                </a>
+
+                <nav>
+                    <ul class="nav-menu" id="navMenu">
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link">בית</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="how-it-works.html" class="nav-link">איך זה עובד?</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="payment.html" class="nav-link active">תשלום</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="contact.html" class="nav-link">צור קשר</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="payment-hero">
+        <div class="hero-particles" id="heroParticles"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="payment-main-title">תשלום ומחירון</h1>
+                <p class="hero-subtitle">בחר את החבילה המושלמת עבורך ושלם בקלות ובביטחון</p>
+                <div class="hero-badges">
+                    <span class="hero-badge"><i class="fas fa-shield-alt"></i> תשלום מאובטח</span>
+                    <span class="hero-badge"><i class="fas fa-bolt"></i> מהיר ופשוט</span>
+                    <span class="hero-badge"><i class="fas fa-heart"></i> שירות אישי</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-wave">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <path d="M0,64 C480,150 960,-20 1440,64 L1440,120 L0,120 Z" fill="white"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Price Calculator Section -->
+    <section id="calculator" class="calculator-section">
+        <div class="tech-animated-bg">
+            <div class="tech-grid"></div>
+            <div class="floating-particles">
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="container">
+            <h2 class="section-title animated-title" style="color: white; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);">
+                <span class="title-icon"><i class="fas fa-coins"></i></span>
+                בחר את החבילה המושלמת עבורך
+            </h2>
+            <p class="section-subtitle">כל החבילות כוללות עיצוב מקצועי, קוד נקי ותמיכה מלאה</p>
+
+            <!-- Pricing Comparison Table -->
+            <div class="pricing-table">
+                <!-- Basic Package -->
+                <div class="pricing-card" >
+                    <div class="card-glow"></div>
+                    <div class="pricing-header">
+                        <div class="pricing-icon pulse-animation">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="pricing-title">דף נחיתה</h3>
+                        <p class="pricing-subtitle">מושלם לעסקים מתחילים/קטנים</p>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="currency">₪</span>
+                        <span class="amount counter" data-target="500">500</span>
+                        <span class="amount-separator">-</span>
+                        <span class="amount counter" data-target="1000">1,000</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li class="feature-item"><i class="fas fa-check"></i> דף יחיד מעוצב</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> עיצוב רספונסיבי</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> טופס יצירת קשר</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> אופטימיזציה בסיסית</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> אינטגרציה עם רשתות חברתיות</li>
+                        <li class="feature-disabled"><i class="fas fa-times"></i> אינטגרציות מתקדמות</li>
+                        <li class="feature-disabled"><i class="fas fa-times"></i> דפים נוספים</li>
+                        <li class="feature-disabled"><i class="fas fa-times"></i> פאנל ניהול</li>
+                    </ul>
+                    <button class="pricing-btn magnetic-btn">
+                        <span>בחר חבילה</span>
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                </div>
+
+                <!-- Popular Package -->
+                <div class="pricing-card popular" >
+                    <div class="card-glow popular-glow"></div>
+                    <div class="popular-badge">
+                        <i class="fas fa-star"></i> הכי פופולרי
+                    </div>
+                    <div class="pricing-header">
+                        <div class="pricing-icon pulse-animation">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <h3 class="pricing-title">אתר אינטראקטיבי</h3>
+                        <p class="pricing-subtitle">המומלץ ביותר!</p>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="currency">₪</span>
+                        <span class="amount counter" data-target="1000">1,000</span>
+                        <span class="amount-separator">-</span>
+                        <span class="amount counter" data-target="2500">2,500</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li class="feature-item"><i class="fas fa-check"></i> עד 5 דפים</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> עיצוב מתקדם</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> אנימציות ואפקטים</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> SEO מתקדם</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> אינטגרציה עם רשתות</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> גלריית תמונות</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> טפסים מתקדמים</li>
+                        <li class="feature-disabled"><i class="fas fa-times"></i> פאנל ניהול מלא</li>
+                    </ul>
+                    <button class="pricing-btn popular-btn magnetic-btn">
+                        <span>בחר חבילה</span>
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                </div>
+
+                <!-- Premium Package -->
+                <div class="pricing-card" >
+                    <div class="card-glow"></div>
+                    <div class="pricing-header">
+                        <div class="pricing-icon pulse-animation">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="pricing-title">אתר מלא</h3>
+                        <p class="pricing-subtitle">פתרון מקיף</p>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="currency">₪</span>
+                        <span class="amount counter" data-target="2500">2,500</span>
+                        <span class="amount-separator">-</span>
+                        <span class="amount counter" data-target="5000">5,000</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li class="feature-item"><i class="fas fa-check"></i> דפים ללא הגבלה</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> עיצוב ייחודי לחלוטין</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> אנימציות ואפקטים ברמה מתקדמת</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> SEO מתקדם + ביצועים</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> כל האינטגרציות</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> גלריות ומדיה מתקדמת</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> אזור ניהול תוכן</li>
+                        <li class="feature-item"><i class="fas fa-check"></i> פאנל ניהול מלא</li>
+                    </ul>
+                    <button class="pricing-btn magnetic-btn">
+                        <span>בחר חבילה</span>
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="trust-badges">
+                <div class="trust-badge" data-aos="fade-up">
+                    <div class="badge-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="badge-content">
+                        <h4>תשלום מאובטח</h4>
+                        <p>כל התשלומים מוצפנים</p>
+                    </div>
+                </div>
+                <div class="trust-badge" data-aos="fade-up" data-aos-delay="100">
+                    <div class="badge-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="badge-content">
+                        <h4>SSL מאובטח</h4>
+                        <p>הגנה מלאה על המידע</p>
+                    </div>
+                </div>
+                <div class="trust-badge" data-aos="fade-up" data-aos-delay="200">
+                    <div class="badge-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="badge-content">
+                        <h4>תמיכה 24/7</h4>
+                        <p>זמינים תמיד לעזרה</p>
+                    </div>
+                </div>
+                <div class="trust-badge" data-aos="fade-up" data-aos-delay="300">
+                    <div class="badge-icon">
+                        <i class="fas fa-undo-alt"></i>
+                    </div>
+                    <div class="badge-content">
+                        <h4>שביעות רצון מובטחת</h4>
+                        <p>נעבוד עד שתהיו מרוצים</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="pricing-note">
+                <i class="fas fa-info-circle"></i>
+                המחיר הסופי ייקבע לאחר פגישת התאמה אישית. כל חבילה ניתנת להתאמה מלאה לפי הצרכים שלך.
+            </p>
+        </div>
+    </section>
+
+    <!-- Payment Section -->
+    <section id="payment" class="payment-section">
+        <div class="tech-animated-bg">
+            <div class="tech-grid"></div>
+            <div class="floating-particles">
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="container">
+            <h2 class="section-title animated-title">
+                <span class="title-icon"><i class="fas fa-credit-card"></i></span>
+                תשלום בביט
+            </h2>
+
+            <!-- Payment Security Badges -->
+            <div class="payment-security">
+                <div class="security-badge glow-effect">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>תשלום מאובטח 100%</span>
+                </div>
+                <div class="security-badge glow-effect">
+                    <i class="fas fa-lock"></i>
+                    <span>הצפנת SSL</span>
+                </div>
+            </div>
+
+            <div class="payment-container">
+                <div class="payment-card-3d">
+                    <p style="margin-bottom: 15px; font-size: 18px;">סרוק את הברקוד לתשלום מהיר ובטוח</p>
+                    <img src="MyBit.jpg" alt="תשלום בביט" loading="lazy" class="qr-image">
+
+                    <!-- Payment info -->
+                    <div class="payment-info">
+                        <div class="info-item hover-lift">
+                            <i class="fas fa-check-circle"></i>
+                            <span>תשלום מיידי ומאובטח</span>
+                        </div>
+                        <div class="info-item hover-lift">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>פשוט לסרוק ולשלם</span>
+                        </div>
+                        <div class="info-item hover-lift">
+                            <i class="fas fa-receipt"></i>
+                            <span>קבלה אוטומטית</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>יש לכם שאלות?</h2>
+                <p>אנחנו כאן לעזור - דברו איתנו ונתאים לכם את החבילה המושלמת</p>
+                <div class="cta-buttons">
+                    <a href="#calculator" class="cta-btn primary">
+                        <i class="fas fa-tags"></i>
+                        צפה במחירים
+                    </a>
+                    <a href="contact.html" class="cta-btn secondary">
+                        <i class="fas fa-envelope"></i>
+                        צור קשר!
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p><strong>WebNova</strong> - בניית אתרים מקצועית</p>
+            <p>📞 טלפון: 0584549087 | ✉️ אימייל: info@webnova.co.il</p>
+            <p>WebNova © 2026 | כל הזכויות שמורות</p>
+        </div>
+    </footer>
+
+    <div class="scroll-to-top" id="scrollToTop">↑</div>
+    <a href="https://wa.me/972584549087" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.737 5.607 2.137 8.048l-2.137 7.952 7.933-2.127c2.42 1.37 5.173 2.127 8.067 2.127 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.467c-2.482 0-4.908-0.646-7.07-1.87l-0.507-0.292-5.247 1.407 1.407-5.235-0.321-0.532c-1.346-2.22-2.063-4.757-2.063-7.413 0-7.72 6.28-14 14-14s14 6.28 14 14-6.28 14-14 14zM23.108 19.725c-0.413-0.213-2.44-1.203-2.817-1.34-0.377-0.14-0.651-0.213-0.927 0.213s-1.067 1.34-1.307 1.616-0.483 0.32-0.897 0.107c-2.007-1.003-3.327-1.79-4.65-4.057-0.35-0.6 0.35-0.557 1.003-1.853 0.107-0.273 0.053-0.507-0.027-0.713-0.08-0.213-0.927-2.227-1.267-3.053-0.333-0.803-0.673-0.693-0.927-0.707-0.24-0.013-0.513-0.013-0.787-0.013s-0.72 0.107-1.097 0.533c-0.377 0.427-1.443 1.41-1.443 3.437s1.477 3.99 1.683 4.263c0.207 0.273 2.913 4.447 7.053 6.233 2.601 1.123 3.62 1.21 4.917 1.020 0.787-0.12 2.44-0.997 2.787-1.96s0.347-1.787 0.24-1.96c-0.093-0.187-0.36-0.293-0.773-0.507z"/>
+        </svg>
+    </a>
+
+    <!-- Accessibility Button -->
+    <button class="accessibility-button" id="accessibilityBtn" aria-label="הנגשה">
+        ♿
+    </button>
+
+    <!-- Accessibility Menu -->
+    <div class="accessibility-menu" id="accessibilityMenu">
+        <h3>תפריט הנגשה</h3>
+        <button class="accessibility-option" data-action="contrast">ניגודיות גבוהה</button>
+        <button class="accessibility-option" data-action="large-text">הגדל טקסט</button>
+        <button class="accessibility-option" data-action="larger-text">הגדל טקסט מאוד</button>
+        <button class="accessibility-option" data-action="grayscale">גווני אפור</button>
+        <button class="accessibility-option" data-action="invert">היפוך צבעים</button>
+        <button class="accessibility-option" data-action="highlight-links">הדגש קישורים</button>
+        <button class="accessibility-option" data-action="reset">אפס הנגשה</button>
+    </div>
+
+    <!-- Chatbot Button -->
+    <button class="chatbot-button" id="chatbotBtn" aria-label="צ'אט">
+        💬
+    </button>
+
+    <!-- Chatbot Window -->
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+            <h3>👋 שלום! איך אפשר לעזור?</h3>
+            <button class="chatbot-close" id="chatbotClose">✕</button>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="chat-message bot">
+                <div class="message-bubble">היי! אני כאן לעזור לך. במה אתה מעוניין?</div>
+            </div>
+        </div>
+        <div class="chat-options" id="chatOptions">
+            <button class="chat-option-btn" data-response="כמה זמן לוקח לבנות אתר?">כמה זמן לוקח לבנות אתר?</button>
+            <button class="chat-option-btn" data-response="כמה עולה לבנות אתר?">כמה עולה לבנות אתר?</button>
+            <button class="chat-option-btn" data-response="איך זה עובד?">איך זה עובד?</button>
+            <button class="chat-option-btn" data-response="אני רוצה לקבל הצעת מחיר" data-action="show-form">אני רוצה לקבל הצעת מחיר</button>
+        </div>
+
+        <!-- Chatbot Contact Form -->
+        <div class="chat-form-container" id="chatFormContainer" style="display: none;">
+            <div class="chat-form">
+                <h4>מלא את הפרטים ונחזור אליך בהקדם!</h4>
+                <form id="chatContactForm">
+                    <input type="text" name="fullName" placeholder="שם מלא *" required>
+                    <input type="email" name="email" placeholder="אימייל *" required>
+                    <input type="tel" name="phone" placeholder="טלפון *" required>
+                    <textarea name="message" placeholder="ספר לנו על הפרויקט..."></textarea>
+                    <button type="submit" class="chat-submit-btn">שלח פנייה 🚀</button>
+                    <button type="button" class="chat-back-btn" id="chatBackBtn">חזרה</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="payment.js"></script>
+</body>
+</html>
