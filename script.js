@@ -222,9 +222,9 @@ if (paymentContainer) {
     observer.observe(paymentContainer);
 }
 
-const contactForm = document.querySelector('.contact-form');
-if (contactForm) {
-    observer.observe(contactForm);
+const contactFormElement = document.querySelector('.contact-form');
+if (contactFormElement) {
+    observer.observe(contactFormElement);
 }
 
 // Scroll to top button with progress
@@ -253,7 +253,9 @@ scrollToTopBtn.addEventListener('click', () => {
 });
 
 // Form submission
-document.getElementById('contactForm').addEventListener('submit', function(e) {
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+contactForm.addEventListener('submit', function(e) {
     e.preventDefault();
     
     const submitBtn = document.querySelector('.submit-btn');
@@ -292,9 +294,11 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
             submitBtn.disabled = false;
         });
 });
+}
 
 // Real-time Form Validation
 const formInputs = document.querySelectorAll('#contactForm input[required], #contactForm select[required]');
+if (formInputs.length > 0) {
 
 formInputs.forEach(input => {
     input.addEventListener('input', function() {
@@ -374,15 +378,19 @@ function validateField(field) {
 function updateFormProgress() {
     const totalFields = formInputs.length;
     let filledFields = 0;
-    
+
     formInputs.forEach(input => {
         if (input.value.trim() && input.classList.contains('valid')) {
             filledFields++;
         }
     });
-    
+
     const progress = (filledFields / totalFields) * 100;
-    document.getElementById('formProgressBar').style.width = progress + '%';
+    const progressBar = document.getElementById('formProgressBar');
+    if (progressBar) {
+        progressBar.style.width = progress + '%';
+    }
+}
 }
 
 // Pricing buttons - scroll to contact form
@@ -400,22 +408,29 @@ document.querySelectorAll('.pricing-btn').forEach(btn => {
             ripple.remove();
         }, 600);
         
-        // Scroll to contact form
-        const contactForm = document.getElementById('contact');
-        contactForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        
-        // Pre-fill message with package selection
-        setTimeout(() => {
-            const messageField = document.getElementById('message');
-            messageField.value = `שלום, אני מעוניין/ת בחבילת "${packageName}". אשמח לקבל פרטים נוספים.`;
-            messageField.focus();
-            
-            // Add highlight animation
-            messageField.style.animation = 'fieldHighlight 1s ease';
+        // Redirect to contact page with package info
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+            contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // Pre-fill message with package selection
             setTimeout(() => {
-                messageField.style.animation = '';
-            }, 1000);
-        }, 800);
+                const messageField = document.getElementById('message');
+                if (messageField) {
+                    messageField.value = `שלום, אני מעוניין/ת בחבילת "${packageName}". אשמח לקבל פרטים נוספים.`;
+                    messageField.focus();
+
+                    // Add highlight animation
+                    messageField.style.animation = 'fieldHighlight 1s ease';
+                    setTimeout(() => {
+                        messageField.style.animation = '';
+                    }, 1000);
+                }
+            }, 800);
+        } else {
+            // Redirect to contact page
+            window.location.href = `contact.html?package=${encodeURIComponent(packageName)}`;
+        }
     });
 });
 
@@ -528,28 +543,30 @@ const chatOptions = document.getElementById('chatOptions');
 
 let chatbotShown = false;
 
-// Show chatbot after 10 seconds
-setTimeout(() => {
-    if (!chatbotShown) {
-        chatbotBtn.style.animation = 'pulse 1s ease 3';
-    }
-}, 10000);
+if (chatbotBtn && chatbotWindow && chatbotClose) {
+    // Show chatbot after 10 seconds
+    setTimeout(() => {
+        if (!chatbotShown && chatbotBtn) {
+            chatbotBtn.style.animation = 'pulse 1s ease 3';
+        }
+    }, 10000);
 
-chatbotBtn.addEventListener('click', () => {
-    chatbotWindow.classList.toggle('show');
-    chatbotShown = true;
-});
+    chatbotBtn.addEventListener('click', () => {
+        chatbotWindow.classList.toggle('show');
+        chatbotShown = true;
+    });
 
-chatbotClose.addEventListener('click', () => {
-    chatbotWindow.classList.remove('show');
-});
-
-// Close chatbot when clicking outside
-document.addEventListener('click', (e) => {
-    if (!chatbotBtn.contains(e.target) && !chatbotWindow.contains(e.target)) {
+    chatbotClose.addEventListener('click', () => {
         chatbotWindow.classList.remove('show');
-    }
-});
+    });
+
+    // Close chatbot when clicking outside
+    document.addEventListener('click', (e) => {
+        if (chatbotBtn && chatbotWindow && !chatbotBtn.contains(e.target) && !chatbotWindow.contains(e.target)) {
+            chatbotWindow.classList.remove('show');
+        }
+    });
+}
 
 // Chatbot responses
 const responses = {
@@ -562,6 +579,7 @@ const chatFormContainer = document.getElementById('chatFormContainer');
 const chatContactForm = document.getElementById('chatContactForm');
 const chatBackBtn = document.getElementById('chatBackBtn');
 
+if (chatbotMessages && chatOptions) {
 document.querySelectorAll('.chat-option-btn').forEach(btn => {
     btn.addEventListener('click', function() {
         const question = this.dataset.response;
@@ -602,8 +620,10 @@ document.querySelectorAll('.chat-option-btn').forEach(btn => {
         chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
     });
 });
+}
 
 // Handle chat form submission
+if (chatContactForm) {
 chatContactForm.addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -633,9 +653,209 @@ chatContactForm.addEventListener('submit', function(e) {
             submitBtn.disabled = false;
         });
 });
+}
 
 // Handle back button
+if (chatBackBtn && chatFormContainer && chatOptions) {
 chatBackBtn.addEventListener('click', () => {
     chatFormContainer.style.display = 'none';
     chatOptions.style.display = 'block';
+});
+}
+
+// ========================================
+// Enhanced Graphics and Effects
+// ========================================
+
+// Scroll Progress Bar
+const scrollProgressBar = document.getElementById('scrollProgressBar');
+if (scrollProgressBar) {
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollPercent = (scrollTop / scrollHeight) * 100;
+        scrollProgressBar.style.width = scrollPercent + '%';
+    });
+}
+
+// Mouse tracking for reason cards (radial gradient spotlight effect)
+document.querySelectorAll('.reason-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty('--mouse-x', x + '%');
+        card.style.setProperty('--mouse-y', y + '%');
+    });
+});
+
+// Smooth reveal animation for elements as they scroll into view
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+        }
+    });
+}, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+});
+
+// Observe elements for reveal animation
+document.querySelectorAll('.trust-badge, .info-item, .payment-method').forEach(el => {
+    revealObserver.observe(el);
+});
+
+// Add shimmer effect to section titles on scroll
+const titleObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('shimmer');
+            setTimeout(() => {
+                entry.target.classList.remove('shimmer');
+            }, 2000);
+        }
+    });
+}, {
+    threshold: 0.5
+});
+
+document.querySelectorAll('.section-title, .process-title, .tech-title').forEach(title => {
+    titleObserver.observe(title);
+});
+
+// Tilt effect for pricing cards (3D hover)
+document.querySelectorAll('.pricing-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+    });
+});
+
+// Counter animation for stat numbers
+const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const statNumber = entry.target.querySelector('.stat-number');
+            if (statNumber && !statNumber.classList.contains('counted')) {
+                statNumber.classList.add('counted');
+                animateCounter(statNumber);
+            }
+        }
+    });
+}, {
+    threshold: 0.5
+});
+
+document.querySelectorAll('.stat-item').forEach(stat => {
+    counterObserver.observe(stat);
+});
+
+function animateCounter(element) {
+    const text = element.textContent;
+    const hasPlus = text.includes('+');
+    const hasPercent = text.includes('%');
+    const hasSlash = text.includes('/');
+
+    // Handle special cases like "24/7"
+    if (hasSlash) {
+        return; // Don't animate 24/7
+    }
+
+    const numericValue = parseInt(text.replace(/[^0-9]/g, ''));
+    const duration = 2000;
+    const steps = 60;
+    const increment = numericValue / steps;
+    let current = 0;
+    let step = 0;
+
+    const timer = setInterval(() => {
+        step++;
+        current = Math.min(Math.round(increment * step), numericValue);
+
+        let displayValue = current.toString();
+        if (hasPlus) displayValue += '+';
+        if (hasPercent) displayValue += '%';
+
+        element.textContent = displayValue;
+
+        if (step >= steps) {
+            clearInterval(timer);
+            // Restore original text
+            element.textContent = text;
+        }
+    }, duration / steps);
+}
+
+// Parallax effect for floating shapes
+const shapes = document.querySelectorAll('.shape');
+let ticking = false;
+
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        window.requestAnimationFrame(() => {
+            const scrolled = window.pageYOffset;
+            shapes.forEach((shape, index) => {
+                const speed = 0.1 + (index * 0.05);
+                const yPos = -(scrolled * speed);
+                shape.style.transform = `translateY(${yPos}px)`;
+            });
+            ticking = false;
+        });
+        ticking = true;
+    }
+});
+
+// Add sparkle effect to logo on hover
+const logoText = document.querySelector('.logo-text');
+if (logoText) {
+    logoText.addEventListener('mouseenter', () => {
+        logoText.style.animation = 'sparkle 0.5s ease';
+        setTimeout(() => {
+            logoText.style.animation = '';
+        }, 500);
+    });
+}
+
+// Typing effect for hero subtitle (only on page load)
+const heroSubtitle = document.querySelector('.hero p');
+if (heroSubtitle && !sessionStorage.getItem('heroTyped')) {
+    const originalText = heroSubtitle.textContent;
+    heroSubtitle.textContent = '';
+    heroSubtitle.style.minHeight = '30px';
+
+    let charIndex = 0;
+    const typeInterval = setInterval(() => {
+        if (charIndex < originalText.length) {
+            heroSubtitle.textContent += originalText[charIndex];
+            charIndex++;
+        } else {
+            clearInterval(typeInterval);
+            sessionStorage.setItem('heroTyped', 'true');
+        }
+    }, 50);
+}
+
+// Enhanced button hover effects
+document.querySelectorAll('.btn, .submit-btn, .pricing-btn').forEach(btn => {
+    btn.addEventListener('mouseenter', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        this.style.setProperty('--x', x + 'px');
+        this.style.setProperty('--y', y + 'px');
+    });
 });
