@@ -40,49 +40,50 @@
         .accessibility-statement-page {
             padding: 120px 0 80px;
             min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
         .accessibility-statement-container {
             max-width: 900px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.03);
+            background: #ffffff;
             border-radius: 20px;
             padding: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
         .accessibility-statement-container h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #00d4ff, #7c3aed);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #000000;
             text-align: center;
+            font-weight: 800;
         }
 
         .accessibility-statement-container .subtitle {
             text-align: center;
-            color: #94a3b8;
+            color: #555555;
             font-size: 1.1rem;
             margin-bottom: 40px;
         }
 
         .accessibility-statement-container h2 {
             font-size: 1.5rem;
-            color: #00d4ff;
+            color: #000000;
+            font-weight: 700;
             margin: 40px 0 20px;
             padding-bottom: 10px;
-            border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+            border-bottom: 2px solid #e0e0e0;
         }
 
         .accessibility-statement-container h2 i {
             margin-left: 10px;
+            color: #667eea;
         }
 
         .accessibility-statement-container p {
-            color: #cbd5e1;
+            color: #333333;
             line-height: 1.9;
             margin-bottom: 15px;
             font-size: 1.05rem;
@@ -95,12 +96,12 @@
         }
 
         .accessibility-statement-container ul li {
-            color: #cbd5e1;
+            color: #333333;
             padding: 12px 15px;
             margin-bottom: 10px;
-            background: rgba(0, 212, 255, 0.05);
+            background: #f8f9fa;
             border-radius: 10px;
-            border-right: 4px solid #00d4ff;
+            border-right: 4px solid #667eea;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -108,51 +109,53 @@
         }
 
         .accessibility-statement-container ul li:hover {
-            background: rgba(0, 212, 255, 0.1);
+            background: #f0f0f0;
             transform: translateX(-5px);
         }
 
         .accessibility-statement-container ul li i {
-            color: #00d4ff;
+            color: #667eea;
             font-size: 1.1rem;
             min-width: 25px;
         }
 
         .contact-box {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(124, 58, 237, 0.1));
+            background: linear-gradient(135deg, #667eea, #764ba2);
             border-radius: 15px;
             padding: 30px;
             margin: 30px 0;
-            border: 1px solid rgba(0, 212, 255, 0.2);
+            border: none;
         }
 
         .contact-box h3 {
             color: #fff;
             margin-bottom: 20px;
             font-size: 1.3rem;
+            font-weight: 700;
         }
 
         .contact-box p {
             margin-bottom: 10px;
+            color: #ffffff;
         }
 
         .contact-box a {
-            color: #00d4ff;
-            text-decoration: none;
+            color: #ffffff;
+            text-decoration: underline;
             transition: all 0.3s ease;
         }
 
         .contact-box a:hover {
-            text-decoration: underline;
+            opacity: 0.8;
         }
 
         .update-date {
             text-align: center;
-            color: #64748b;
+            color: #666666;
             font-size: 0.95rem;
             margin-top: 40px;
             padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid #e0e0e0;
         }
 
         .standards-badges {
@@ -164,8 +167,8 @@
         }
 
         .standards-badges .badge {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(124, 58, 237, 0.15));
-            border: 1px solid rgba(0, 212, 255, 0.3);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
             border-radius: 50px;
             padding: 10px 25px;
             color: #fff;
@@ -176,7 +179,121 @@
         }
 
         .standards-badges .badge i {
-            color: #00d4ff;
+            color: #ffffff;
+        }
+
+        /* Decorative Circles for Accessibility Page */
+        .accessibility-statement-page .blob-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .accessibility-statement-page .blob {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+        }
+
+        .accessibility-statement-page .blob-1 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+            top: 10%;
+            right: -100px;
+            animation: floatCircle1 15s ease-in-out infinite;
+        }
+
+        .accessibility-statement-page .blob-2 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%);
+            bottom: 20%;
+            left: -80px;
+            animation: floatCircle2 18s ease-in-out infinite;
+        }
+
+        .accessibility-statement-page .blob-3 {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 70%);
+            top: 50%;
+            left: 60%;
+            animation: floatCircle3 12s ease-in-out infinite;
+        }
+
+        /* Additional decorative circles */
+        .circle-decoration {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .circle-1 {
+            width: 500px;
+            height: 500px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            top: -150px;
+            left: -150px;
+            animation: rotateCircle 30s linear infinite;
+        }
+
+        .circle-2 {
+            width: 350px;
+            height: 350px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            bottom: -100px;
+            right: -100px;
+            animation: rotateCircle 25s linear infinite reverse;
+        }
+
+        .circle-3 {
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.05);
+            top: 30%;
+            right: 10%;
+            animation: pulseCircle 4s ease-in-out infinite;
+        }
+
+        .circle-4 {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.04);
+            bottom: 30%;
+            left: 5%;
+            animation: pulseCircle 5s ease-in-out infinite 1s;
+        }
+
+        @keyframes floatCircle1 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-30px, 40px); }
+        }
+
+        @keyframes floatCircle2 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(40px, -30px); }
+        }
+
+        @keyframes floatCircle3 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-20px, -40px); }
+        }
+
+        @keyframes rotateCircle {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulseCircle {
+            0%, 100% { transform: scale(1); opacity: 0.05; }
+            50% { transform: scale(1.2); opacity: 0.1; }
         }
 
         @media (max-width: 768px) {
@@ -197,6 +314,14 @@
                 flex-direction: column;
                 align-items: center;
             }
+
+            .circle-decoration {
+                display: none;
+            }
+
+            .accessibility-statement-page .blob {
+                opacity: 0.1;
+            }
         }
     </style>
 </head>
@@ -212,6 +337,12 @@
         <div class="blob blob-2"></div>
         <div class="blob blob-3"></div>
     </div>
+
+    <!-- Decorative Circles -->
+    <div class="circle-decoration circle-1"></div>
+    <div class="circle-decoration circle-2"></div>
+    <div class="circle-decoration circle-3"></div>
+    <div class="circle-decoration circle-4"></div>
 
     <!-- Animated Background -->
     <div class="animated-bg"></div>
@@ -367,22 +498,36 @@
                     <h2><i class="fa-solid fa-keyboard"></i> קיצורי מקלדת</h2>
                     <p>ניתן לנווט באתר באמצעות המקלדת:</p>
                     <ul>
+
+                         <li>
+                            <i class="fa-solid fa-keyboard"></i>
+                            <span><strong>חץ שמאלה ← </strong> - מעבר לאלמנט הבא </span>
+                        </li>
+                       
+                        <li>
+                            <i class="fa-solid fa-keyboard"></i>
+                            <span><strong>חץ ימינה → </strong> - מעבר לאלמנט הקודם </span>
+
                         <li>
                             <i class="fa-solid fa-keyboard"></i>
                             <span><strong>Tab</strong> - מעבר בין אלמנטים באתר</span>
                         </li>
+
                         <li>
                             <i class="fa-solid fa-keyboard"></i>
                             <span><strong>Shift + Tab</strong> - מעבר לאחור בין אלמנטים</span>
                         </li>
-                        <li>
+
+                        <li>                 
                             <i class="fa-solid fa-keyboard"></i>
                             <span><strong>Enter</strong> - הפעלת כפתורים וקישורים</span>
                         </li>
+
                         <li>
                             <i class="fa-solid fa-keyboard"></i>
                             <span><strong>Escape</strong> - סגירת חלונות קופצים ותפריטים</span>
                         </li>
+
                     </ul>
 
                     <h2><i class="fa-solid fa-desktop"></i> דפדפנים נתמכים</h2>
@@ -438,6 +583,7 @@
         <div class="container">
             <p><strong>WebNova</strong> - בניית אתרים מקצועית</p>
             <p>📞 טלפון: 0584549087 | ✉️ אימייל: info@webnova.co.il</p>
+            <p><a href="accessibility-statement.html" style="color: #00d4ff;">הצהרת נגישות</a></p>
             <p>WebNova © 2026 | כל הזכויות שמורות</p>
         </div>
     </footer>
@@ -449,6 +595,44 @@
         </svg>
     </a>
 
+    <!-- Chatbot Button -->
+    <button class="chatbot-button" id="chatbotBtn" aria-label="צ'אט">
+        💬
+    </button>
+
+    <!-- Chatbot Window -->
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+            <h3>👋 שלום! איך אפשר לעזור?</h3>
+            <button class="chatbot-close" id="chatbotClose">✕</button>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="chat-message bot">
+                <div class="message-bubble">היי! אני כאן לעזור לך. במה אתה מעוניין?</div>
+            </div>
+        </div>
+        <div class="chat-input-container" id="chatInputContainer">
+            <input type="text" class="chat-text-input" id="chatTextInput" placeholder="כתוב הודעה..." autocomplete="off">
+            <button class="chat-send-btn" id="chatSendBtn">➤</button>
+        </div>
+
+        <!-- Chatbot Contact Form -->
+        <div class="chat-form-container" id="chatFormContainer" style="display: none;">
+            <div class="chat-form">
+                <h4>מלא את הפרטים ונחזור אליך בהקדם!</h4>
+                <form id="chatContactForm">
+                    <input type="text" name="fullName" placeholder="שם מלא *" required>
+                    <input type="email" name="email" placeholder="אימייל *" required>
+                    <input type="tel" name="phone" placeholder="טלפון *" required>
+                    <textarea name="message" placeholder="ספר לנו על הפרויקט..."></textarea>
+                    <button type="submit" class="chat-submit-btn">שלח פנייה 🚀</button>
+                    <button type="button" class="chat-back-btn" id="chatBackBtn">חזרה</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="script.js"></script>
 
     <!-- ==================== וידג'ט נגישות מתקדם ==================== -->
