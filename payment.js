@@ -1,489 +1,649 @@
-// Initialize EmailJS
-(function() {
-    emailjs.init("mrvxMulPJ4TcR7BFJ");
-})();
+/* ========================================
+   Payment Page Specific Styles
+   Enhanced with Advanced Effects
+======================================== */
 
-// Professional Loading Screen Manager
-let loadingProgress = 0;
-let resourcesLoaded = 0;
-let totalResources = 0;
-let videosLoaded = 0;
-let totalVideos = 0;
+/* Clear Payment Main Title */
+.payment-main-title {
+    font-size: 56px;
+    font-weight: 900;
+    color: white;
+    text-shadow:
+        2px 2px 0 rgba(0, 0, 0, 0.3),
+        4px 4px 8px rgba(0, 0, 0, 0.2);
+    letter-spacing: 2px;
+    font-family: 'Heebo', sans-serif;
+}
 
-function updateLoadingProgress(percentage, step, subtitle) {
-    const progressBar = document.querySelector('.loading-progress-bar');
-    const percentageElement = document.getElementById('loadingPercentage');
-    const subtitleElement = document.getElementById('loadingSubtitle');
+/* Tech Animated Background */
+.tech-animated-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0a1628 0%, #1a365d 50%, #0d2137 100%);
+    overflow: hidden;
+    z-index: 0;
+}
 
-    if (progressBar) {
-        progressBar.style.setProperty('--progress-width', percentage + '%');
+.tech-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(rgba(102, 126, 234, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(102, 126, 234, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+.floating-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.floating-particles span {
+    position: absolute;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.6), rgba(118, 75, 162, 0.4));
+    border-radius: 50%;
+    animation: floatUp 15s linear infinite;
+    bottom: -100px;
+}
+
+.floating-particles span:nth-child(1) { left: 10%; width: 15px; height: 15px; animation-delay: 0s; animation-duration: 12s; }
+.floating-particles span:nth-child(2) { left: 20%; width: 25px; height: 25px; animation-delay: 2s; animation-duration: 18s; }
+.floating-particles span:nth-child(3) { left: 35%; width: 10px; height: 10px; animation-delay: 4s; animation-duration: 14s; }
+.floating-particles span:nth-child(4) { left: 50%; width: 30px; height: 30px; animation-delay: 1s; animation-duration: 20s; }
+.floating-particles span:nth-child(5) { left: 65%; width: 18px; height: 18px; animation-delay: 3s; animation-duration: 16s; }
+.floating-particles span:nth-child(6) { left: 75%; width: 12px; height: 12px; animation-delay: 5s; animation-duration: 13s; }
+.floating-particles span:nth-child(7) { left: 85%; width: 22px; height: 22px; animation-delay: 0.5s; animation-duration: 17s; }
+.floating-particles span:nth-child(8) { left: 5%; width: 28px; height: 28px; animation-delay: 2.5s; animation-duration: 19s; }
+.floating-particles span:nth-child(9) { left: 45%; width: 14px; height: 14px; animation-delay: 4.5s; animation-duration: 15s; }
+.floating-particles span:nth-child(10) { left: 90%; width: 20px; height: 20px; animation-delay: 1.5s; animation-duration: 21s; }
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
     }
-
-    if (percentageElement) {
-        percentageElement.textContent = Math.round(percentage) + '%';
+    10% {
+        opacity: 1;
     }
-
-    if (subtitleElement && subtitle) {
-        subtitleElement.textContent = subtitle;
+    90% {
+        opacity: 1;
     }
-
-    if (step >= 1) {
-        const step1 = document.getElementById('step1');
-        if (step1) {
-            step1.classList.add('complete');
-            step1.querySelector('i').className = 'fas fa-check-circle';
-        }
-    }
-
-    if (step >= 2) {
-        const step2 = document.getElementById('step2');
-        if (step2) {
-            step2.classList.add('active');
-            if (step > 2) {
-                step2.classList.remove('active');
-                step2.classList.add('complete');
-                step2.querySelector('i').className = 'fas fa-check-circle';
-            }
-        }
-    }
-
-    if (step >= 3) {
-        const step3 = document.getElementById('step3');
-        if (step3) {
-            step3.classList.add('active');
-            if (step > 3) {
-                step3.classList.remove('active');
-                step3.classList.add('complete');
-                step3.querySelector('i').className = 'fas fa-check-circle';
-            }
-        }
+    100% {
+        transform: translateY(-120vh) rotate(720deg);
+        opacity: 0;
     }
 }
 
-function hideLoadingScreen() {
-    const loadingScreen = document.getElementById('loadingScreen');
-    updateLoadingProgress(100, 4, 'הכל מוכן!');
-
-    setTimeout(() => {
-        if (loadingScreen) {
-            loadingScreen.classList.add('hidden');
-        }
-    }, 500);
+/* Floating 3D Elements */
+.floating-3d-elements {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
 }
 
-// Initialize loading and page functionality
-document.addEventListener('DOMContentLoaded', function() {
-    // Step 1: Resources loaded
-    updateLoadingProgress(33, 1, 'טוען משאבים...');
+.floating-cube {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    top: 20%;
+    right: 10%;
+    transform-style: preserve-3d;
+    animation: rotateCube 20s infinite linear;
+}
 
-    // Count total videos
-    const videos = document.querySelectorAll('video');
-    totalVideos = videos.length;
+.cube-face {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    backdrop-filter: blur(5px);
+}
 
-    if (totalVideos === 0) {
-        updateLoadingProgress(100, 3, 'מכין את האתר...');
-        setTimeout(hideLoadingScreen, 1000);
-    } else {
-        updateLoadingProgress(50, 2, `טוען סרטונים... (0/${totalVideos})`);
+.cube-face.front { transform: translateZ(30px); }
+.cube-face.back { transform: rotateY(180deg) translateZ(30px); }
+.cube-face.right { transform: rotateY(90deg) translateZ(30px); }
+.cube-face.left { transform: rotateY(-90deg) translateZ(30px); }
+.cube-face.top { transform: rotateX(90deg) translateZ(30px); }
+.cube-face.bottom { transform: rotateX(-90deg) translateZ(30px); }
 
-        let videosReadyCount = 0;
+@keyframes rotateCube {
+    0% { transform: rotateX(0deg) rotateY(0deg); }
+    100% { transform: rotateX(360deg) rotateY(360deg); }
+}
 
-        videos.forEach((video, index) => {
-            video.load();
+.floating-sphere {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    bottom: 30%;
+    left: 5%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.1));
+    box-shadow:
+        inset 0 0 50px rgba(255, 255, 255, 0.1),
+        0 0 30px rgba(102, 126, 234, 0.2);
+    animation: floatSphere 15s ease-in-out infinite;
+}
 
-            video.addEventListener('canplaythrough', function() {
-                videosReadyCount++;
-                const videoProgress = 50 + (videosReadyCount / totalVideos) * 30;
-                updateLoadingProgress(
-                    videoProgress,
-                    2,
-                    `טוען סרטונים... (${videosReadyCount}/${totalVideos})`
-                );
+@keyframes floatSphere {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-40px) scale(1.1); }
+}
 
-                if (videosReadyCount === totalVideos) {
-                    updateLoadingProgress(80, 3, 'מכין את האתר...');
+.floating-ring {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 60%;
+    right: 15%;
+    border: 3px solid rgba(102, 126, 234, 0.2);
+    border-radius: 50%;
+    animation: rotateRing 10s linear infinite;
+}
 
-                    videos.forEach(v => {
-                        const playPromise = v.play();
-                        if (playPromise !== undefined) {
-                            playPromise.catch(error => {
-                                console.log('Video autoplay prevented:', error);
-                                document.addEventListener('click', () => {
-                                    v.play();
-                                }, { once: true });
-                            });
-                        }
-                    });
+.floating-ring::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    transform: translateX(-50%);
+}
 
-                    setTimeout(hideLoadingScreen, 1000);
-                }
-            });
+@keyframes rotateRing {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
-            setTimeout(() => {
-                if (videosReadyCount < totalVideos) {
-                    console.log('Video loading timeout, proceeding anyway');
-                    hideLoadingScreen();
-                }
-            }, 8000);
-        });
-    }
+/* Payment Hero Section */
+.payment-hero {
+    position: relative;
+    padding: 150px 0 100px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    overflow: hidden;
+    text-align: center;
+}
 
-    // Header scroll effect
-    const header = document.getElementById('header');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    });
+.payment-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+}
 
-    // Initialize hero particles
-    initHeroParticles();
+.hero-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
 
-    // Initialize scroll animations
-    initScrollAnimations();
-});
-
-
-// Hero Particles
-function initHeroParticles() {
-    const container = document.getElementById('heroParticles');
-    if (!container) return;
-
-    const particleCount = 50;
-
-    for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.style.cssText = `
-            position: absolute;
-            width: ${Math.random() * 6 + 2}px;
-            height: ${Math.random() * 6 + 2}px;
-            background: rgba(255, 255, 255, ${Math.random() * 0.5 + 0.3});
-            border-radius: 50%;
-            top: ${Math.random() * 100}%;
-            left: ${Math.random() * 100}%;
-            animation: floatParticle ${Math.random() * 10 + 10}s linear infinite;
-            animation-delay: ${Math.random() * 5}s;
-        `;
-        container.appendChild(particle);
-    }
-
-    // Add CSS animation dynamically
-    if (!document.getElementById('particleStyles')) {
-        const style = document.createElement('style');
-        style.id = 'particleStyles';
-        style.textContent = `
-            @keyframes floatParticle {
-                0%, 100% {
-                    transform: translateY(0) translateX(0);
-                    opacity: 0;
-                }
-                10% {
-                    opacity: 1;
-                }
-                90% {
-                    opacity: 1;
-                }
-                50% {
-                    transform: translateY(-100px) translateX(${Math.random() * 100 - 50}px);
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    }
+.hero-content {
+    position: relative;
+    z-index: 2;
 }
 
 
-// Scroll Animations
-function initScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.classList.add('animate');
-                }, index * 100);
-            }
-        });
-    }, observerOptions);
-
-    // Observe elements
-    document.querySelectorAll('.pricing-card').forEach(card => observer.observe(card));
-    document.querySelectorAll('.trust-badge').forEach(badge => observer.observe(badge));
-
-    const paymentContainer = document.querySelector('.payment-container');
-    if (paymentContainer) observer.observe(paymentContainer);
+.hero-subtitle {
+    font-size: 22px;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 20px 0 30px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-// Scroll to top button
-const scrollToTopBtn = document.getElementById('scrollToTop');
+.hero-badges {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
 
-window.addEventListener('scroll', () => {
-    const scrollTop = window.pageYOffset;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercent = (scrollTop / docHeight) * 100;
-    const scrollDegrees = (scrollPercent / 100) * 360;
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 12px 24px;
+    border-radius: 50px;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
 
-    scrollToTopBtn.style.setProperty('--scroll-progress', scrollDegrees + 'deg');
+.hero-badge:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
 
-    if (scrollTop > 300) {
-        scrollToTopBtn.classList.add('visible');
-    } else {
-        scrollToTopBtn.classList.remove('visible');
+.hero-badge i {
+    font-size: 16px;
+}
+
+/* Hero Wave */
+.hero-wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    line-height: 0;
+}
+
+.hero-wave svg {
+    width: 100%;
+    height: 80px;
+}
+
+/* Animated Title */
+.animated-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.title-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+    border-radius: 50%;
+    animation: bounceIcon 2s ease-in-out infinite;
+}
+
+.title-icon i {
+    font-size: 28px;
+}
+
+@keyframes bounceIcon {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Card Glow Effect */
+.card-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, rgba(102, 126, 234, 0.1), transparent 30%);
+    animation: rotateGlow 4s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.pricing-card:hover .card-glow {
+    opacity: 1;
+}
+
+.popular-glow {
+    background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.2), transparent 30%);
+}
+
+@keyframes rotateGlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Pulse Animation */
+.pulse-animation {
+    animation: pulseIcon 2s ease-in-out infinite;
+}
+
+@keyframes pulseIcon {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
     }
-});
-
-scrollToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
-
-// Pricing buttons - redirect to contact
-document.querySelectorAll('.pricing-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const pricingCard = this.closest('.pricing-card');
-        const packageName = pricingCard.querySelector('.pricing-title').textContent;
-
-        // Redirect to contact form on main page
-        window.location.href = `index.html#contact?package=${encodeURIComponent(packageName)}`;
-    });
-});
-
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    });
-});
-
-// Chatbot
-const chatbotBtn = document.getElementById('chatbotBtn');
-const chatbotWindow = document.getElementById('chatbotWindow');
-const chatbotClose = document.getElementById('chatbotClose');
-const chatbotMessages = document.getElementById('chatbotMessages');
-const chatOptions = document.getElementById('chatOptions');
-
-let chatbotShown = false;
-
-setTimeout(() => {
-    if (!chatbotShown) {
-        chatbotBtn.style.animation = 'pulse 1s ease 3';
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 15px rgba(102, 126, 234, 0);
     }
-}, 10000);
+}
 
-chatbotBtn.addEventListener('click', () => {
-    chatbotWindow.classList.toggle('show');
-    chatbotShown = true;
-});
+/* Magnetic Button */
+.magnetic-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    overflow: hidden;
+}
 
-chatbotClose.addEventListener('click', () => {
-    chatbotWindow.classList.remove('show');
-});
+.magnetic-btn i {
+    transition: transform 0.3s ease;
+}
 
-document.addEventListener('click', (e) => {
-    if (!chatbotBtn.contains(e.target) && !chatbotWindow.contains(e.target)) {
-        chatbotWindow.classList.remove('show');
+.magnetic-btn:hover i {
+    transform: translateX(-5px);
+}
+
+/* Feature Items Animation */
+.feature-item {
+    opacity: 0;
+    transform: translateX(20px);
+    animation: slideInFeature 0.5s ease forwards;
+}
+
+.feature-item:nth-child(1) { animation-delay: 0.1s; }
+.feature-item:nth-child(2) { animation-delay: 0.2s; }
+.feature-item:nth-child(3) { animation-delay: 0.3s; }
+.feature-item:nth-child(4) { animation-delay: 0.4s; }
+.feature-item:nth-child(5) { animation-delay: 0.5s; }
+.feature-item:nth-child(6) { animation-delay: 0.6s; }
+.feature-item:nth-child(7) { animation-delay: 0.7s; }
+.feature-item:nth-child(8) { animation-delay: 0.8s; }
+
+@keyframes slideInFeature {
+    to {
+        opacity: 1;
+        transform: translateX(0);
     }
-});
+}
 
-// Chatbot responses
-const responses = {
-    'כמה זמן לוקח לבנות אתר?': '⏱️ זמני הפיתוח שלנו:\n\n• דף נחיתה: 3-7 ימים\n• אתר תדמית: 1-2 שבועות\n• אתר מלא: 2-4 שבועות\n\nאנחנו עובדים מהר אבל לא מתפשרים על איכות! 💪',
-    'כמה עולה לבנות אתר?': '💰 המחירים שלנו:\n\n💼 דף נחיתה: ₪500-1,000\nמושלם להשקות, קמפיינים ועסקים קטנים\n\n🌐 אתר תדמית: ₪1,000-2,500\nעד 5 דפים + עיצוב מתקדם + אנימציות\n\n🚀 אתר מלא: ₪2,500-5,000\nדפים ללא הגבלה + עיצוב ייחודי + פאנל ניהול\n\n✨ כל החבילות כוללות: עיצוב רספונסיבי, SEO בסיסי, ותמיכה טכנית!',
-    'איך זה עובד?': '🔄 תהליך העבודה ב-5 שלבים:\n\n1️⃣ פגישת היכרות - נבין את הצרכים שלך\n2️⃣ עיצוב - תקבל הצעה ויזואלית לאישור\n3️⃣ פיתוח - נבנה את האתר שלך\n4️⃣ בדיקות - נוודא שהכל עובד מושלם\n5️⃣ השקה - האתר עולה לאוויר! 🎉\n\nלאורך כל התהליך תקבל עדכונים ותוכל לראות את ההתקדמות.'
-};
+/* Enhanced Payment Container */
+.payment-card-3d {
+    position: relative;
+    perspective: 1000px;
+}
 
-// Keywords for intelligent responses
-const keywordResponses = {
-    'מחיר|עלות|כסף|תקציב|עולה|כמה': responses['כמה עולה לבנות אתר?'],
-    'זמן|מהר|דחוף|לוקח|מתי': responses['כמה זמן לוקח לבנות אתר?'],
-    'עובד|תהליך|שלבים|איך': responses['איך זה עובד?'],
-    'וורדפרס|wordpress|קוד|טכנולוגיה': '💻 אנחנו עובדים עם טכנולוגיות מתקדמות:\n\n• HTML5/CSS3/JavaScript לביצועים מעולים\n• עיצוב רספונסיבי לכל מכשיר\n• אופטימיזציה למהירות טעינה\n• אבטחה ברמה גבוהה\n\nהאתר שלך יהיה מהיר, מאובטח ומודרני!',
-    'עיצוב|דיזיין|יפה|צבעים|לוגו': '🎨 העיצוב שלנו כולל:\n\n• עיצוב מותאם אישית לעסק שלך\n• צבעים ופונטים מקצועיים\n• אנימציות מרשימות\n• חוויית משתמש מעולה\n\nכל אתר מעוצב מאפס - לא תבניות משעממות!',
-    'תמיכה|עזרה|בעיה|תקלה|שאלה': '🛠️ התמיכה שלנו:\n\n• תמיכה טכנית מלאה\n• זמינות גבוהה\n• תיקון באגים מהיר\n• עדכונים שוטפים\n\nאנחנו כאן בשבילך גם אחרי ההשקה!',
-    'seo|קידום|גוגל|חיפוש': '📈 קידום אתרים (SEO):\n\n• אופטימיזציה למנועי חיפוש\n• מהירות טעינה גבוהה\n• תגיות מטא נכונות\n• מבנה אתר ידידותי לגוגל\n\nהאתר שלך יופיע בתוצאות החיפוש!',
-    'טלפון|ליצור קשר|לדבר|להתקשר': '📞 דרכי יצירת קשר:\n\n• טלפון: 058-454-9087\n• אימייל: contact@webnova.co.il\n• וואטסאפ: לחץ על הכפתור הירוק\n\nנשמח לשמוע ממך!',
-    'שלום|היי|הי|בוקר|ערב': '👋 שלום! נעים להכיר!\n\nאני הבוט של WebNova ואני כאן לעזור לך.\nאתה יכול לשאול אותי על מחירים, זמנים, או כל שאלה אחרת.\n\nאיך אוכל לעזור לך היום?',
-    'תודה|מעולה|אחלה|סבבה': '😊 בשמחה! אם יש עוד שאלות, אני כאן.\n\nרוצה לקבל הצעת מחיר? פשוט לחץ על הכפתור למטה!'
-};
+.qr-scanner-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #667eea, transparent);
+    animation: scanLine 2s ease-in-out infinite;
+    z-index: 10;
+    border-radius: 10px;
+}
 
-const chatFormContainer = document.getElementById('chatFormContainer');
-const chatContactForm = document.getElementById('chatContactForm');
-const chatBackBtn = document.getElementById('chatBackBtn');
+@keyframes scanLine {
+    0%, 100% { top: 0; opacity: 0; }
+    10%, 90% { opacity: 1; }
+    50% { top: calc(100% - 4px); }
+}
 
-document.querySelectorAll('.chat-option-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const question = this.dataset.response;
-        const action = this.dataset.action;
+.qr-image {
+    transition: all 0.5s ease;
+}
 
-        const userMsg = document.createElement('div');
-        userMsg.className = 'chat-message user';
-        userMsg.innerHTML = `<div class="message-bubble">${question}</div>`;
-        chatbotMessages.appendChild(userMsg);
+.payment-container:hover .qr-image {
+    transform: scale(1.05);
+    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+}
 
-        if (action === 'show-form') {
-            setTimeout(() => {
-                const botMsg = document.createElement('div');
-                botMsg.className = 'chat-message bot';
-                botMsg.innerHTML = `<div class="message-bubble">מעולה! אשמח למלא איתך טופס קצר 📝</div>`;
-                chatbotMessages.appendChild(botMsg);
-                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+/* Glow Effect */
+.glow-effect {
+    position: relative;
+    overflow: hidden;
+}
 
-                setTimeout(() => {
-                    chatOptions.style.display = 'none';
-                    chatFormContainer.style.display = 'block';
-                }, 500);
-            }, 500);
-        } else {
-            setTimeout(() => {
-                const botMsg = document.createElement('div');
-                botMsg.className = 'chat-message bot';
-                botMsg.innerHTML = `<div class="message-bubble">${responses[question]}</div>`;
-                chatbotMessages.appendChild(botMsg);
-                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-            }, 500);
-        }
+.glow-effect::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg);
+    animation: shimmer 3s infinite;
+}
 
-        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-    });
-});
+@keyframes shimmer {
+    0% { transform: translateX(-150%) rotate(45deg); }
+    100% { transform: translateX(150%) rotate(45deg); }
+}
 
-// Handle chat form submission
-chatContactForm.addEventListener('submit', function(e) {
-    e.preventDefault();
+/* Hover Lift Effect */
+.hover-lift {
+    transition: all 0.3s ease;
+}
 
-    const submitBtn = this.querySelector('.chat-submit-btn');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'שולח...';
-    submitBtn.disabled = true;
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
 
-    emailjs.sendForm('service_4gvk08g', 'template_amc3bab', this)
-        .then(function() {
-            const successMsg = document.createElement('div');
-            successMsg.className = 'chat-message bot';
-            successMsg.innerHTML = `<div class="message-bubble">תודה רבה! קיבלנו את הפנייה ונחזור אליך בהקדם 🎉</div>`;
-            chatbotMessages.appendChild(successMsg);
-            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
 
-            chatContactForm.reset();
-            chatFormContainer.style.display = 'none';
-            chatOptions.style.display = 'block';
-        }, function(error) {
-            alert('אופס! משהו השתבש. אנא נסה שוב או צור קשר דרך WhatsApp.');
-        })
-        .finally(function() {
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        });
-});
+/* CTA Section */
+.cta-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
 
-chatBackBtn.addEventListener('click', () => {
-    chatFormContainer.style.display = 'none';
-    chatOptions.style.display = 'block';
-});
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    animation: rotateBg 30s linear infinite;
+}
 
-// Handle free text input
-const chatTextInput = document.getElementById('chatTextInput');
-const chatSendBtn = document.getElementById('chatSendBtn');
+@keyframes rotateBg {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
-function getSmartResponse(message) {
-    const lowerMessage = message.toLowerCase();
+.cta-content {
+    position: relative;
+    z-index: 2;
+}
 
-    // Check keyword patterns
-    for (const [pattern, response] of Object.entries(keywordResponses)) {
-        const keywords = pattern.split('|');
-        for (const keyword of keywords) {
-            if (lowerMessage.includes(keyword)) {
-                return response;
-            }
-        }
+.cta-content h2 {
+    font-size: 48px;
+    color: white;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cta-content p {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 40px;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 40px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.cta-btn.primary {
+    background: white;
+    color: #667eea;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.cta-btn.primary:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+}
+
+.cta-btn.secondary {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+.cta-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-5px);
+}
+
+/* Active Navigation Link */
+.nav-link.active {
+    color: white;
+    font-weight: 700;
+}
+
+.nav-link.active::before {
+    display: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .payment-main-title {
+        font-size: 32px;
     }
 
-    // Default response if no keywords match
-    return '🤔 תודה על השאלה!\n\nלא הצלחתי להבין בדיוק מה אתה מחפש, אבל אשמח לעזור!\n\nתוכל:\n• לבחור מהאפשרויות למעלה\n• ליצור קשר ישירות: 058-454-9087\n• להשאיר פרטים ונחזור אליך\n\nמה תעדיף?';
+    .hero-subtitle {
+        font-size: 18px;
+        padding: 0 20px;
+    }
+
+    .hero-badges {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .payment-hero {
+        padding: 120px 0 80px;
+    }
+
+    .hero-wave svg {
+        height: 50px;
+    }
+
+    .title-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .title-icon i {
+        font-size: 22px;
+    }
+
+    .cta-section {
+        text-align: center;
+    }
+
+    .cta-section .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cta-content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cta-content h2 {
+        font-size: 32px;
+        text-align: center;
+    }
+
+    .cta-content p {
+        font-size: 16px;
+        padding: 0 20px;
+        text-align: center;
+    }
+
+    .cta-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .cta-btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+
+    .floating-3d-elements {
+        display: none;
+    }
+
+    .floating-particles span {
+        width: 10px;
+        height: 10px;
+    }
 }
 
-function sendChatMessage() {
-    if (!chatTextInput || !chatbotMessages) return;
+@media (max-width: 480px) {
+    .payment-main-title {
+        font-size: 28px;
+    }
 
-    const message = chatTextInput.value.trim();
-    if (!message) return;
+    .hero-badge {
+        font-size: 12px;
+        padding: 10px 18px;
+    }
 
-    // Add user message
-    const userMsg = document.createElement('div');
-    userMsg.className = 'chat-message user';
-    userMsg.innerHTML = `<div class="message-bubble">${message}</div>`;
-    chatbotMessages.appendChild(userMsg);
-    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-
-    // Clear input
-    chatTextInput.value = '';
-
-    // Get and show bot response
-    setTimeout(() => {
-        const response = getSmartResponse(message);
-        const botMsg = document.createElement('div');
-        botMsg.className = 'chat-message bot';
-        botMsg.innerHTML = `<div class="message-bubble">${response.replace(/\n/g, '<br>')}</div>`;
-        chatbotMessages.appendChild(botMsg);
-        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-    }, 600);
+    .animated-title {
+        flex-direction: column;
+        gap: 10px;
+    }
 }
-
-if (chatTextInput && chatSendBtn) {
-    chatSendBtn.addEventListener('click', sendChatMessage);
-
-    chatTextInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            sendChatMessage();
-        }
-    });
-}
-
-// Counter Animation for pricing
-function animateCounters() {
-    const counters = document.querySelectorAll('.counter');
-    counters.forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-target'));
-        const duration = 2000;
-        const step = target / (duration / 16);
-        let current = 0;
-
-        const updateCounter = () => {
-            current += step;
-            if (current < target) {
-                counter.textContent = Math.floor(current).toLocaleString();
-                requestAnimationFrame(updateCounter);
-            } else {
-                counter.textContent = target.toLocaleString();
-            }
-        };
-
-        // Start animation when element is in view
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    updateCounter();
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        observer.observe(counter);
-    });
-}
-
-// Initialize counter animation
-animateCounters();
