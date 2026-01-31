@@ -221,6 +221,176 @@ if (scrollProgressBar) {
     });
 }
 
+// Mouse tracking for reason cards (radial gradient spotlight effect)
+document.querySelectorAll('.reason-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty('--mouse-x', x + '%');
+        card.style.setProperty('--mouse-y', y + '%');
+    });
+});
+
+// Counter animation for stat numbers
+const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const statNumber = entry.target.querySelector('.stat-number');
+            if (statNumber && !statNumber.classList.contains('counted')) {
+                statNumber.classList.add('counted');
+                animateCounter(statNumber);
+            }
+        }
+    });
+}, {
+    threshold: 0.5
+});
+
+document.querySelectorAll('.stat-item').forEach(stat => {
+    counterObserver.observe(stat);
+});
+
+function animateCounter(element) {
+    const text = element.textContent;
+    const hasPlus = text.includes('+');
+    const hasPercent = text.includes('%');
+    const hasSlash = text.includes('/');
+
+    // Handle special cases like "24/7"
+    if (hasSlash) {
+        return; // Don't animate 24/7
+    }
+
+    const numericValue = parseInt(text.replace(/[^0-9]/g, ''));
+    const duration = 2000;
+    const steps = 60;
+    const increment = numericValue / steps;
+    let current = 0;
+    let step = 0;
+
+    const timer = setInterval(() => {
+        step++;
+        current = Math.min(Math.round(increment * step), numericValue);
+
+        let displayValue = current.toString();
+        if (hasPlus) displayValue += '+';
+        if (hasPercent) displayValue += '%';
+
+        element.textContent = displayValue;
+
+        if (step >= steps) {
+            clearInterval(timer);
+            // Restore original text
+            element.textContent = text;
+        }
+    }, duration / steps);
+}
+
+// Enhanced parallax effect for floating shapes
+const shapes = document.querySelectorAll('.shape');
+let ticking = false;
+
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        window.requestAnimationFrame(() => {
+            const scrolled = window.pageYOffset;
+            shapes.forEach((shape, index) => {
+                const speed = 0.1 + (index * 0.05);
+                const yPos = -(scrolled * speed);
+                shape.style.transform = `translateY(${yPos}px)`;
+            });
+            ticking = false;
+        });
+        ticking = true;
+    }
+});
+
+// Enhanced parallax effect for blobs
+const blobs = document.querySelectorAll('.blob');
+let tickingBlobs = false;
+
+window.addEventListener('scroll', () => {
+    if (!tickingBlobs) {
+        window.requestAnimationFrame(() => {
+            const scrolled = window.pageYOffset;
+            blobs.forEach((blob, index) => {
+                const speed = 0.03 + (index * 0.01);
+                const yPos = -(scrolled * speed);
+                blob.style.transform = `translateY(${yPos}px)`;
+            });
+            tickingBlobs = false;
+        });
+        tickingBlobs = true;
+    }
+}, { passive: true });
+
+// Card reveal observer
+const cardRevealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => {
+                entry.target.classList.add('card-enter');
+            }, index * 100);
+        }
+    });
+}, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -30px 0px'
+});
+
+document.querySelectorAll('.reason-card, .code-card').forEach(card => {
+    cardRevealObserver.observe(card);
+});
+
+// Enhanced button effects with ripple on click
+document.querySelectorAll('.btn, .cta-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const ripple = document.createElement('span');
+        ripple.className = 'btn-ripple';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.style.width = '20px';
+        ripple.style.height = '20px';
+
+        this.appendChild(ripple);
+
+        setTimeout(() => {
+            ripple.remove();
+        }, 600);
+    });
+});
+
+// Add float animation to icons
+document.querySelectorAll('.reason-icon, .timeline-icon').forEach((icon, index) => {
+    icon.style.animationDelay = `${index * 0.2}s`;
+});
+
+// Section visibility observer
+const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+});
+
+document.querySelectorAll('section').forEach(section => {
+    sectionObserver.observe(section);
+});
+
+// Mobile-specific optimizations
+if (window.innerWidth <= 768) {
+    document.documentElement.style.setProperty('--animation-duration', '0.3s');
+}
+
 // Chatbot
 const chatbotBtn = document.getElementById('chatbotBtn');
 const chatbotWindow = document.getElementById('chatbotWindow');
@@ -258,7 +428,7 @@ if (chatbotBtn && chatbotWindow && chatbotClose) {
 // Chatbot responses
 const responses = {
     'כמה זמן לוקח לבנות אתר?': '⏱️ זמני הפיתוח שלנו:\n\n• דף נחיתה: 3-7 ימים\n• אתר תדמית: 1-2 שבועות\n• אתר מלא: 2-4 שבועות\n\nאנחנו עובדים מהר אבל לא מתפשרים על איכות! 💪',
-    'כמה עולה לבנות אתר?': '💰 המחירים שלנו:\n\n💼 500 - 100דף נחיתה: 0\nמושלם להשקות, קמפיינים ועסקים קטנים\n\n🌐 אתר תדמית: ₪1,000-2,500\nעד 5 דפים + עיצוב מתקדם + אנימציות\n\n🚀 אתר מלא: ₪2,500-5,000\nדפים ללא הגבלה + עיצוב ייחודי + פאנל ניהול\n\n✨ כל החבילות כוללות: עיצוב רספונסיבי, SEO בסיסי, ותמיכה טכנית!',
+    'כמה עולה לבנות אתר?': '💰 המחירים שלנו:\n\n💼 דף נחיתה: ₪500-1,000\nמושלם להשקות, קמפיינים ועסקים קטנים\n\n🌐 אתר תדמית: ₪1,000-2,500\nעד 5 דפים + עיצוב מתקדם + אנימציות\n\n🚀 אתר מלא: ₪2,500-5,000\nדפים ללא הגבלה + עיצוב ייחודי + פאנל ניהול\n\n✨ כל החבילות כוללות: עיצוב רספונסיבי, SEO בסיסי, ותמיכה טכנית!',
     'איך זה עובד?': '🔄 תהליך העבודה ב-5 שלבים:\n\n1️⃣ פגישת היכרות - נבין את הצרכים שלך\n2️⃣ עיצוב - תקבל הצעה ויזואלית לאישור\n3️⃣ פיתוח - נבנה את האתר שלך\n4️⃣ בדיקות - נוודא שהכל עובד מושלם\n5️⃣ השקה - האתר עולה לאוויר! 🎉\n\nלאורך כל התהליך תקבל עדכונים ותוכל לראות את ההתקדמות.'
 };
 

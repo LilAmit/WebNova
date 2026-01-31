@@ -828,8 +828,31 @@ if (heroSubtitle && !sessionStorage.getItem('heroTyped')) {
     }, 50);
 }
 
-// Enhanced button hover effects
-document.querySelectorAll('.btn, .submit-btn, .pricing-btn').forEach(btn => {
+// Enhanced button effects with ripple on click
+document.querySelectorAll('.btn, .submit-btn, .pricing-btn, .cta-btn').forEach(btn => {
+    // Ripple effect on click
+    btn.addEventListener('click', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Create ripple element
+        const ripple = document.createElement('span');
+        ripple.className = 'btn-ripple';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.style.width = '20px';
+        ripple.style.height = '20px';
+
+        this.appendChild(ripple);
+
+        // Remove ripple after animation
+        setTimeout(() => {
+            ripple.remove();
+        }, 600);
+    });
+
+    // Mouse position tracking for hover effects
     btn.addEventListener('mouseenter', function(e) {
         const rect = this.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -839,3 +862,150 @@ document.querySelectorAll('.btn, .submit-btn, .pricing-btn').forEach(btn => {
         this.style.setProperty('--y', y + 'px');
     });
 });
+
+// ========================================
+// Enhanced Scroll Animations
+// ========================================
+
+// Section visibility observer
+const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+});
+
+// Observe all sections
+document.querySelectorAll('section').forEach(section => {
+    sectionObserver.observe(section);
+});
+
+// Smooth scroll reveal for cards
+const cardRevealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => {
+                entry.target.classList.add('card-enter');
+            }, index * 100);
+        }
+    });
+}, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -30px 0px'
+});
+
+document.querySelectorAll('.reason-card, .pricing-card, .code-card, .trust-badge').forEach(card => {
+    cardRevealObserver.observe(card);
+});
+
+// Enhanced parallax effect for background elements
+let lastScrollY = window.scrollY;
+let ticking2 = false;
+
+function updateParallax() {
+    const scrollY = window.scrollY;
+
+    // Parallax for floating shapes
+    document.querySelectorAll('.shape').forEach((shape, index) => {
+        const speed = 0.05 + (index * 0.02);
+        const yPos = scrollY * speed;
+        shape.style.transform = `translateY(${-yPos}px)`;
+    });
+
+    // Parallax for blob container
+    const blobs = document.querySelectorAll('.blob');
+    blobs.forEach((blob, index) => {
+        const speed = 0.03 + (index * 0.01);
+        const yPos = scrollY * speed;
+        blob.style.transform = `translateY(${-yPos}px)`;
+    });
+
+    lastScrollY = scrollY;
+    ticking2 = false;
+}
+
+window.addEventListener('scroll', () => {
+    if (!ticking2) {
+        requestAnimationFrame(updateParallax);
+        ticking2 = true;
+    }
+}, { passive: true });
+
+// Smooth header shadow on scroll
+const header = document.getElementById('header');
+if (header) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            header.classList.add('shadow-on-scroll', 'scrolled');
+        } else {
+            header.classList.remove('shadow-on-scroll', 'scrolled');
+        }
+    }, { passive: true });
+}
+
+// Add float animation to icons
+document.querySelectorAll('.reason-icon, .pricing-icon, .badge-icon').forEach((icon, index) => {
+    icon.style.animationDelay = `${index * 0.2}s`;
+    icon.classList.add('float-icon');
+});
+
+// Image reveal on scroll
+const imageObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+        }
+    });
+}, {
+    threshold: 0.3
+});
+
+// Only apply image-reveal to logo images, not qr-image (which is handled by payment container)
+document.querySelectorAll('.logo img').forEach(img => {
+    img.classList.add('image-reveal');
+    imageObserver.observe(img);
+});
+
+// Scroll progress indicator
+const createScrollProgress = () => {
+    const existingProgress = document.getElementById('scroll-progress');
+    if (existingProgress) return;
+
+    const progress = document.createElement('div');
+    progress.id = 'scroll-progress';
+    progress.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        z-index: 10001;
+        transition: width 0.1s ease-out;
+        width: 0%;
+    `;
+    document.body.appendChild(progress);
+
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        progress.style.width = `${scrollPercent}%`;
+    }, { passive: true });
+};
+
+createScrollProgress();
+
+// Titles are now clean without animations
+
+// Mobile-specific optimizations
+if (window.innerWidth <= 768) {
+    // Reduce animation intensity on mobile
+    document.documentElement.style.setProperty('--animation-duration', '0.3s');
+
+    // Disable parallax on mobile for better performance
+    window.removeEventListener('scroll', updateParallax);
+}

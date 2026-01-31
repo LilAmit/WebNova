@@ -520,7 +520,7 @@ header.scrolled {
 /* Navigation Menu */
 .nav-menu {
     display: flex;
-    gap: 30px;
+    gap: 15px;
     align-items: center;
     list-style: none;
     margin: 0;
@@ -537,12 +537,17 @@ header.scrolled {
     font-weight: 600;
     font-size: 15px;
     transition: all 0.3s ease;
-    padding: 10px 20px;
-    display: inline-block;
+    padding: 12px 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
     border-radius: 25px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    min-width: 110px;
+    text-align: center;
+    white-space: nowrap;
 }
 
 .nav-link:hover {
@@ -718,33 +723,70 @@ header.scrolled {
     transition: all 0.3s ease;
     text-decoration: none;
     display: inline-block;
-    font-weight: bold;
+    font-weight: 700;
+    font-family: 'Heebo', sans-serif;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    position: relative;
+    overflow: hidden;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: rgba(255, 255, 255, 0.2);
     color: white;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.5);
 }
 
 .btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+    transform: scale(1.08) translateY(-3px);
+    background: rgba(255, 255, 255, 0.95);
+    color: #667eea;
+    border-color: white;
+    box-shadow:
+        0 10px 40px rgba(255, 255, 255, 0.5),
+        0 0 30px rgba(255, 255, 255, 0.4),
+        inset 0 0 20px rgba(102, 126, 234, 0.1);
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
 }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.15);
+    background: transparent;
     color: white;
     border: 2px solid rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(10px);
 }
 
 .btn-secondary:hover {
-    background: white;
+    transform: scale(1.08) translateY(-3px);
+    background: rgba(255, 255, 255, 0.9);
     color: #667eea;
     border-color: white;
+    box-shadow:
+        0 10px 40px rgba(255, 255, 255, 0.5),
+        0 0 30px rgba(255, 255, 255, 0.4);
+}
+
+.btn-secondary:active {
+    transform: scale(0.98);
+}
+
+/* Button ripple effect */
+.btn-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: scale(0);
+    animation: ripple-animation 0.6s ease-out;
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
 }
 
 .section {
@@ -821,8 +863,7 @@ header.scrolled {
 
 #contact .section-title {
     color: white;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .section-title {
@@ -830,13 +871,9 @@ header.scrolled {
     font-size: 42px;
     margin-bottom: 50px;
     color: white;
-    font-weight: 800;
+    font-weight: 700;
     font-family: 'Heebo', sans-serif;
-    letter-spacing: 1px;
-    text-shadow:
-        0 0 20px rgba(255, 255, 255, 0.3),
-        0 0 40px rgba(102, 126, 234, 0.2),
-        2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.5px;
 }
 
 .reasons-grid {
@@ -946,8 +983,7 @@ header.scrolled {
 
 .payment-section .section-title {
     color: white;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .payment-security {
@@ -989,14 +1025,9 @@ header.scrolled {
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.2);
     backdrop-filter: blur(10px);
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s ease;
-}
-
-.payment-container.animate {
     opacity: 1;
     transform: translateY(0);
+    transition: all 0.6s ease;
 }
 
 .payment-container img {
@@ -1280,7 +1311,7 @@ footer {
 
 .scroll-to-top {
     position: fixed;
-    bottom: 30px;
+    bottom: 100px;
     left: 30px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -1392,8 +1423,9 @@ footer {
     position: fixed;
     bottom: 240px;
     left: 30px;
-    width: 450px;
+    width: 550px;
     max-width: calc(100vw - 60px);
+    max-height: 80vh;
     background: white;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.2);
@@ -1439,7 +1471,8 @@ footer {
 .chatbot-messages {
     flex: 1;
     padding: 20px;
-    max-height: 400px;
+    max-height: 500px;
+    min-height: 350px;
     overflow-y: auto;
     background: #f8f9fa;
 }
@@ -1965,8 +1998,16 @@ footer {
 }
 
 .pricing-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    transform: scale(1.08) translateY(-5px);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    box-shadow:
+        0 15px 40px rgba(102, 126, 234, 0.6),
+        0 0 40px rgba(118, 75, 162, 0.4),
+        0 0 60px rgba(102, 126, 234, 0.3);
+}
+
+.pricing-btn:active {
+    transform: scale(0.98);
 }
 
 .popular-btn {
@@ -1975,7 +2016,16 @@ footer {
 }
 
 .popular-btn:hover {
-    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.4);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow:
+        0 15px 40px rgba(102, 126, 234, 0.6),
+        0 0 40px rgba(255, 255, 255, 0.5),
+        0 0 60px rgba(118, 75, 162, 0.4);
+}
+
+.popular-btn:active {
+    transform: scale(0.98);
 }
 
 /* Trust Badges */
@@ -2077,8 +2127,7 @@ footer {
     font-size: 36px;
     margin-bottom: 60px;
     color: white;
-    font-weight: bold;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    font-weight: 700;
 }
 
 .timeline {
@@ -2243,14 +2292,31 @@ footer {
 .tech-section {
     padding: 80px 0;
     background: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.tech-section .tech-animated-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0a1628 0%, #1a365d 50%, #0d2137 100%);
+    z-index: 0;
+}
+
+.tech-section .container {
+    position: relative;
+    z-index: 2;
 }
 
 .tech-title {
     text-align: center;
     font-size: 36px;
     margin-bottom: 50px;
-    color: #667eea;
-    font-weight: bold;
+    color: white;
+    font-weight: 700;
 }
 
 .code-showcase {
@@ -2355,7 +2421,7 @@ footer {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 15px;
+        gap: 6px;
         width: 100%;
         padding: 0;
     }
@@ -2366,12 +2432,15 @@ footer {
     }
 
     .nav-link {
-        font-size: 14px;
-        padding: 8px 15px;
+        font-size: 11px;
+        padding: 5px 10px;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 20px;
+        border-radius: 15px;
         transition: all 0.3s ease;
         color: white;
+        min-width: 65px;
+        text-align: center;
+        font-weight: 500;
     }
 
     .nav-link:hover {
@@ -2586,17 +2655,17 @@ footer {
     }
 
     .scroll-to-top {
-        width: 50px;
-        height: 50px;
-        bottom: 110px;
+        width: 55px;
+        height: 55px;
+        bottom: 120px;
         left: 15px;
-        font-size: 20px;
+        font-size: 22px;
     }
 
     .whatsapp-float {
-        width: 50px;
-        height: 50px;
-        bottom: 50px;
+        width: 55px;
+        height: 55px;
+        bottom: 55px;
         left: 15px;
     }
 
@@ -2647,11 +2716,15 @@ footer {
     }
 
     .chatbot-window {
-        max-height: 70vh;
+        max-height: 85vh;
+        width: calc(100vw - 20px);
+        left: 10px;
+        bottom: 230px;
     }
 
     .chatbot-messages {
-        max-height: 300px;
+        max-height: 400px;
+        min-height: 300px;
     }
 
     .calculator-container {
@@ -2763,22 +2836,24 @@ footer {
     }
 
     .chatbot-window {
-        bottom: 240px;
-        left: 15px;
-        width: calc(100vw - 30px);
+        bottom: 230px;
+        left: 10px;
+        width: calc(100vw - 20px);
+        max-height: 85vh;
     }
 
     .chatbot-header {
-        padding: 15px;
+        padding: 18px;
     }
 
     .chatbot-header h3 {
-        font-size: 16px;
+        font-size: 17px;
     }
 
     .chatbot-messages {
-        padding: 15px;
-        max-height: 350px;
+        padding: 18px;
+        max-height: 450px;
+        min-height: 300px;
     }
 
     .chat-options {
@@ -3583,7 +3658,7 @@ footer::before {
 
 .portfolio-section .section-title {
     color: white;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    font-weight: 700;
 }
 
 .section-subtitle {
@@ -3783,7 +3858,7 @@ footer::before {
 
 .services-overview .section-title {
     color: white;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    font-weight: 700;
 }
 
 .service-card {
@@ -3849,7 +3924,7 @@ footer::before {
 
 .testimonials-section .section-title {
     color: white;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    font-weight: 700;
 }
 
 .testimonials-grid {
@@ -4246,31 +4321,52 @@ footer::before {
     border-radius: 50px;
     font-size: 18px;
     font-weight: 700;
+    font-family: 'Heebo', sans-serif;
     text-decoration: none;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .cta-btn.primary {
-    background: white;
-    color: #667eea;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.5);
 }
 
 .cta-btn.primary:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+    transform: scale(1.08) translateY(-3px);
+    background: rgba(255, 255, 255, 0.95);
+    color: #667eea;
+    border-color: white;
+    box-shadow:
+        0 10px 40px rgba(255, 255, 255, 0.5),
+        0 0 30px rgba(255, 255, 255, 0.4),
+        inset 0 0 20px rgba(102, 126, 234, 0.1);
+}
+
+.cta-btn.primary:active {
+    transform: scale(0.98);
 }
 
 .cta-btn.secondary {
-    background: rgba(255, 255, 255, 0.15);
+    background: transparent;
     color: white;
     border: 2px solid rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(10px);
 }
 
 .cta-btn.secondary:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: translateY(-5px);
+    transform: scale(1.08) translateY(-3px);
+    background: rgba(255, 255, 255, 0.9);
+    color: #667eea;
+    border-color: white;
+    box-shadow:
+        0 10px 40px rgba(255, 255, 255, 0.5),
+        0 0 30px rgba(255, 255, 255, 0.4);
+}
+
+.cta-btn.secondary:active {
+    transform: scale(0.98);
 }
 
 /* CTA Section Responsive */
@@ -4314,5 +4410,531 @@ footer::before {
         width: 100%;
         max-width: 300px;
         justify-content: center;
+    }
+}
+
+/* ========================================
+   Enhanced Mobile Optimization
+======================================== */
+
+/* Smooth scrolling for all devices */
+html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Better touch targets - minimum 44px for accessibility */
+@media (max-width: 768px) {
+    /* Improved touch targets */
+    a, button, .btn, .pricing-btn, .cta-btn, .nav-link {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* Better text readability */
+    body {
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    /* Improved spacing */
+    .container {
+        padding: 0 20px;
+    }
+
+    /* Hero section mobile optimization */
+    .hero {
+        padding: 40px 0 60px;
+    }
+
+    .hero h1 {
+        font-size: 26px;
+        line-height: 1.4;
+        padding: 0 10px;
+    }
+
+    .hero p {
+        font-size: 16px;
+        line-height: 1.6;
+        padding: 0 10px;
+    }
+
+    /* Cards optimization */
+    .reason-card,
+    .pricing-card,
+    .contact-card,
+    .trust-badge {
+        padding: 25px 20px;
+        margin-bottom: 15px;
+    }
+
+    /* Form optimization for mobile */
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        font-size: 16px !important; /* Prevent zoom on iOS */
+        padding: 15px;
+        border-radius: 12px;
+    }
+
+    /* Better button styling on mobile */
+    .btn, .pricing-btn, .submit-btn {
+        padding: 16px 30px;
+        font-size: 16px;
+        border-radius: 30px;
+        font-weight: 600;
+    }
+
+    /* Timeline mobile optimization */
+    .timeline-content {
+        padding: 20px;
+    }
+
+    .timeline-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 22px;
+    }
+
+    /* Stats section mobile */
+    .stat-item {
+        padding: 25px 20px;
+    }
+
+    .stat-number {
+        font-size: 32px;
+    }
+
+    .stat-label {
+        font-size: 15px;
+    }
+
+    /* Header mobile improvements */
+    header {
+        padding: 10px 0;
+    }
+
+    .nav-link {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+
+    /* Footer mobile */
+    footer {
+        padding: 30px 20px;
+        text-align: center;
+    }
+
+    footer p {
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+    body {
+        font-size: 15px;
+    }
+
+    .hero h1 {
+        font-size: 24px;
+    }
+
+    .section-title,
+    .process-title,
+    .tech-title {
+        font-size: 24px;
+        padding: 0 10px;
+    }
+
+    .pricing-card {
+        padding: 20px 15px;
+    }
+
+    .pricing-title {
+        font-size: 20px;
+    }
+
+    .amount {
+        font-size: 24px;
+    }
+
+    .nav-menu {
+        gap: 8px;
+    }
+
+    .nav-link {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    /* Floating buttons spacing */
+    .chatbot-button {
+        bottom: 185px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .scroll-to-top {
+        bottom: 125px;
+    }
+
+    .whatsapp-float {
+        bottom: 60px;
+    }
+}
+
+/* Landscape mobile optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero {
+        padding: 30px 0;
+    }
+
+    .hero h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .hero p {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .chatbot-window {
+        max-height: 70vh;
+    }
+
+    .chatbot-messages {
+        max-height: 200px;
+    }
+}
+
+/* Performance optimizations for mobile */
+@media (max-width: 768px) {
+    /* Reduce animations on mobile for better performance */
+    .reason-card:hover,
+    .pricing-card:hover,
+    .trust-badge:hover {
+        transform: translateY(-5px);
+    }
+
+    /* Disable heavy hover effects on mobile */
+    .reason-card:hover .reason-icon {
+        transform: scale(1.05);
+    }
+
+    .pricing-card:hover .pricing-icon {
+        transform: none;
+    }
+
+    /* Optimize images */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Reduce particle effects on mobile */
+    .floating-particles span {
+        display: none;
+    }
+
+    .floating-particles span:nth-child(1),
+    .floating-particles span:nth-child(2),
+    .floating-particles span:nth-child(3) {
+        display: block;
+        width: 8px;
+        height: 8px;
+    }
+}
+
+/* ========================================
+   Enhanced Scrolling Graphics & Effects
+======================================== */
+
+/* Scroll reveal animations */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal-on-scroll.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered reveal animations */
+.reveal-on-scroll:nth-child(1) { transition-delay: 0.1s; }
+.reveal-on-scroll:nth-child(2) { transition-delay: 0.2s; }
+.reveal-on-scroll:nth-child(3) { transition-delay: 0.3s; }
+.reveal-on-scroll:nth-child(4) { transition-delay: 0.4s; }
+.reveal-on-scroll:nth-child(5) { transition-delay: 0.5s; }
+.reveal-on-scroll:nth-child(6) { transition-delay: 0.6s; }
+
+/* Enhanced card hover with 3D perspective */
+.reason-card,
+.pricing-card,
+.trust-badge,
+.code-card {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+/* Smooth gradient animation on hover */
+.reason-card::after,
+.pricing-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(102, 126, 234, 0.15) 0%,
+        transparent 50%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    border-radius: inherit;
+    z-index: 0;
+}
+
+.reason-card:hover::after,
+.pricing-card:hover::after {
+    opacity: 1;
+}
+
+/* Parallax floating elements */
+.parallax-float {
+    will-change: transform;
+    transition: transform 0.3s ease-out;
+}
+
+/* Enhanced timeline animation */
+.timeline-item {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-item:nth-child(even) {
+    transform: translateX(50px);
+}
+
+.timeline-item.animate {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Glowing border effect on hover */
+.glow-border {
+    position: relative;
+}
+
+.glow-border::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+    background-size: 200% 200%;
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    animation: gradientBorder 3s ease infinite;
+}
+
+.glow-border:hover::before {
+    opacity: 1;
+}
+
+@keyframes gradientBorder {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Smooth scroll indicator pulse */
+.scroll-indicator {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 50px;
+    border: 2px solid rgba(102, 126, 234, 0.5);
+    border-radius: 25px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 100;
+}
+
+.scroll-indicator.visible {
+    opacity: 1;
+}
+
+.scroll-indicator::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 10px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 3px;
+    animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+    50% {
+        transform: translateX(-50%) translateY(20px);
+        opacity: 0.3;
+    }
+}
+
+/* Section separator wave animation */
+.section-wave {
+    position: relative;
+    overflow: hidden;
+}
+
+.section-wave::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 60px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%23ffffff'/%3E%3C/svg%3E");
+    background-size: 50% 100%;
+    animation: waveMove 15s linear infinite;
+}
+
+@keyframes waveMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Note: Section fade-in removed to prevent page visibility issues */
+
+/* Button effects removed for clean design */
+
+/* Gradient text animation */
+.gradient-text-animated {
+    background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: textGradient 3s linear infinite;
+}
+
+@keyframes textGradient {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+/* Card entrance animations */
+.card-enter {
+    animation: cardEnter 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes cardEnter {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Floating animation for icons */
+.float-icon {
+    animation: floatIcon 3s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Enhanced shadow on scroll */
+.shadow-on-scroll {
+    transition: box-shadow 0.3s ease;
+}
+
+.shadow-on-scroll.scrolled {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Smooth image reveal */
+.image-reveal {
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.image-reveal.revealed {
+    clip-path: inset(0 0 0 0);
+}
+
+/* Desktop-only parallax enhancement */
+@media (min-width: 769px) and (hover: hover) {
+    .parallax-section {
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .reason-card:hover {
+        transform: translateY(-15px) rotateX(5deg);
+        box-shadow: 0 25px 50px rgba(102, 126, 234, 0.3);
+    }
+
+    .pricing-card:hover {
+        box-shadow: 0 30px 60px rgba(102, 126, 234, 0.3);
+    }
+
+    .trust-badge:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+    }
+}
+
+/* Disable heavy animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .reveal-on-scroll {
+        opacity: 1;
+        transform: none;
+    }
+
+    .timeline-item {
+        opacity: 1;
+        transform: none;
+    }
+
+    section {
+        opacity: 1;
+        transform: none;
     }
 }
