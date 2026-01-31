@@ -418,7 +418,13 @@
       // הוספת tabindex לאלמנטים אינטראקטיביים
       const interactiveElements = document.querySelectorAll(
         'a, button, input, select, textarea, [role="button"], ' +
-        'h1, h2, h3, h4, h5, h6, p, li'
+        'h1, h2, h3, h4, h5, h6, p, li, ' +
+        '.service-card, .portfolio-item, .testimonial-card, .reason-card, ' +
+        '.pricing-card, .timeline-item, .stat-item, .contact-card, ' +
+        '.trust-badge, .hero-feature, .code-card, .faq-item, ' +
+        '[role="listitem"], [role="article"], [role="region"], ' +
+        '.nav-link, .btn, .cta-btn, .submit-btn, ' +
+        'article, section > .container > *, footer a, header a'
       );
       interactiveElements.forEach(el => {
         if (!el.hasAttribute('tabindex') && !el.closest('.accessibility-panel')) {
@@ -426,6 +432,46 @@
           el.setAttribute('data-keyboard-nav-added', 'true');
         }
       });
+
+      // Add Enter key and Arrow keys support for focusable non-interactive elements
+      this.keyboardNavHandler = (e) => {
+        if (e.key === 'Enter' && e.target.hasAttribute('data-keyboard-nav-added')) {
+          const link = e.target.querySelector('a');
+          if (link) {
+            link.click();
+          } else if (e.target.onclick) {
+            e.target.onclick(e);
+          }
+        }
+
+        // Arrow keys navigation (like Tab)
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+          e.preventDefault();
+          const focusableElements = Array.from(document.querySelectorAll(
+            'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), ' +
+            'textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )).filter(el => !el.closest('.accessibility-panel') && el.offsetParent !== null);
+
+          const currentIndex = focusableElements.indexOf(document.activeElement);
+
+          if (currentIndex !== -1) {
+            let nextIndex;
+            if (e.key === 'ArrowRight') {
+              // RTL: ArrowRight goes backwards (like Shift+Tab)
+              nextIndex = currentIndex - 1;
+              if (nextIndex < 0) nextIndex = focusableElements.length - 1;
+            } else {
+              // RTL: ArrowLeft goes forwards (like Tab)
+              nextIndex = currentIndex + 1;
+              if (nextIndex >= focusableElements.length) nextIndex = 0;
+            }
+            focusableElements[nextIndex].focus();
+          } else if (focusableElements.length > 0) {
+            focusableElements[0].focus();
+          }
+        }
+      };
+      document.addEventListener('keydown', this.keyboardNavHandler);
     },
 
     disableFullKeyboardNav() {
@@ -434,6 +480,11 @@
         el.removeAttribute('tabindex');
         el.removeAttribute('data-keyboard-nav-added');
       });
+
+      // Remove keyboard nav handler
+      if (this.keyboardNavHandler) {
+        document.removeEventListener('keydown', this.keyboardNavHandler);
+      }
     },
 
     toggleFeature(feature, btn) {
@@ -453,6 +504,14 @@
     changeTextSize(delta) {
       this.textSize = Math.max(80, Math.min(150, this.textSize + delta));
       document.documentElement.style.fontSize = this.textSize + '%';
+
+      // Add class to enable CSS scaling for all elements
+      if (this.textSize !== 100) {
+        document.documentElement.classList.add('text-size-changed');
+      } else {
+        document.documentElement.classList.remove('text-size-changed');
+      }
+
       this.announce(`גודל טקסט שונה ל-${this.textSize}%`);
       this.saveSettings();
     },
@@ -505,6 +564,7 @@
       // הסרת כל המחלקות
       document.body.className = '';
       document.documentElement.style.fontSize = '';
+      document.documentElement.classList.remove('text-size-changed');
       document.documentElement.setAttribute('dir', 'rtl');
 
       // איפוס משתנים
@@ -581,6 +641,11 @@
         document.body.className = settings.classes || '';
         this.textSize = settings.textSize || 100;
         document.documentElement.style.fontSize = this.textSize + '%';
+
+        // Add class if text size is not default
+        if (this.textSize !== 100) {
+          document.documentElement.classList.add('text-size-changed');
+        }
 
         // טעינת מצב כפתורים
         if (settings.buttonStates) {

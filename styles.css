@@ -827,11 +827,16 @@ header.scrolled {
 
 .section-title {
     text-align: center;
-    font-size: 36px;
+    font-size: 42px;
     margin-bottom: 50px;
     color: white;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-    font-weight: bold;
+    font-weight: 800;
+    font-family: 'Heebo', sans-serif;
+    letter-spacing: 1px;
+    text-shadow:
+        0 0 20px rgba(255, 255, 255, 0.3),
+        0 0 40px rgba(102, 126, 234, 0.2),
+        2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .reasons-grid {
@@ -1387,7 +1392,7 @@ footer {
     position: fixed;
     bottom: 240px;
     left: 30px;
-    width: 350px;
+    width: 450px;
     max-width: calc(100vw - 60px);
     background: white;
     border-radius: 20px;
@@ -1434,7 +1439,7 @@ footer {
 .chatbot-messages {
     flex: 1;
     padding: 20px;
-    max-height: 300px;
+    max-height: 400px;
     overflow-y: auto;
     background: #f8f9fa;
 }
@@ -1830,19 +1835,32 @@ footer {
     backdrop-filter: blur(10px);
 }
 
+.price-range {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0;
+}
+
 .currency {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
-    color: #667eea;
-    margin-left: 5px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .pricing-card.popular .currency {
-    color: white;
+    background: white;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .amount {
-    font-size: 42px;
+    font-size: 36px;
     font-weight: 900;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     -webkit-background-clip: text;
@@ -1855,6 +1873,17 @@ footer {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+}
+
+.amount-separator {
+    font-size: 24px;
+    font-weight: 700;
+    color: #667eea;
+    margin: 0 5px;
+}
+
+.pricing-card.popular .amount-separator {
+    color: white;
 }
 
 .pricing-features {
@@ -2618,11 +2647,11 @@ footer {
     }
 
     .chatbot-window {
-        max-height: 60vh;
+        max-height: 70vh;
     }
 
     .chatbot-messages {
-        max-height: 200px;
+        max-height: 300px;
     }
 
     .calculator-container {
@@ -2670,11 +2699,15 @@ footer {
     }
 
     .amount {
-        font-size: 36px;
+        font-size: 28px;
     }
 
     .currency {
-        font-size: 20px;
+        font-size: 16px;
+    }
+
+    .amount-separator {
+        font-size: 18px;
     }
 
     .pricing-features li {
@@ -2724,13 +2757,13 @@ footer {
     .chatbot-button {
         width: 50px;
         height: 50px;
-        bottom: 160px;
+        bottom: 175px;
         left: 15px;
         font-size: 22px;
     }
 
     .chatbot-window {
-        bottom: 220px;
+        bottom: 240px;
         left: 15px;
         width: calc(100vw - 30px);
     }
@@ -2745,7 +2778,7 @@ footer {
 
     .chatbot-messages {
         padding: 15px;
-        max-height: 250px;
+        max-height: 350px;
     }
 
     .chat-options {
@@ -2846,7 +2879,7 @@ footer {
     }
 
     .chatbot-window {
-        width: 400px;
+        width: 480px;
     }
 
     .scroll-to-top {
@@ -2906,7 +2939,7 @@ footer {
     }
 
     .scroll-to-top {
-        bottom: 110px;
+        bottom: 130px;
         left: 10px;
     }
 
@@ -2933,7 +2966,7 @@ footer {
     }
 
     .chatbot-messages {
-        max-height: 180px;
+        max-height: 280px;
     }
 
     .message-bubble {
@@ -2978,12 +3011,12 @@ footer {
     }
 
     .chatbot-window {
-        max-height: 50vh;
+        max-height: 60vh;
         bottom: 190px;
     }
 
     .chatbot-messages {
-        max-height: 150px;
+        max-height: 200px;
     }
 }
 
@@ -3268,33 +3301,6 @@ footer {
     50% { background-position: 100% 50%; }
 }
 
-/* Shimmer Loading Effect */
-.shimmer {
-    position: relative;
-    overflow: hidden;
-}
-
-.shimmer::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.4),
-        transparent
-    );
-    animation: shimmerEffect 2s infinite;
-}
-
-@keyframes shimmerEffect {
-    0% { left: -100%; }
-    100% { left: 200%; }
-}
-
 /* Hover Reveal Effect */
 .hover-reveal {
     position: relative;
@@ -3570,6 +3576,11 @@ footer::before {
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
 }
 
+.portfolio-section .container {
+    position: relative;
+    z-index: 2;
+}
+
 .portfolio-section .section-title {
     color: white;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
@@ -3748,6 +3759,11 @@ footer::before {
     position: relative;
 }
 
+.services-overview .container {
+    position: relative;
+    z-index: 2;
+}
+
 .services-overview::before {
     content: '';
     position: absolute;
@@ -3824,6 +3840,11 @@ footer::before {
     padding: 100px 0;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     position: relative;
+}
+
+.testimonials-section .container {
+    position: relative;
+    z-index: 2;
 }
 
 .testimonials-section .section-title {
@@ -4160,5 +4181,138 @@ footer::before {
 
     .contact-info-cards {
         grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================
+   CTA Section Styles
+======================================== */
+
+/* CTA Section */
+.cta-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    animation: rotateBg 30s linear infinite;
+}
+
+@keyframes rotateBg {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.cta-content {
+    position: relative;
+    z-index: 2;
+}
+
+.cta-content h2 {
+    font-size: 48px;
+    color: white;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cta-content p {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 40px;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 40px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.cta-btn.primary {
+    background: white;
+    color: #667eea;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.cta-btn.primary:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+}
+
+.cta-btn.secondary {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+.cta-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-5px);
+}
+
+/* CTA Section Responsive */
+@media (max-width: 768px) {
+    .cta-section {
+        text-align: center;
+    }
+
+    .cta-section .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cta-content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cta-content h2 {
+        font-size: 32px;
+        text-align: center;
+    }
+
+    .cta-content p {
+        font-size: 16px;
+        padding: 0 20px;
+        text-align: center;
+    }
+
+    .cta-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .cta-btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
     }
 }

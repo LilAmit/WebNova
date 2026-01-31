@@ -702,23 +702,7 @@ document.querySelectorAll('.trust-badge, .info-item, .payment-method').forEach(e
     revealObserver.observe(el);
 });
 
-// Add shimmer effect to section titles on scroll
-const titleObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('shimmer');
-            setTimeout(() => {
-                entry.target.classList.remove('shimmer');
-            }, 2000);
-        }
-    });
-}, {
-    threshold: 0.5
-});
-
-document.querySelectorAll('.section-title, .process-title, .tech-title').forEach(title => {
-    titleObserver.observe(title);
-});
+// Section titles styling is handled by CSS only (no shimmer effect)
 
 // Tilt effect for pricing cards (3D hover)
 document.querySelectorAll('.pricing-card').forEach(card => {
