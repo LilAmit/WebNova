@@ -461,16 +461,15 @@ body.dark-mode-active select {
 }
 
 /* ===== ניגודיות גבוהה צהוב-שחור ===== */
-body.high-contrast-yellow-active {
+body.high-contrast-yellow-active,
+body.high-contrast-yellow-active * {
   background: #000000 !important;
+  background-color: #000000 !important;
   background-image: none !important;
   color: #ffff00 !important;
-}
-
-body.high-contrast-yellow-active * {
-  background-color: #000000 !important;
-  color: #ffff00 !important;
   border-color: #ffff00 !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
 }
 
 body.high-contrast-yellow-active h1,
@@ -478,31 +477,103 @@ body.high-contrast-yellow-active h2,
 body.high-contrast-yellow-active h3,
 body.high-contrast-yellow-active h4,
 body.high-contrast-yellow-active h5,
-body.high-contrast-yellow-active h6 {
+body.high-contrast-yellow-active h6,
+body.high-contrast-yellow-active p,
+body.high-contrast-yellow-active span,
+body.high-contrast-yellow-active li,
+body.high-contrast-yellow-active label,
+body.high-contrast-yellow-active strong,
+body.high-contrast-yellow-active i,
+body.high-contrast-yellow-active em {
   color: #ffff00 !important;
-  text-shadow: none !important;
+  background: transparent !important;
+  -webkit-text-fill-color: #ffff00 !important;
 }
 
-body.high-contrast-yellow-active a {
+body.high-contrast-yellow-active a,
+body.high-contrast-yellow-active a * {
   color: #00ffff !important;
+  -webkit-text-fill-color: #00ffff !important;
   text-decoration: underline !important;
+  background: transparent !important;
 }
 
-body.high-contrast-yellow-active button:not(.accessibility-panel button) {
+body.high-contrast-yellow-active button:not(.accessibility-panel button),
+body.high-contrast-yellow-active .btn,
+body.high-contrast-yellow-active .cta-btn,
+body.high-contrast-yellow-active .submit-btn,
+body.high-contrast-yellow-active .pricing-btn,
+body.high-contrast-yellow-active input[type="submit"],
+body.high-contrast-yellow-active input[type="button"] {
   background: #ffff00 !important;
   color: #000000 !important;
   border: 2px solid #ffff00 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+body.high-contrast-yellow-active button:not(.accessibility-panel button) *,
+body.high-contrast-yellow-active .btn *,
+body.high-contrast-yellow-active .cta-btn *,
+body.high-contrast-yellow-active .submit-btn *,
+body.high-contrast-yellow-active .pricing-btn * {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  background: transparent !important;
+}
+
+body.high-contrast-yellow-active input,
+body.high-contrast-yellow-active textarea,
+body.high-contrast-yellow-active select {
+  background: #000000 !important;
+  color: #ffff00 !important;
+  border: 2px solid #ffff00 !important;
+}
+
+body.high-contrast-yellow-active input::placeholder,
+body.high-contrast-yellow-active textarea::placeholder {
+  color: #cccc00 !important;
+}
+
+body.high-contrast-yellow-active img,
+body.high-contrast-yellow-active svg:not(.accessibility-panel svg),
+body.high-contrast-yellow-active video {
+  filter: grayscale(100%) contrast(120%) !important;
+}
+
+body.high-contrast-yellow-active .blob,
+body.high-contrast-yellow-active .animated-bg,
+body.high-contrast-yellow-active .floating-shapes,
+body.high-contrast-yellow-active .shape,
+body.high-contrast-yellow-active .tech-animated-bg,
+body.high-contrast-yellow-active .tech-grid,
+body.high-contrast-yellow-active .floating-particles,
+body.high-contrast-yellow-active .hero-particles,
+body.high-contrast-yellow-active .particle,
+body.high-contrast-yellow-active .card-glow,
+body.high-contrast-yellow-active .hero-wave,
+body.high-contrast-yellow-active .loading-particles {
+  display: none !important;
+}
+
+body.high-contrast-yellow-active ::selection {
+  background: #ffff00 !important;
+  color: #000000 !important;
 }
 
 /* ===== צבעים הפוכים ===== */
-body.invert-colors-active header,
-body.invert-colors-active main,
-body.invert-colors-active footer {
+/* Apply invert to all main content elements, not body (to preserve fixed positioning) */
+body.invert-colors-active > *:not(.accessibility-panel):not(.accessibility-trigger):not(#skipLinks):not(#readingGuide):not(#srAnnouncer) {
   filter: invert(1) hue-rotate(180deg);
 }
 
+body.invert-colors-active {
+  background: #ffffff !important;
+}
+
 body.invert-colors-active img,
-body.invert-colors-active video {
+body.invert-colors-active video,
+body.invert-colors-active picture,
+body.invert-colors-active svg:not(.accessibility-panel svg):not(.whatsapp-float svg) {
   filter: invert(1) hue-rotate(180deg);
 }
 
@@ -529,6 +600,50 @@ body.line-height-active * {
 /* ===== מרווח אותיות ===== */
 body.letter-spacing-active * {
   letter-spacing: 0.12em !important;
+}
+
+/* ===== גודל טקסט מוגדל ===== */
+html.text-size-changed * {
+  font-size: inherit !important;
+}
+
+html.text-size-changed body,
+html.text-size-changed p,
+html.text-size-changed span,
+html.text-size-changed li,
+html.text-size-changed a,
+html.text-size-changed label,
+html.text-size-changed input,
+html.text-size-changed textarea,
+html.text-size-changed select,
+html.text-size-changed button,
+html.text-size-changed td,
+html.text-size-changed th {
+  font-size: 1em !important;
+}
+
+html.text-size-changed h1 {
+  font-size: 2.5em !important;
+}
+
+html.text-size-changed h2 {
+  font-size: 2em !important;
+}
+
+html.text-size-changed h3 {
+  font-size: 1.5em !important;
+}
+
+html.text-size-changed h4 {
+  font-size: 1.25em !important;
+}
+
+html.text-size-changed h5 {
+  font-size: 1.1em !important;
+}
+
+html.text-size-changed h6 {
+  font-size: 1em !important;
 }
 
 /* ===== סמן גדול ===== */
@@ -564,22 +679,65 @@ body.stop-animations-active *::after {
 }
 
 /* ===== הסתרת תמונות ===== */
+/* Hide images and media */
 body.hide-media-active img,
 body.hide-media-active video,
 body.hide-media-active iframe,
-body.hide-media-active svg:not(.accessibility-panel svg),
+body.hide-media-active svg:not(.accessibility-panel svg):not(.whatsapp-float svg),
 body.hide-media-active picture {
   display: none !important;
 }
 
+/* Hide background decorations */
+body.hide-media-active .blob-container,
+body.hide-media-active .blob,
+body.hide-media-active .animated-bg,
+body.hide-media-active .floating-shapes,
+body.hide-media-active .shape,
+body.hide-media-active .tech-animated-bg,
+body.hide-media-active .tech-grid,
+body.hide-media-active .floating-particles,
+body.hide-media-active .hero-particles,
+body.hide-media-active .loading-particles,
+body.hide-media-active .particle,
+body.hide-media-active .floating-3d-elements,
+body.hide-media-active .floating-cube,
+body.hide-media-active .floating-sphere,
+body.hide-media-active .floating-ring,
+body.hide-media-active .cube-face,
+body.hide-media-active .card-glow,
+body.hide-media-active .hero-wave {
+  display: none !important;
+}
+
+/* Set black background for body and main containers */
 body.hide-media-active {
+  background: #000000 !important;
+  background-image: none !important;
+}
+
+body.hide-media-active header,
+body.hide-media-active footer,
+body.hide-media-active section,
+body.hide-media-active main,
+body.hide-media-active .hero,
+body.hide-media-active .page-hero,
+body.hide-media-active .payment-hero,
+body.hide-media-active .contact-hero {
+  background: #000000 !important;
   background-image: none !important;
 }
 
 /* ===== שמירת פאנל נגישות ללא מצבים ===== */
 body.high-contrast-yellow-active .accessibility-panel,
-body.invert-colors-active .accessibility-panel,
 body.dark-mode-active .accessibility-panel {
+  position: fixed !important;
+  background: white !important;
+  filter: none !important;
+  z-index: 100000 !important;
+}
+
+body.invert-colors-active .accessibility-panel {
   position: fixed !important;
   background: white !important;
   filter: none !important;
@@ -594,8 +752,12 @@ body.dark-mode-active .accessibility-panel.active {
 }
 
 body.high-contrast-yellow-active .accessibility-panel *,
-body.invert-colors-active .accessibility-panel *,
 body.dark-mode-active .accessibility-panel * {
+  filter: none !important;
+}
+
+body.invert-colors-active .accessibility-panel *,
+body.invert-colors-active .accessibility-trigger * {
   filter: none !important;
 }
 
@@ -654,7 +816,14 @@ body.dark-mode-active .accessibility-btn[aria-pressed="true"] i {
 }
 
 body.high-contrast-yellow-active .accessibility-trigger,
-body.dark-mode-active .accessibility-trigger,
+body.dark-mode-active .accessibility-trigger {
+  background: linear-gradient(135deg, #2196f3, #1976d2) !important;
+  color: white !important;
+  filter: none !important;
+  position: fixed !important;
+  z-index: 100001 !important;
+}
+
 body.invert-colors-active .accessibility-trigger {
   background: linear-gradient(135deg, #2196f3, #1976d2) !important;
   color: white !important;
