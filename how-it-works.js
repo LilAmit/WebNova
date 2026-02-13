@@ -503,7 +503,7 @@ if (chatContactForm) {
         submitBtn.textContent = 'שולח...';
         submitBtn.disabled = true;
 
-        emailjs.sendForm('service_4gvk08g', 'template_amc3bab', this)
+        emailjs.sendForm('service_xawxe8j', 'template_amc3bab', this)
             .then(function() {
                 // Show success message
                 const successMsg = document.createElement('div');

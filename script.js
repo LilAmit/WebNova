@@ -257,11 +257,25 @@ const contactForm = document.getElementById('contactForm');
 if (contactForm) {
 contactForm.addEventListener('submit', function(e) {
     e.preventDefault();
-    
+
+    // Validate all fields before submission
+    const allInputs = document.querySelectorAll('#contactForm input[required], #contactForm select[required]');
+    let hasErrors = false;
+    allInputs.forEach(input => {
+        validateField(input);
+        if (!input.classList.contains('valid')) {
+            hasErrors = true;
+        }
+    });
+
+    if (hasErrors) {
+        return;
+    }
+
     const submitBtn = document.querySelector('.submit-btn');
     const btnText = submitBtn.querySelector('.btn-text');
     const btnLoading = submitBtn.querySelector('.btn-loading');
-    
+
     btnText.style.display = 'none';
     btnLoading.style.display = 'flex';
     submitBtn.disabled = true;
@@ -274,11 +288,21 @@ contactForm.addEventListener('submit', function(e) {
         message: document.getElementById('message').value
     };
 
-    emailjs.send('service_4gvk08g', 'template_amc3bab', templateParams)
+    emailjs.send('service_xawxe8j', 'template_amc3bab', templateParams)
         .then(function(response) {
             console.log('SUCCESS!', response.status, response.text);
             document.getElementById('successMessage').style.display = 'block';
             document.getElementById('contactForm').reset();
+
+            // Reset validation states - remove checkmarks and restore icons
+            document.querySelectorAll('#contactForm input, #contactForm select').forEach(input => {
+                input.classList.remove('valid', 'invalid');
+            });
+            document.querySelectorAll('#contactForm .error-message').forEach(el => {
+                el.textContent = '';
+                el.classList.remove('show');
+            });
+
             updateFormProgress();
             
             setTimeout(() => {
@@ -305,7 +329,7 @@ formInputs.forEach(input => {
         validateField(this);
         updateFormProgress();
     });
-    
+
     input.addEventListener('blur', function() {
         validateField(this);
     });
@@ -334,16 +358,24 @@ function validateField(field) {
     
     // Phone validation
     if (fieldName === 'phone' && value) {
-        const phoneRegex = /^[0-9]{10}$/;
-        if (!phoneRegex.test(value.replace(/\s+/g, ''))) {
+        if (/[a-zA-Zא-ת]/.test(value)) {
             isValid = false;
-            errorMessage = 'מספר טלפון לא תקין (10 ספרות)';
+            errorMessage = 'מספר טלפון צריך להכיל מספרים בלבד';
+        } else {
+            const phoneRegex = /^[0-9]{10}$/;
+            if (!phoneRegex.test(value.replace(/\s+/g, ''))) {
+                isValid = false;
+                errorMessage = 'מספר טלפון לא תקין (10 ספרות)';
+            }
         }
     }
-    
+
     // Name validation
     if (fieldName === 'fullName' && value) {
-        if (value.length < 2) {
+        if (/[0-9]/.test(value)) {
+            isValid = false;
+            errorMessage = 'שם מלא צריך להכיל אותיות בלבד';
+        } else if (value.length < 2) {
             isValid = false;
             errorMessage = 'שם חייב להכיל לפחות 2 תווים';
         }
@@ -569,7 +601,7 @@ chatContactForm.addEventListener('submit', function(e) {
     submitBtn.textContent = 'שולח...';
     submitBtn.disabled = true;
 
-    emailjs.sendForm('service_4gvk08g', 'template_amc3bab', this)
+    emailjs.sendForm('service_xawxe8j', 'template_amc3bab', this)
         .then(function() {
             // Show success message
             const successMsg = document.createElement('div');

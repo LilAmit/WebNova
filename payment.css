@@ -650,11 +650,13 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .payment-main-title {
         font-size: 28px;
     }
+}
 
+@media (max-width: 480px) {
     .hero-badge {
         font-size: 12px;
         padding: 10px 18px;

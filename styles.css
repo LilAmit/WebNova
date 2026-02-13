@@ -1114,7 +1114,7 @@ header.scrolled {
 .form-group textarea,
 .form-group select {
     width: 100%;
-    padding: 14px 45px 14px 15px;
+    padding: 14px 45px 14px 45px;
     border: 2px solid #e0e0e0;
     border-radius: 10px;
     font-size: 15px;
@@ -1145,6 +1145,14 @@ header.scrolled {
     font-size: 18px;
     opacity: 0;
     transition: all 0.3s ease;
+    z-index: 2;
+}
+
+/* Hide the icon when validation is showing */
+.form-group input.valid ~ .input-icon,
+.form-group input.invalid ~ .input-icon,
+.form-group select.valid ~ .input-icon {
+    opacity: 0;
 }
 
 .form-group input.valid ~ .input-validation,
@@ -4251,7 +4259,7 @@ footer::before {
 
 @media (max-width: 768px) {
     .contact-main-title {
-        font-size: 36px;
+        font-size: 28px;
     }
 
     .contact-info-cards {
@@ -4473,7 +4481,7 @@ html {
     .form-group textarea,
     .form-group select {
         font-size: 16px !important; /* Prevent zoom on iOS */
-        padding: 15px;
+        padding: 15px 45px 15px 45px;
         border-radius: 12px;
     }
 
