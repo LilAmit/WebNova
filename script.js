@@ -1041,3 +1041,281 @@ if (window.innerWidth <= 768) {
     // Disable parallax on mobile for better performance
     window.removeEventListener('scroll', updateParallax);
 }
+
+// ========================================
+// Animation Performance Optimization
+// ========================================
+// Pause all CSS animations when the tab is not visible
+(function() {
+    const animatedBg = document.querySelector('.animated-bg');
+    const floatingShapes = document.querySelector('.floating-shapes');
+    const blobContainer = document.querySelector('.blob-container');
+
+    document.addEventListener('visibilitychange', function() {
+        const paused = document.hidden;
+        [animatedBg, floatingShapes, blobContainer].forEach(el => {
+            if (el) {
+                el.style.animationPlayState = paused ? 'paused' : 'running';
+                el.querySelectorAll('*').forEach(child => {
+                    child.style.animationPlayState = paused ? 'paused' : 'running';
+                });
+            }
+        });
+    });
+})();
+
+// ========================================
+// Page Transitions
+// ========================================
+(function() {
+    // Create transition overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'page-transition-overlay';
+    overlay.innerHTML = '<span class="page-transition-logo">WebNova</span>';
+    document.body.appendChild(overlay);
+
+    // Page enter animation
+    document.body.classList.add('page-enter');
+    setTimeout(() => document.body.classList.remove('page-enter'), 400);
+
+    // Intercept internal navigation links
+    document.addEventListener('click', function(e) {
+        const link = e.target.closest('a');
+        if (!link) return;
+
+        const href = link.getAttribute('href');
+        if (!href) return;
+
+        // Skip external links, anchors, javascript:, tel:, mailto:, whatsapp
+        if (href.startsWith('#') || href.startsWith('http') || href.startsWith('javascript:') ||
+            href.startsWith('tel:') || href.startsWith('mailto:') || href.startsWith('https://wa.me') ||
+            link.target === '_blank') return;
+
+        // Only handle internal .html links
+        if (href.endsWith('.html') || href === '/' || href === '') {
+            e.preventDefault();
+            overlay.classList.add('active');
+            setTimeout(() => {
+                window.location.href = href;
+            }, 400);
+        }
+    });
+})();
+
+// ========================================
+// 3. Letter-by-Letter Section Title Animation
+// ========================================
+(function() {
+    const titles = document.querySelectorAll('.section-title');
+
+    titles.forEach(title => {
+        const text = title.textContent.trim();
+        title.textContent = '';
+        title.setAttribute('aria-label', text);
+
+        // Split text into segments: Latin runs, Hebrew runs, spaces, and punctuation
+        // This preserves LTR word order (like "WebNova") within RTL text
+        const segments = text.match(/[a-zA-Z]+|[\u0590-\u05FF]+|\s+|[^a-zA-Z\u0590-\u05FF\s]+/g) || [];
+        let charIndex = 0;
+
+        segments.forEach(segment => {
+            if (/^\s+$/.test(segment)) {
+                // Space
+                const span = document.createElement('span');
+                span.className = 'char';
+                span.textContent = '\u00A0';
+                span.style.transitionDelay = `${charIndex * 0.03}s`;
+                title.appendChild(span);
+                charIndex++;
+                return;
+            }
+
+            const isLatin = /^[a-zA-Z]+$/.test(segment);
+
+            if (isLatin) {
+                // Wrap Latin word in LTR container to preserve letter order
+                const wrapper = document.createElement('span');
+                wrapper.style.display = 'inline-flex';
+                wrapper.style.direction = 'ltr';
+                wrapper.style.unicodeBidi = 'bidi-override';
+
+                [...segment].forEach(char => {
+                    const span = document.createElement('span');
+                    span.className = 'char';
+                    span.textContent = char;
+                    span.style.transitionDelay = `${charIndex * 0.03}s`;
+                    wrapper.appendChild(span);
+                    charIndex++;
+                });
+
+                title.appendChild(wrapper);
+            } else {
+                // Hebrew, punctuation, or other characters - render normally
+                [...segment].forEach(char => {
+                    const span = document.createElement('span');
+                    span.className = 'char';
+                    span.textContent = char;
+                    span.style.transitionDelay = `${charIndex * 0.03}s`;
+                    title.appendChild(span);
+                    charIndex++;
+                });
+            }
+        });
+    });
+
+    const titleObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('text-animated');
+                titleObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    titles.forEach(title => titleObserver.observe(title));
+})();
+
+// ========================================
+// 4. Hero Particles (Homepage)
+// ========================================
+(function() {
+    const container = document.getElementById('heroParticlesHome');
+    if (!container) return;
+
+    const count = 40;
+    for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'hero-particle';
+        const size = Math.random() * 5 + 2;
+        const duration = Math.random() * 15 + 10;
+        const delay = Math.random() * 10;
+        const startX = Math.random() * 100;
+        const startY = Math.random() * 100;
+        const brightness = Math.random() * 0.4 + 0.2;
+
+        p.style.cssText = `
+            width: ${size}px;
+            height: ${size}px;
+            background: rgba(255, 255, 255, ${brightness});
+            left: ${startX}%;
+            top: ${startY}%;
+            animation: heroFloat ${duration}s ease-in-out ${delay}s infinite;
+        `;
+        container.appendChild(p);
+    }
+
+    if (!document.getElementById('heroParticleStyle')) {
+        const style = document.createElement('style');
+        style.id = 'heroParticleStyle';
+        style.textContent = `
+            @keyframes heroFloat {
+                0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+                25% { transform: translate(${Math.random() * 60 - 30}px, -${Math.random() * 80 + 20}px) scale(1.3); opacity: 0.7; }
+                50% { transform: translate(${Math.random() * 40 - 20}px, -${Math.random() * 60 + 10}px) scale(0.8); opacity: 0.5; }
+                75% { transform: translate(${Math.random() * 50 - 25}px, ${Math.random() * 30}px) scale(1.1); opacity: 0.6; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+})();
+
+// ========================================
+// 5. Magnetic Buttons
+// ========================================
+(function() {
+    const magneticBtns = document.querySelectorAll('.cta-btn, .btn-primary, .portfolio-btn');
+
+    magneticBtns.forEach(btn => {
+        btn.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            this.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px) scale(1.05)`;
+        });
+
+        btn.addEventListener('mouseleave', function() {
+            this.style.transform = '';
+        });
+    });
+})();
+
+// ========================================
+// 6. Infinite Tech Ticker
+// ========================================
+(function() {
+    const ticker = document.getElementById('techTicker');
+    if (!ticker) return;
+
+    const techs = [
+        { icon: 'fa-brands fa-html5', name: 'HTML5' },
+        { icon: 'fa-brands fa-css3-alt', name: 'CSS3' },
+        { icon: 'fa-brands fa-js', name: 'JavaScript' },
+        { icon: 'fa-brands fa-react', name: 'React' },
+        { icon: 'fa-brands fa-node-js', name: 'Node.js' },
+        { icon: 'fa-solid fa-mobile-screen', name: 'Responsive' },
+        { icon: 'fa-solid fa-magnifying-glass', name: 'SEO' },
+        { icon: 'fa-solid fa-gauge-high', name: 'Performance' },
+        { icon: 'fa-solid fa-shield-halved', name: 'Security' },
+        { icon: 'fa-solid fa-universal-access', name: 'Accessibility' },
+        { icon: 'fa-brands fa-figma', name: 'Figma' },
+        { icon: 'fa-solid fa-palette', name: 'UI/UX Design' },
+    ];
+
+    const itemsHTML = techs.map(t =>
+        `<div class="ticker-item"><i class="${t.icon}"></i> ${t.name}</div>`
+    ).join('');
+
+    // Duplicate for seamless loop
+    ticker.innerHTML = `<div class="ticker-track">${itemsHTML}${itemsHTML}</div>`;
+})();
+
+// ========================================
+// 7. Portfolio Image Reveal on Scroll
+// ========================================
+(function() {
+    const portfolioObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('revealed');
+                }, index * 200);
+                portfolioObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.portfolio-item').forEach(item => {
+        item.classList.add('reveal-ready');
+        portfolioObserver.observe(item);
+    });
+})();
+
+// ========================================
+// 2. Portfolio 3D Tilt Effect
+// ========================================
+(function() {
+    if (window.innerWidth <= 768) return; // Disable on mobile
+
+    document.querySelectorAll('.portfolio-item').forEach(card => {
+        card.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = (y - centerY) / 15;
+            const rotateY = (centerX - x) / 15;
+
+            this.classList.add('tilt-active');
+            this.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
+        });
+
+        card.addEventListener('mouseleave', function() {
+            this.classList.remove('tilt-active');
+            this.style.transform = '';
+        });
+    });
+})();
+

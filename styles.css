@@ -55,12 +55,17 @@ body {
     z-index: -1;
     pointer-events: none;
     overflow: hidden;
+    contain: strict;
 }
 
 .shape {
     position: absolute;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
 .shape:nth-child(1) {
@@ -1387,6 +1392,9 @@ footer {
     animation: pulse 2s infinite;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .whatsapp-float svg {
@@ -3205,6 +3213,7 @@ footer {
     overflow: hidden;
     z-index: -2;
     pointer-events: none;
+    contain: strict;
 }
 
 .blob {
@@ -3213,6 +3222,10 @@ footer {
     filter: blur(80px);
     opacity: 0.5;
     animation: blobFloat 20s ease-in-out infinite;
+    will-change: transform, border-radius;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
 .blob-1 {
@@ -3697,6 +3710,10 @@ footer::before {
     box-shadow: 0 30px 80px rgba(102, 126, 234, 0.4);
 }
 
+.portfolio-item.tilt-active:hover {
+    transform: none; /* Overridden by JS tilt */
+}
+
 .portfolio-image {
     position: relative;
     height: 250px;
@@ -4092,6 +4109,9 @@ footer::before {
         linear-gradient(90deg, rgba(102, 126, 234, 0.1) 1px, transparent 1px);
     background-size: 50px 50px;
     animation: gridMove 20s linear infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 @keyframes gridMove {
@@ -4116,6 +4136,9 @@ footer::before {
     border-radius: 50%;
     animation: floatUp 15s linear infinite;
     bottom: -100px;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .floating-particles span:nth-child(1) { left: 10%; width: 15px; height: 15px; animation-delay: 0s; animation-duration: 12s; }
@@ -4947,4 +4970,278 @@ html {
         opacity: 1;
         transform: none;
     }
+
+    .section-title .char {
+        opacity: 1;
+        transform: none;
+    }
+
+    .portfolio-item.reveal-ready .portfolio-image {
+        clip-path: none;
+    }
+
+    .portfolio-item.reveal-ready .portfolio-info {
+        opacity: 1;
+        transform: none;
+    }
+
+    .ticker-track {
+        animation: none !important;
+    }
 }
+
+/* ========================================
+   Page Transitions
+======================================== */
+.page-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.page-transition-overlay.active {
+    pointer-events: all;
+    opacity: 1;
+}
+
+.page-transition-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.page-transition-logo {
+    position: relative;
+    z-index: 1;
+    color: white;
+    font-family: 'Heebo', sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+}
+
+.page-transition-overlay.active .page-transition-logo {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Page enter animation */
+body.page-enter {
+    animation: pageEnter 0.4s ease-out forwards;
+}
+
+@keyframes pageEnter {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   1. Animated Gradient Section Titles
+======================================== */
+.section-title .char {
+    background: linear-gradient(270deg, #ffffff, #d4d8ff, #e8d0f0, #ffffff);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientText 6s ease infinite;
+}
+
+@keyframes gradientText {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ========================================
+   2. Portfolio 3D Tilt + Glow
+======================================== */
+.portfolio-item {
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.portfolio-item.tilt-active {
+    transition: none;
+}
+
+.portfolio-item::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #667eea, #a855f7, #ec4899, #667eea);
+    background-size: 300% 300%;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    animation: gradientText 4s ease infinite;
+}
+
+.portfolio-item:hover::after {
+    opacity: 1;
+}
+
+/* ========================================
+   3. Letter-by-Letter Title Animation
+======================================== */
+.section-title .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.section-title.text-animated .char {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ========================================
+   4. Hero Particles
+======================================== */
+.hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hero-particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* ========================================
+   5. Magnetic Buttons
+======================================== */
+.cta-btn,
+.btn-primary,
+.portfolio-btn {
+    transition: all 0.3s ease, transform 0.15s ease-out;
+    will-change: transform;
+}
+
+/* ========================================
+   6. Infinite Tech Ticker
+======================================== */
+.tech-ticker {
+    overflow: hidden;
+    padding: 25px 0;
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    margin: 30px 0;
+}
+
+.tech-ticker::before,
+.tech-ticker::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.tech-ticker::before {
+    left: 0;
+    background: linear-gradient(to right, rgba(102, 126, 234, 0.8), transparent);
+}
+
+.tech-ticker::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(102, 126, 234, 0.8), transparent);
+}
+
+.ticker-track {
+    display: flex;
+    gap: 50px;
+    animation: tickerScroll 25s linear infinite;
+    width: max-content;
+}
+
+.ticker-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 16px;
+    font-weight: 600;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+}
+
+.ticker-item i {
+    font-size: 22px;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+@keyframes tickerScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* ========================================
+   7. Portfolio Image Reveal
+======================================== */
+.portfolio-item.reveal-ready .portfolio-image {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.portfolio-item.revealed .portfolio-image {
+    clip-path: inset(0 0 0 0);
+}
+
+.portfolio-item.reveal-ready .portfolio-info {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
+}
+
+.portfolio-item.revealed .portfolio-info {
+    opacity: 1;
+    transform: translateY(0);
+}
+
