@@ -1033,14 +1033,108 @@ createScrollProgress();
 
 // Titles are now clean without animations
 
-// Mobile-specific optimizations
-if (window.innerWidth <= 768) {
-    // Reduce animation intensity on mobile
-    document.documentElement.style.setProperty('--animation-duration', '0.3s');
+// ========================================
+// Mobile-Specific Optimizations
+// ========================================
+(function() {
+    const isMobile = window.innerWidth <= 768;
+    const isSmallMobile = window.innerWidth <= 480;
 
-    // Disable parallax on mobile for better performance
-    window.removeEventListener('scroll', updateParallax);
-}
+    // --- Hamburger Menu ---
+    const menuToggle = document.getElementById('mobileMenuToggle');
+    const navMenu = document.getElementById('navMenu');
+    const nav = navMenu ? navMenu.closest('nav') : null;
+
+    if (menuToggle && nav) {
+        menuToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            nav.classList.toggle('mobile-open');
+        });
+
+        // Close menu when clicking a nav link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                nav.classList.remove('mobile-open');
+            });
+        });
+
+        // Close menu on outside click
+        document.addEventListener('click', function(e) {
+            if (!menuToggle.contains(e.target) && !nav.contains(e.target)) {
+                menuToggle.classList.remove('active');
+                nav.classList.remove('mobile-open');
+            }
+        });
+    }
+
+    if (isMobile) {
+        // Reduce animation intensity
+        document.documentElement.style.setProperty('--animation-duration', '0.3s');
+
+        // Disable parallax on mobile for better performance
+        window.removeEventListener('scroll', updateParallax);
+
+        // Disable heavy CSS animations on mobile
+        const heavyAnimatedEls = document.querySelectorAll('.animated-bg, .floating-shapes');
+        heavyAnimatedEls.forEach(el => {
+            el.style.animationDuration = '30s'; // Slow down instead of removing
+        });
+
+        // Disable 3D transforms on cards for smoother scrolling
+        document.querySelectorAll('.reason-card, .pricing-card, .trust-badge, .code-card').forEach(card => {
+            card.style.transformStyle = 'flat';
+            card.style.perspective = 'none';
+        });
+
+        // Passive scroll listeners for smooth performance
+        document.addEventListener('touchstart', function(){}, {passive: true});
+        document.addEventListener('touchmove', function(){}, {passive: true});
+
+        // Fix iOS viewport height (100vh issue)
+        function setVH() {
+            document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px');
+        }
+        setVH();
+        window.addEventListener('resize', setVH);
+
+        // Prevent zoom on input focus (iOS)
+        document.querySelectorAll('input, textarea, select').forEach(el => {
+            el.setAttribute('autocomplete', el.getAttribute('autocomplete') || 'off');
+        });
+    }
+
+    // --- Smart floating buttons: hide on scroll down, show on scroll up ---
+    if (isMobile) {
+        const floatingBtns = document.querySelectorAll('.scroll-to-top, .whatsapp-float, .chatbot-button');
+        let lastScrollY = window.scrollY;
+        let ticking = false;
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                requestAnimationFrame(function() {
+                    const currentScrollY = window.scrollY;
+                    const scrollingDown = currentScrollY > lastScrollY && currentScrollY > 100;
+
+                    floatingBtns.forEach(btn => {
+                        if (scrollingDown) {
+                            btn.style.transform = 'translateX(-80px)';
+                            btn.style.opacity = '0';
+                        } else {
+                            btn.style.transform = 'translateX(0)';
+                            btn.style.opacity = '1';
+                        }
+                        btn.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                    });
+
+                    lastScrollY = currentScrollY;
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, {passive: true});
+    }
+})();
 
 // ========================================
 // Animation Performance Optimization
