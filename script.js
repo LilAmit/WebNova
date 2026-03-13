@@ -273,11 +273,12 @@ contactForm.addEventListener('submit', function(e) {
     }
 
     const submitBtn = document.querySelector('.submit-btn');
+    if (!submitBtn) return;
     const btnText = submitBtn.querySelector('.btn-text');
     const btnLoading = submitBtn.querySelector('.btn-loading');
 
-    btnText.style.display = 'none';
-    btnLoading.style.display = 'flex';
+    if (btnText) btnText.style.display = 'none';
+    if (btnLoading) btnLoading.style.display = 'flex';
     submitBtn.disabled = true;
 
     const templateParams = {
@@ -313,8 +314,8 @@ contactForm.addEventListener('submit', function(e) {
             alert('אופס! משהו השתבש. אנא נסה שוב או צור קשר דרך WhatsApp.');
         })
         .finally(function() {
-            btnText.style.display = 'inline';
-            btnLoading.style.display = 'none';
+            if (btnText) btnText.style.display = 'inline';
+            if (btnLoading) btnLoading.style.display = 'none';
             submitBtn.disabled = false;
         });
 });
@@ -494,7 +495,7 @@ const chatbotBtn = document.getElementById('chatbotBtn');
 const chatbotWindow = document.getElementById('chatbotWindow');
 const chatbotClose = document.getElementById('chatbotClose');
 const chatbotMessages = document.getElementById('chatbotMessages');
-const chatOptions = document.getElementById('chatOptions');
+const chatOptions = document.getElementById('chatOptions'); // May not exist - legacy
 
 let chatbotShown = false;
 
@@ -1002,34 +1003,7 @@ document.querySelectorAll('.logo img').forEach(img => {
     imageObserver.observe(img);
 });
 
-// Scroll progress indicator
-const createScrollProgress = () => {
-    const existingProgress = document.getElementById('scroll-progress');
-    if (existingProgress) return;
-
-    const progress = document.createElement('div');
-    progress.id = 'scroll-progress';
-    progress.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 3px;
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-        z-index: 10001;
-        transition: width 0.1s ease-out;
-        width: 0%;
-    `;
-    document.body.appendChild(progress);
-
-    window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = (scrollTop / docHeight) * 100;
-        progress.style.width = `${scrollPercent}%`;
-    }, { passive: true });
-};
-
-createScrollProgress();
+// Scroll progress indicator handled by HTML element #scrollProgressBar
 
 // Titles are now clean without animations
 
@@ -1273,7 +1247,7 @@ createScrollProgress();
 // 4. Hero Particles (Homepage)
 // ========================================
 (function() {
-    const container = document.getElementById('heroParticlesHome');
+    const container = document.getElementById('heroParticlesHome') || document.getElementById('heroParticles');
     if (!container) return;
 
     const count = 40;
