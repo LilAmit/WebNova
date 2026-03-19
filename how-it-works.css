@@ -171,14 +171,16 @@
     transform: scale(0.98);
 }
 
-/* Active Navigation Link */
-.nav-link.active {
-    color: white;
-    font-weight: 700;
-}
+/* Active Navigation Link - desktop only */
+@media (min-width: 769px) {
+    .nav-link.active {
+        color: white;
+        font-weight: 700;
+    }
 
-.nav-link.active::before {
-    display: none;
+    .nav-link.active::before {
+        display: none;
+    }
 }
 
 /* Responsive Styles */

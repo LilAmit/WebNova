@@ -73,11 +73,10 @@
 /* ===== כפתור נגישות ראשי ===== */
 .accessibility-trigger {
   position: fixed;
-  top: 50%;
-  left: 15px;
-  transform: translateY(-50%);
-  width: 55px;
-  height: 55px;
+  bottom: 240px;
+  left: 30px;
+  width: 60px;
+  height: 60px;
   background: linear-gradient(135deg, #2196f3, #1976d2);
   color: white;
   border: none;
@@ -97,7 +96,7 @@
 
 .accessibility-trigger:hover,
 .accessibility-trigger:focus {
-  transform: translateY(-50%) scale(1.1);
+  transform: scale(1.1);
   box-shadow: 0 6px 20px rgba(33, 150, 243, 0.6);
   outline: none;
 }
@@ -848,7 +847,8 @@ body.invert-colors-active .accessibility-trigger {
   }
 
   .accessibility-trigger {
-    top: 40%;
+    bottom: 210px;
+    left: 15px;
     width: 50px;
     height: 50px;
     font-size: 22px;
@@ -886,7 +886,7 @@ body.invert-colors-active .accessibility-trigger {
     height: 45px;
     font-size: 20px;
     left: 10px;
-    top: 35%;
+    bottom: 175px;
   }
 
   .accessibility-panel {

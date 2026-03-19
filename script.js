@@ -1020,9 +1020,12 @@ document.querySelectorAll('.logo img').forEach(img => {
     const nav = navMenu ? navMenu.closest('nav') : null;
 
     if (menuToggle && nav) {
-        menuToggle.addEventListener('click', function() {
+        menuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
             this.classList.toggle('active');
             nav.classList.toggle('mobile-open');
+            // Lock body scroll when menu is open
+            document.body.style.overflow = nav.classList.contains('mobile-open') ? 'hidden' : '';
         });
 
         // Close menu when clicking a nav link
@@ -1030,14 +1033,25 @@ document.querySelectorAll('.logo img').forEach(img => {
             link.addEventListener('click', () => {
                 menuToggle.classList.remove('active');
                 nav.classList.remove('mobile-open');
+                document.body.style.overflow = '';
             });
         });
 
-        // Close menu on outside click
-        document.addEventListener('click', function(e) {
-            if (!menuToggle.contains(e.target) && !nav.contains(e.target)) {
+        // Close menu on clicking the overlay background
+        nav.addEventListener('click', function(e) {
+            if (e.target === nav) {
                 menuToggle.classList.remove('active');
                 nav.classList.remove('mobile-open');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Close menu on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && nav.classList.contains('mobile-open')) {
+                menuToggle.classList.remove('active');
+                nav.classList.remove('mobile-open');
+                document.body.style.overflow = '';
             }
         });
     }
@@ -1078,36 +1092,7 @@ document.querySelectorAll('.logo img').forEach(img => {
         });
     }
 
-    // --- Smart floating buttons: hide on scroll down, show on scroll up ---
-    if (isMobile) {
-        const floatingBtns = document.querySelectorAll('.scroll-to-top, .whatsapp-float, .chatbot-button');
-        let lastScrollY = window.scrollY;
-        let ticking = false;
-
-        window.addEventListener('scroll', function() {
-            if (!ticking) {
-                requestAnimationFrame(function() {
-                    const currentScrollY = window.scrollY;
-                    const scrollingDown = currentScrollY > lastScrollY && currentScrollY > 100;
-
-                    floatingBtns.forEach(btn => {
-                        if (scrollingDown) {
-                            btn.style.transform = 'translateX(-80px)';
-                            btn.style.opacity = '0';
-                        } else {
-                            btn.style.transform = 'translateX(0)';
-                            btn.style.opacity = '1';
-                        }
-                        btn.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
-                    });
-
-                    lastScrollY = currentScrollY;
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }, {passive: true});
-    }
+    // Floating buttons always visible on mobile (no hide on scroll)
 })();
 
 // ========================================
@@ -1217,8 +1202,24 @@ document.querySelectorAll('.logo img').forEach(img => {
                 });
 
                 title.appendChild(wrapper);
+            } else if (/^[\u0590-\u05FF]+$/.test(segment)) {
+                // Hebrew word - wrap in container to prevent mid-word line breaks
+                const wrapper = document.createElement('span');
+                wrapper.style.display = 'inline-flex';
+                wrapper.style.whiteSpace = 'nowrap';
+
+                [...segment].forEach(char => {
+                    const span = document.createElement('span');
+                    span.className = 'char';
+                    span.textContent = char;
+                    span.style.transitionDelay = `${charIndex * 0.03}s`;
+                    wrapper.appendChild(span);
+                    charIndex++;
+                });
+
+                title.appendChild(wrapper);
             } else {
-                // Hebrew, punctuation, or other characters - render normally
+                // Punctuation or other characters - render normally
                 [...segment].forEach(char => {
                     const span = document.createElement('span');
                     span.className = 'char';
@@ -1334,8 +1335,8 @@ document.querySelectorAll('.logo img').forEach(img => {
         `<div class="ticker-item"><i class="${t.icon}"></i> ${t.name}</div>`
     ).join('');
 
-    // Duplicate for seamless loop
-    ticker.innerHTML = `<div class="ticker-track">${itemsHTML}${itemsHTML}</div>`;
+    // Duplicate many times for seamless infinite loop with no gaps
+    ticker.innerHTML = `<div class="ticker-track">${itemsHTML}${itemsHTML}${itemsHTML}${itemsHTML}${itemsHTML}${itemsHTML}</div>`;
 })();
 
 // ========================================
