@@ -495,7 +495,7 @@ const chatbotBtn = document.getElementById('chatbotBtn');
 const chatbotWindow = document.getElementById('chatbotWindow');
 const chatbotClose = document.getElementById('chatbotClose');
 const chatbotMessages = document.getElementById('chatbotMessages');
-const chatOptions = document.getElementById('chatOptions'); // May not exist - legacy
+const chatOptions = document.getElementById('chatOptions'); // Legacy - may not exist
 
 let chatbotShown = false;
 
@@ -507,19 +507,38 @@ if (chatbotBtn && chatbotWindow && chatbotClose) {
         }
     }, 10000);
 
+    function updateAccessibilityVisibility() {
+        const trigger = document.querySelector('.accessibility-trigger');
+        if (trigger) {
+            if (chatbotWindow.classList.contains('show')) {
+                trigger.style.opacity = '0';
+                trigger.style.pointerEvents = 'none';
+                trigger.style.visibility = 'hidden';
+                trigger.style.transition = 'opacity 0.3s ease, visibility 0.3s ease';
+            } else {
+                trigger.style.opacity = '';
+                trigger.style.pointerEvents = '';
+                trigger.style.visibility = '';
+            }
+        }
+    }
+
     chatbotBtn.addEventListener('click', () => {
         chatbotWindow.classList.toggle('show');
         chatbotShown = true;
+        updateAccessibilityVisibility();
     });
 
     chatbotClose.addEventListener('click', () => {
         chatbotWindow.classList.remove('show');
+        updateAccessibilityVisibility();
     });
 
     // Close chatbot when clicking outside
     document.addEventListener('click', (e) => {
         if (chatbotBtn && chatbotWindow && !chatbotBtn.contains(e.target) && !chatbotWindow.contains(e.target)) {
             chatbotWindow.classList.remove('show');
+            updateAccessibilityVisibility();
         }
     });
 }
@@ -542,7 +561,13 @@ const keywordResponses = {
     'seo|קידום|גוגל|חיפוש': '📈 קידום אתרים (SEO):\n\n• אופטימיזציה למנועי חיפוש\n• מהירות טעינה גבוהה\n• תגיות מטא נכונות\n• מבנה אתר ידידותי לגוגל\n\nהאתר שלך יופיע בתוצאות החיפוש!',
     'טלפון|ליצור קשר|לדבר|להתקשר': '📞 דרכי יצירת קשר:\n\n• טלפון: 058-454-9087\n• אימייל: contact@webnova.co.il\n• וואטסאפ: לחץ על הכפתור הירוק\n\nנשמח לשמוע ממך!',
     'שלום|היי|הי|בוקר|ערב': '👋 שלום! נעים להכיר!\n\nאני הבוט של WebNova ואני כאן לעזור לך.\nאתה יכול לשאול אותי על מחירים, זמנים, או כל שאלה אחרת.\n\nאיך אוכל לעזור לך היום?',
-    'תודה|מעולה|אחלה|סבבה': '😊 בשמחה! אם יש עוד שאלות, אני כאן.\n\nרוצה לקבל הצעת מחיר? פשוט לחץ על הכפתור למטה!'
+    'תודה|מעולה|אחלה|סבבה': '😊 בשמחה! אם יש עוד שאלות, אני כאן.\n\nרוצה לקבל הצעת מחיר? פשוט לחץ על הכפתור למטה!',
+    'רספונסיבי|מובייל|טלפון|נייד|מותאם': '📱 כל האתרים שלנו רספונסיביים!\n\n• מותאמים לכל גודל מסך\n• טלפונים, טאבלטים ומחשבים\n• חוויית משתמש מושלמת בכל מכשיר\n• נבדקים על מגוון דפדפנים\n\nהאתר שלך יראה מעולה בכל מקום!',
+    'אחסון|דומיין|שרת|hosting|domain': '🌐 אחסון ודומיין:\n\n• אנחנו יכולים לעזור לך לבחור אחסון מתאים\n• הגדרת דומיין מותאם אישית\n• SSL מאובטח (HTTPS)\n• גיבויים אוטומטיים\n\nנדאג שהאתר שלך יהיה מהיר ומאובטח!',
+    'תחזוקה|עדכון|שינוי|לשנות|לעדכן': '🔧 תחזוקה ועדכונים:\n\n• עדכוני תוכן שוטפים\n• שינויים בעיצוב\n• הוספת דפים חדשים\n• תיקוני באגים\n\nאנחנו מציעים חבילות תחזוקה חודשיות. צור קשר לפרטים!',
+    'חנות|מכירה|מוצרים|ecommerce|חנות אונליין': '🛒 חנות אונליין:\n\n• בניית חנות מקוונת מלאה\n• ניהול מוצרים ומלאי\n• סליקת אשראי מאובטחת\n• ממשק ניהול נוח\n\nצור קשר לקבלת הצעת מחיר מותאמת!',
+    'פורטפוליו|עבודות|דוגמאות|לראות': '🖼️ הפורטפוליו שלנו:\n\nאתה יכול לראות דוגמאות לעבודות שלנו באתר.\nכל פרויקט מעוצב בהתאמה אישית ללקוח.\n\nרוצה לראות דוגמאות ספציפיות? צור קשר ונשמח להציג!',
+    'אבטחה|מאובטח|האקר|פריצה|ssl': '🔒 אבטחת אתרים:\n\n• תעודת SSL (HTTPS) בכל אתר\n• הגנה מפני התקפות\n• קוד נקי ומאובטח\n• גיבויים שוטפים\n\nהאבטחה של האתר שלך חשובה לנו!'
 };
 
 const chatFormContainer = document.getElementById('chatFormContainer');
@@ -1014,44 +1039,80 @@ document.querySelectorAll('.logo img').forEach(img => {
     const isMobile = window.innerWidth <= 768;
     const isSmallMobile = window.innerWidth <= 480;
 
-    // --- Hamburger Menu ---
+    // --- Hamburger Menu (Slide from Left for RTL) ---
     const menuToggle = document.getElementById('mobileMenuToggle');
     const navMenu = document.getElementById('navMenu');
     const nav = navMenu ? navMenu.closest('nav') : null;
 
     if (menuToggle && nav) {
+        const headerContent = document.querySelector('.header-content');
+
+        // Create close button inside nav
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'mobile-menu-close';
+        closeBtn.setAttribute('aria-label', 'סגור תפריט');
+        closeBtn.innerHTML = '<span></span><span></span>';
+        nav.insertBefore(closeBtn, nav.firstChild);
+
+        // Create dark overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'mobile-menu-overlay';
+        document.body.appendChild(overlay);
+
+        function openMenu() {
+            menuToggle.classList.add('active');
+            nav.classList.add('mobile-open');
+            overlay.classList.add('active');
+            document.body.classList.add('mobile-menu-open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            menuToggle.classList.remove('active');
+            nav.classList.remove('mobile-open');
+            overlay.classList.remove('active');
+            document.body.classList.remove('mobile-menu-open');
+            document.body.style.overflow = '';
+        }
+
+        // On mobile, move nav to body so position:fixed works
+        // (header has backdrop-filter which creates containing block)
+        function setupMobileMenu() {
+            if (window.innerWidth <= 768) {
+                if (nav.parentElement !== document.body) {
+                    document.body.appendChild(nav);
+                }
+            } else {
+                if (nav.parentElement === document.body && headerContent) {
+                    headerContent.insertBefore(nav, menuToggle);
+                }
+                closeMenu();
+            }
+        }
+
+        setupMobileMenu();
+        window.addEventListener('resize', setupMobileMenu);
+
         menuToggle.addEventListener('click', function(e) {
             e.stopPropagation();
-            this.classList.toggle('active');
-            nav.classList.toggle('mobile-open');
-            // Lock body scroll when menu is open
-            document.body.style.overflow = nav.classList.contains('mobile-open') ? 'hidden' : '';
-        });
-
-        // Close menu when clicking a nav link
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                menuToggle.classList.remove('active');
-                nav.classList.remove('mobile-open');
-                document.body.style.overflow = '';
-            });
-        });
-
-        // Close menu on clicking the overlay background
-        nav.addEventListener('click', function(e) {
-            if (e.target === nav) {
-                menuToggle.classList.remove('active');
-                nav.classList.remove('mobile-open');
-                document.body.style.overflow = '';
+            if (nav.classList.contains('mobile-open')) {
+                closeMenu();
+            } else {
+                openMenu();
             }
         });
 
-        // Close menu on Escape key
+        closeBtn.addEventListener('click', closeMenu);
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        overlay.addEventListener('click', closeMenu);
+
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && nav.classList.contains('mobile-open')) {
-                menuToggle.classList.remove('active');
-                nav.classList.remove('mobile-open');
-                document.body.style.overflow = '';
+                closeMenu();
             }
         });
     }
