@@ -217,10 +217,6 @@ document.querySelectorAll('.code-card').forEach(card => {
     observer.observe(card);
 });
 
-const paymentContainer = document.querySelector('.payment-container');
-if (paymentContainer) {
-    observer.observe(paymentContainer);
-}
 
 const contactFormElement = document.querySelector('.contact-form');
 if (contactFormElement) {
@@ -546,13 +542,13 @@ if (chatbotBtn && chatbotWindow && chatbotClose) {
 // Chatbot responses
 const responses = {
     'כמה זמן לוקח לבנות אתר?': '⏱️ זמני הפיתוח שלנו:\n\n• דף נחיתה: 3-7 ימים\n• אתר תדמית: 1-2 שבועות\n• אתר מלא: 2-4 שבועות\n\nאנחנו עובדים מהר אבל לא מתפשרים על איכות! 💪',
-    'כמה עולה לבנות אתר?': '💰 המחירים שלנו:\n\n💼 דף נחיתה: ₪500-1,000\nמושלם להשקות, קמפיינים ועסקים קטנים\n\n🌐 אתר תדמית: ₪1,000-2,500\nעד 5 דפים + עיצוב מתקדם + אנימציות\n\n🚀 אתר מלא: ₪2,500-5,000\nדפים ללא הגבלה + עיצוב ייחודי + פאנל ניהול\n\n✨ כל החבילות כוללות: עיצוב רספונסיבי, SEO בסיסי, ותמיכה טכנית!',
+    'כמה עולה לבנות אתר?': '💬 כדי לתת לך הצעה מדויקת, נשמח לשמוע על הפרויקט שלך!\n\nצור איתנו קשר ונחזור אליך עם כל הפרטים:\n\n📞 טלפון: 058-454-9087\n📧 אימייל: info@webnova.co.il\n💚 או שלח הודעה בוואטסאפ!',
     'איך זה עובד?': '🔄 תהליך העבודה ב-5 שלבים:\n\n1️⃣ פגישת היכרות - נבין את הצרכים שלך\n2️⃣ עיצוב - תקבל הצעה ויזואלית לאישור\n3️⃣ פיתוח - נבנה את האתר שלך\n4️⃣ בדיקות - נוודא שהכל עובד מושלם\n5️⃣ השקה - האתר עולה לאוויר! 🎉\n\nלאורך כל התהליך תקבל עדכונים ותוכל לראות את ההתקדמות.'
 };
 
 // Keywords for intelligent responses
 const keywordResponses = {
-    'מחיר|עלות|כסף|תקציב|עולה|כמה': responses['כמה עולה לבנות אתר?'],
+    'מחיר|עלות|כסף|תקציב|עולה|כמה|מחירון': responses['כמה עולה לבנות אתר?'],
     'זמן|מהר|דחוף|לוקח|מתי': responses['כמה זמן לוקח לבנות אתר?'],
     'עובד|תהליך|שלבים|איך': responses['איך זה עובד?'],
     'וורדפרס|wordpress|קוד|טכנולוגיה': '💻 אנחנו עובדים עם טכנולוגיות מתקדמות:\n\n• HTML5/CSS3/JavaScript לביצועים מעולים\n• עיצוב רספונסיבי לכל מכשיר\n• אופטימיזציה למהירות טעינה\n• אבטחה ברמה גבוהה\n\nהאתר שלך יהיה מהיר, מאובטח ומודרני!',
@@ -560,12 +556,12 @@ const keywordResponses = {
     'תמיכה|עזרה|בעיה|תקלה|שאלה': '🛠️ התמיכה שלנו:\n\n• תמיכה טכנית מלאה\n• זמינות גבוהה\n• תיקון באגים מהיר\n• עדכונים שוטפים\n\nאנחנו כאן בשבילך גם אחרי ההשקה!',
     'seo|קידום|גוגל|חיפוש': '📈 קידום אתרים (SEO):\n\n• אופטימיזציה למנועי חיפוש\n• מהירות טעינה גבוהה\n• תגיות מטא נכונות\n• מבנה אתר ידידותי לגוגל\n\nהאתר שלך יופיע בתוצאות החיפוש!',
     'טלפון|ליצור קשר|לדבר|להתקשר': '📞 דרכי יצירת קשר:\n\n• טלפון: 058-454-9087\n• אימייל: contact@webnova.co.il\n• וואטסאפ: לחץ על הכפתור הירוק\n\nנשמח לשמוע ממך!',
-    'שלום|היי|הי|בוקר|ערב': '👋 שלום! נעים להכיר!\n\nאני הבוט של WebNova ואני כאן לעזור לך.\nאתה יכול לשאול אותי על מחירים, זמנים, או כל שאלה אחרת.\n\nאיך אוכל לעזור לך היום?',
-    'תודה|מעולה|אחלה|סבבה': '😊 בשמחה! אם יש עוד שאלות, אני כאן.\n\nרוצה לקבל הצעת מחיר? פשוט לחץ על הכפתור למטה!',
+    'שלום|היי|הי|בוקר|ערב': '👋 שלום! נעים להכיר!\n\nאני הבוט של WebNova ואני כאן לעזור לך.\nאתה יכול לשאול אותי על השירותים שלנו, זמנים, או כל שאלה אחרת.\n\nאיך אוכל לעזור לך היום?',
+    'תודה|מעולה|אחלה|סבבה': '😊 בשמחה! אם יש עוד שאלות, אני כאן.\n\nרוצה ליצור קשר? פשוט לחץ על הכפתור למטה!',
     'רספונסיבי|מובייל|טלפון|נייד|מותאם': '📱 כל האתרים שלנו רספונסיביים!\n\n• מותאמים לכל גודל מסך\n• טלפונים, טאבלטים ומחשבים\n• חוויית משתמש מושלמת בכל מכשיר\n• נבדקים על מגוון דפדפנים\n\nהאתר שלך יראה מעולה בכל מקום!',
     'אחסון|דומיין|שרת|hosting|domain': '🌐 אחסון ודומיין:\n\n• אנחנו יכולים לעזור לך לבחור אחסון מתאים\n• הגדרת דומיין מותאם אישית\n• SSL מאובטח (HTTPS)\n• גיבויים אוטומטיים\n\nנדאג שהאתר שלך יהיה מהיר ומאובטח!',
     'תחזוקה|עדכון|שינוי|לשנות|לעדכן': '🔧 תחזוקה ועדכונים:\n\n• עדכוני תוכן שוטפים\n• שינויים בעיצוב\n• הוספת דפים חדשים\n• תיקוני באגים\n\nאנחנו מציעים חבילות תחזוקה חודשיות. צור קשר לפרטים!',
-    'חנות|מכירה|מוצרים|ecommerce|חנות אונליין': '🛒 חנות אונליין:\n\n• בניית חנות מקוונת מלאה\n• ניהול מוצרים ומלאי\n• סליקת אשראי מאובטחת\n• ממשק ניהול נוח\n\nצור קשר לקבלת הצעת מחיר מותאמת!',
+    'חנות|מכירה|מוצרים|ecommerce|חנות אונליין': '🛒 חנות אונליין:\n\n• בניית חנות מקוונת מלאה\n• ניהול מוצרים ומלאי\n• סליקת אשראי מאובטחת\n• ממשק ניהול נוח\n\nצור קשר ונשמח לעזור!',
     'פורטפוליו|עבודות|דוגמאות|לראות': '🖼️ הפורטפוליו שלנו:\n\nאתה יכול לראות דוגמאות לעבודות שלנו באתר.\nכל פרויקט מעוצב בהתאמה אישית ללקוח.\n\nרוצה לראות דוגמאות ספציפיות? צור קשר ונשמח להציג!',
     'אבטחה|מאובטח|האקר|פריצה|ssl': '🔒 אבטחת אתרים:\n\n• תעודת SSL (HTTPS) בכל אתר\n• הגנה מפני התקפות\n• קוד נקי ומאובטח\n• גיבויים שוטפים\n\nהאבטחה של האתר שלך חשובה לנו!'
 };
@@ -756,7 +752,7 @@ const revealObserver = new IntersectionObserver((entries) => {
 });
 
 // Observe elements for reveal animation
-document.querySelectorAll('.trust-badge, .info-item, .payment-method').forEach(el => {
+document.querySelectorAll('.trust-badge, .info-item').forEach(el => {
     revealObserver.observe(el);
 });
 
@@ -1022,7 +1018,7 @@ const imageObserver = new IntersectionObserver((entries) => {
     threshold: 0.3
 });
 
-// Only apply image-reveal to logo images, not qr-image (which is handled by payment container)
+// Only apply image-reveal to logo images
 document.querySelectorAll('.logo img').forEach(img => {
     img.classList.add('image-reveal');
     imageObserver.observe(img);
@@ -1226,6 +1222,7 @@ document.querySelectorAll('.logo img').forEach(img => {
         const text = title.textContent.trim();
         title.textContent = '';
         title.setAttribute('aria-label', text);
+        title.setAttribute('role', 'heading');
 
         // Split text into segments: Latin runs, Hebrew runs, spaces, and punctuation
         // This preserves LTR word order (like "WebNova") within RTL text
@@ -1239,6 +1236,7 @@ document.querySelectorAll('.logo img').forEach(img => {
                 span.className = 'char';
                 span.textContent = '\u00A0';
                 span.style.transitionDelay = `${charIndex * 0.03}s`;
+                span.setAttribute('aria-hidden', 'true');
                 title.appendChild(span);
                 charIndex++;
                 return;
@@ -1252,6 +1250,7 @@ document.querySelectorAll('.logo img').forEach(img => {
                 wrapper.style.display = 'inline-flex';
                 wrapper.style.direction = 'ltr';
                 wrapper.style.unicodeBidi = 'bidi-override';
+                wrapper.setAttribute('aria-hidden', 'true');
 
                 [...segment].forEach(char => {
                     const span = document.createElement('span');
@@ -1268,6 +1267,7 @@ document.querySelectorAll('.logo img').forEach(img => {
                 const wrapper = document.createElement('span');
                 wrapper.style.display = 'inline-flex';
                 wrapper.style.whiteSpace = 'nowrap';
+                wrapper.setAttribute('aria-hidden', 'true');
 
                 [...segment].forEach(char => {
                     const span = document.createElement('span');
@@ -1286,6 +1286,7 @@ document.querySelectorAll('.logo img').forEach(img => {
                     span.className = 'char';
                     span.textContent = char;
                     span.style.transitionDelay = `${charIndex * 0.03}s`;
+                    span.setAttribute('aria-hidden', 'true');
                     title.appendChild(span);
                     charIndex++;
                 });

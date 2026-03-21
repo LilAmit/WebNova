@@ -382,7 +382,6 @@ header a:focus-visible {
 
 /* אינדיקטור פוקוס לאלמנטים אינטראקטיביים */
 .content-box:focus-visible,
-.price-item:focus-visible,
 .faq-item:focus-visible,
 [role="listitem"]:focus-visible {
   outline: 3px solid #ff758c !important;
@@ -410,6 +409,53 @@ body.screen-reader-active:hover,
 body.keyboard-nav-active:hover,
 body.screen-reader-active html:hover,
 body.keyboard-nav-active html:hover {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* מסגרת נגישות לכותרות וטקסטים בהירו של תיק עבודות */
+body.screen-reader-active .portfolio-main-title:hover,
+body.screen-reader-active .portfolio-hero-subtitle:hover,
+body.keyboard-nav-active .portfolio-main-title:hover,
+body.keyboard-nav-active .portfolio-hero-subtitle:hover {
+  outline: 3px solid #e91e63 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 15px rgba(233, 30, 99, 0.4) !important;
+}
+
+body.screen-reader-active .portfolio-main-title:focus,
+body.screen-reader-active .portfolio-hero-subtitle:focus,
+body.keyboard-nav-active .portfolio-main-title:focus,
+body.keyboard-nav-active .portfolio-hero-subtitle:focus {
+  outline: 4px solid #e91e63 !important;
+  outline-offset: 4px !important;
+  box-shadow: 0 0 20px rgba(233, 30, 99, 0.5) !important;
+}
+
+/* מסגרת על כותרת section-title כולה */
+body.screen-reader-active .section-title:hover,
+body.keyboard-nav-active .section-title:hover {
+  outline: 3px solid #e91e63 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 15px rgba(233, 30, 99, 0.4) !important;
+}
+
+body.screen-reader-active .section-title:focus,
+body.keyboard-nav-active .section-title:focus {
+  outline: 4px solid #e91e63 !important;
+  outline-offset: 4px !important;
+  box-shadow: 0 0 20px rgba(233, 30, 99, 0.5) !important;
+}
+
+/* מניעת מסגרת על אותיות בודדות באנימציית כותרות */
+body.screen-reader-active .section-title .char:hover,
+body.screen-reader-active .section-title .char:focus,
+body.screen-reader-active .section-title span:not(.title-icon):hover,
+body.screen-reader-active .section-title span:not(.title-icon):focus,
+body.keyboard-nav-active .section-title .char:hover,
+body.keyboard-nav-active .section-title .char:focus,
+body.keyboard-nav-active .section-title span:not(.title-icon):hover,
+body.keyboard-nav-active .section-title span:not(.title-icon):focus {
   outline: none !important;
   box-shadow: none !important;
 }
@@ -721,7 +767,7 @@ body.hide-media-active section,
 body.hide-media-active main,
 body.hide-media-active .hero,
 body.hide-media-active .page-hero,
-body.hide-media-active .payment-hero,
+body.hide-media-active .portfolio-hero,
 body.hide-media-active .contact-hero {
   background: #000000 !important;
   background-image: none !important;
