@@ -503,46 +503,30 @@ if (chatbotBtn && chatbotWindow && chatbotClose) {
         }
     }, 10000);
 
-    function updateAccessibilityVisibility() {
-        const trigger = document.querySelector('.accessibility-trigger');
-        if (trigger) {
-            if (chatbotWindow.classList.contains('show')) {
-                trigger.style.opacity = '0';
-                trigger.style.pointerEvents = 'none';
-                trigger.style.visibility = 'hidden';
-                trigger.style.transition = 'opacity 0.3s ease, visibility 0.3s ease';
-            } else {
-                trigger.style.opacity = '';
-                trigger.style.pointerEvents = '';
-                trigger.style.visibility = '';
-            }
-        }
-    }
-
     chatbotBtn.addEventListener('click', () => {
         chatbotWindow.classList.toggle('show');
         chatbotShown = true;
-        updateAccessibilityVisibility();
     });
 
     chatbotClose.addEventListener('click', () => {
         chatbotWindow.classList.remove('show');
-        updateAccessibilityVisibility();
     });
 
     // Close chatbot when clicking outside
     document.addEventListener('click', (e) => {
         if (chatbotBtn && chatbotWindow && !chatbotBtn.contains(e.target) && !chatbotWindow.contains(e.target)) {
             chatbotWindow.classList.remove('show');
-            updateAccessibilityVisibility();
         }
     });
 }
 
+// Reusable contact action buttons (clickable, styled pills)
+const CONTACT_BUTTONS = '<div class="chat-contact-buttons"><a href="tel:0584549087" class="chat-contact-btn phone"><span class="chat-contact-icon">📞</span>058-454-9087</a><a href="mailto:amitmozapi@gmail.com" class="chat-contact-btn email"><span class="chat-contact-icon">✉️</span>amitmozapi@gmail.com</a><a href="https://wa.me/972584549087" target="_blank" rel="noopener noreferrer" class="chat-contact-btn whatsapp"><span class="chat-contact-icon">💬</span>וואטסאפ</a></div>';
+
 // Chatbot responses
 const responses = {
     'כמה זמן לוקח לבנות אתר?': '⏱️ זמני הפיתוח שלנו:\n\n• דף נחיתה: 3-7 ימים\n• אתר תדמית: 1-2 שבועות\n• אתר מלא: 2-4 שבועות\n\nאנחנו עובדים מהר אבל לא מתפשרים על איכות! 💪',
-    'כמה עולה לבנות אתר?': '💬 כדי לתת לך הצעה מדויקת, נשמח לשמוע על הפרויקט שלך!\n\nצור איתנו קשר ונחזור אליך עם כל הפרטים:\n\n📞 טלפון: 058-454-9087\n📧 אימייל: info@webnova.co.il\n💚 או שלח הודעה בוואטסאפ!',
+    'כמה עולה לבנות אתר?': '💬 כדי לתת לך הצעה מדויקת, נשמח לשמוע על הפרויקט שלך!\n\nצור איתנו קשר ונחזור אליך עם כל הפרטים:\n\n' + CONTACT_BUTTONS,
     'איך זה עובד?': '🔄 תהליך העבודה ב-5 שלבים:\n\n1️⃣ פגישת היכרות - נבין את הצרכים שלך\n2️⃣ עיצוב - תקבל הצעה ויזואלית לאישור\n3️⃣ פיתוח - נבנה את האתר שלך\n4️⃣ בדיקות - נוודא שהכל עובד מושלם\n5️⃣ השקה - האתר עולה לאוויר! 🎉\n\nלאורך כל התהליך תקבל עדכונים ותוכל לראות את ההתקדמות.'
 };
 
@@ -550,13 +534,13 @@ const responses = {
 const keywordResponses = {
     'מחיר|עלות|כסף|תקציב|עולה|כמה|מחירון': responses['כמה עולה לבנות אתר?'],
     'זמן|מהר|דחוף|לוקח|מתי': responses['כמה זמן לוקח לבנות אתר?'],
-    'עובד|תהליך|שלבים|איך': responses['איך זה עובד?'],
+    'תהליך|שלבים|איך זה עובד|איך עובד|איך אתם עובדים': responses['איך זה עובד?'],
     'וורדפרס|wordpress|קוד|טכנולוגיה': '💻 אנחנו עובדים עם טכנולוגיות מתקדמות:\n\n• HTML5/CSS3/JavaScript לביצועים מעולים\n• עיצוב רספונסיבי לכל מכשיר\n• אופטימיזציה למהירות טעינה\n• אבטחה ברמה גבוהה\n\nהאתר שלך יהיה מהיר, מאובטח ומודרני!',
     'עיצוב|דיזיין|יפה|צבעים|לוגו': '🎨 העיצוב שלנו כולל:\n\n• עיצוב מותאם אישית לעסק שלך\n• צבעים ופונטים מקצועיים\n• אנימציות מרשימות\n• חוויית משתמש מעולה\n\nכל אתר מעוצב מאפס - לא תבניות משעממות!',
     'תמיכה|עזרה|בעיה|תקלה|שאלה': '🛠️ התמיכה שלנו:\n\n• תמיכה טכנית מלאה\n• זמינות גבוהה\n• תיקון באגים מהיר\n• עדכונים שוטפים\n\nאנחנו כאן בשבילך גם אחרי ההשקה!',
     'seo|קידום|גוגל|חיפוש': '📈 קידום אתרים (SEO):\n\n• אופטימיזציה למנועי חיפוש\n• מהירות טעינה גבוהה\n• תגיות מטא נכונות\n• מבנה אתר ידידותי לגוגל\n\nהאתר שלך יופיע בתוצאות החיפוש!',
-    'טלפון|ליצור קשר|לדבר|להתקשר': '📞 דרכי יצירת קשר:\n\n• טלפון: 058-454-9087\n• אימייל: contact@webnova.co.il\n• וואטסאפ: לחץ על הכפתור הירוק\n\nנשמח לשמוע ממך!',
-    'שלום|היי|הי|בוקר|ערב': '👋 שלום! נעים להכיר!\n\nאני הבוט של WebNova ואני כאן לעזור לך.\nאתה יכול לשאול אותי על השירותים שלנו, זמנים, או כל שאלה אחרת.\n\nאיך אוכל לעזור לך היום?',
+    'טלפון|ליצור קשר|לדבר|להתקשר|איך יוצרים קשר|איך אפשר ליצור קשר|יצירת קשר': '📞 דרכי יצירת קשר:\n\n' + CONTACT_BUTTONS + '\nנשמח לשמוע ממך!',
+    'שלום|היי|הי|בוקר|ערב|מה קורה|מה נשמע|מה המצב|מה המצב?|מה המצב.': '👋 הכל מעולה ותודה ששאלת!\n\nאני הבוט של WebNova ואני כאן לעזור לך.\nאתה יכול לשאול אותי על השירותים שלנו, זמנים, מחירים או כל שאלה אחרת.\n\nאיך אוכל לעזור לך היום?',
     'תודה|מעולה|אחלה|סבבה': '😊 בשמחה! אם יש עוד שאלות, אני כאן.\n\nרוצה ליצור קשר? פשוט לחץ על הכפתור למטה!',
     'רספונסיבי|מובייל|טלפון|נייד|מותאם': '📱 כל האתרים שלנו רספונסיביים!\n\n• מותאמים לכל גודל מסך\n• טלפונים, טאבלטים ומחשבים\n• חוויית משתמש מושלמת בכל מכשיר\n• נבדקים על מגוון דפדפנים\n\nהאתר שלך יראה מעולה בכל מקום!',
     'אחסון|דומיין|שרת|hosting|domain': '🌐 אחסון ודומיין:\n\n• אנחנו יכולים לעזור לך לבחור אחסון מתאים\n• הגדרת דומיין מותאם אישית\n• SSL מאובטח (HTTPS)\n• גיבויים אוטומטיים\n\nנדאג שהאתר שלך יהיה מהיר ומאובטח!',
@@ -661,6 +645,10 @@ const chatSendBtn = document.getElementById('chatSendBtn');
 function getSmartResponse(message) {
     const lowerMessage = message.toLowerCase();
 
+    // Dynamic time/date/day responses
+    const dynamic = getDynamicResponse(lowerMessage);
+    if (dynamic) return dynamic;
+
     // Check keyword patterns
     for (const [pattern, response] of Object.entries(keywordResponses)) {
         const keywords = pattern.split('|');
@@ -672,7 +660,36 @@ function getSmartResponse(message) {
     }
 
     // Default response if no keywords match
-    return '🤔 תודה על השאלה!\n\nלא הצלחתי להבין בדיוק מה אתה מחפש, אבל אשמח לעזור!\n\nתוכל:\n• לבחור מהאפשרויות למעלה\n• ליצור קשר ישירות: 058-454-9087\n• להשאיר פרטים ונחזור אליך\n\nמה תעדיף?';
+    return '🤔 תודה על השאלה!\n\nלא הצלחתי להבין בדיוק מה אתה מחפש, אבל אשמח לעזור!\n\nתוכל ליצור קשר ישירות:\n\n' + CONTACT_BUTTONS;
+}
+
+function getDynamicResponse(lowerMessage) {
+    const now = new Date();
+    const hebrewDays = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
+    const hebrewMonths = ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'];
+
+    // Time
+    if (/מה השעה|מה שעה|השעה עכשיו|מה הזמן|איזה שעה|שעה עכשיו/.test(lowerMessage)) {
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        return `🕐 השעה כרגע היא ${hours}:${minutes}\n\nמשהו נוסף שאוכל לעזור בו?`;
+    }
+
+    // Day of week
+    if (/איזה יום|מה היום|יום בשבוע/.test(lowerMessage)) {
+        const dayName = hebrewDays[now.getDay()];
+        return `📅 היום יום ${dayName}.\n\nאיך אוכל לעזור לך?`;
+    }
+
+    // Date
+    if (/מה התאריך|איזה תאריך|התאריך היום/.test(lowerMessage)) {
+        const day = now.getDate();
+        const month = hebrewMonths[now.getMonth()];
+        const year = now.getFullYear();
+        return `📆 התאריך היום: ${day} ב${month} ${year}.\n\nעל מה תרצה לדבר?`;
+    }
+
+    return null;
 }
 
 function sendChatMessage() {

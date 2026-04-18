@@ -1250,7 +1250,7 @@ footer {
 
 .scroll-to-top {
     position: fixed;
-    bottom: 100px;
+    bottom: 255px;
     left: 30px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -1263,6 +1263,7 @@ footer {
     font-size: 24px;
     cursor: pointer;
     opacity: 0;
+    z-index: 1000;
     transition: all 0.3s ease;
     z-index: 1000;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
@@ -1300,7 +1301,7 @@ footer {
 
 .whatsapp-float {
     position: fixed;
-    bottom: 30px;
+    bottom: 105px;
     left: 30px;
     background: #25D366;
     color: white;
@@ -1337,7 +1338,7 @@ footer {
 /* Chatbot */
 .chatbot-button {
     position: fixed;
-    bottom: 170px;
+    bottom: 30px;
     left: 30px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -1363,15 +1364,17 @@ footer {
 
 .chatbot-window {
     position: fixed;
-    bottom: 240px;
-    left: 30px;
+    top: 50%;
+    left: 50%;
+    bottom: auto;
+    transform: translate(-50%, -50%);
     width: 550px;
-    max-width: calc(100vw - 60px);
-    max-height: 80vh;
+    max-width: calc(100vw - 40px);
+    max-height: 85vh;
     background: white;
     border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-    z-index: 1000;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+    z-index: 100050;
     display: none;
     flex-direction: column;
     overflow: hidden;
@@ -1379,7 +1382,18 @@ footer {
 
 .chatbot-window.show {
     display: flex;
-    animation: slideUp 0.3s ease;
+    animation: chatbotPopIn 0.3s ease;
+}
+
+@keyframes chatbotPopIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
 }
 
 .chatbot-header {
@@ -1458,6 +1472,65 @@ footer {
 .chat-message.user .message-bubble {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
+}
+
+.message-bubble .chat-link {
+    color: #667eea;
+    font-weight: 600;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+}
+
+.message-bubble .chat-link:hover {
+    color: #764ba2;
+}
+
+/* Chatbot contact action buttons */
+.chat-contact-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.chat-contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    color: white;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    direction: rtl;
+}
+
+.chat-contact-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+    filter: brightness(1.05);
+    text-decoration: none;
+    color: white;
+}
+
+.chat-contact-btn.phone {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.chat-contact-btn.email {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.chat-contact-btn.whatsapp {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+}
+
+.chat-contact-icon {
+    font-size: 16px;
+    line-height: 1;
 }
 
 .chat-options {
@@ -2496,7 +2569,7 @@ footer {
     .scroll-to-top {
         width: 55px;
         height: 55px;
-        bottom: 80px;
+        bottom: 210px;
         left: 15px;
         font-size: 22px;
     }
@@ -2504,7 +2577,7 @@ footer {
     .whatsapp-float {
         width: 55px;
         height: 55px;
-        bottom: 15px;
+        bottom: 80px;
         left: 15px;
     }
 
@@ -2557,8 +2630,11 @@ footer {
     .chatbot-window {
         max-height: 85vh;
         width: calc(100vw - 20px);
-        left: 10px;
-        bottom: 230px;
+        max-width: calc(100vw - 20px);
+        left: 50%;
+        top: 50%;
+        bottom: auto;
+        transform: translate(-50%, -50%);
     }
 
     .chatbot-messages {
@@ -2669,15 +2745,18 @@ footer {
     .chatbot-button {
         width: 50px;
         height: 50px;
-        bottom: 145px;
+        bottom: 15px;
         left: 15px;
         font-size: 22px;
     }
 
     .chatbot-window {
-        bottom: 200px;
-        left: 10px;
+        top: 50%;
+        left: 50%;
+        bottom: auto;
+        transform: translate(-50%, -50%);
         width: calc(100vw - 20px);
+        max-width: calc(100vw - 20px);
         max-height: 85vh;
     }
 
@@ -2798,17 +2877,17 @@ footer {
 
     .scroll-to-top {
         left: 30px;
-        bottom: 100px;
+        bottom: 255px;
     }
 
     .whatsapp-float {
         left: 30px;
-        bottom: 30px;
+        bottom: 105px;
     }
 
     .chatbot-button {
         left: 30px;
-        bottom: 170px;
+        bottom: 30px;
     }
 }
 
@@ -2862,17 +2941,17 @@ footer {
     }
 
     .scroll-to-top {
-        bottom: 65px;
+        bottom: 175px;
         left: 10px;
     }
 
     .whatsapp-float {
-        bottom: 10px;
+        bottom: 65px;
         left: 10px;
     }
 
     .chatbot-button {
-        bottom: 120px;
+        bottom: 10px;
         left: 10px;
     }
 
@@ -2946,8 +3025,11 @@ footer {
     }
 
     .chatbot-window {
-        max-height: 60vh;
-        bottom: 190px;
+        max-height: 90vh;
+        top: 50%;
+        left: 50%;
+        bottom: auto;
+        transform: translate(-50%, -50%);
     }
 
     .chatbot-messages {
@@ -3489,22 +3571,10 @@ footer::before {
     100% { transform: translateX(100%); }
 }
 
-/* Scroll Progress Indicator */
-.scroll-progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: transparent;
-    z-index: 10001;
-}
-
+/* Scroll Progress Indicator - hidden */
+.scroll-progress,
 .scroll-progress-bar {
-    height: 100%;
-    background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
-    width: 0%;
-    transition: width 0.1s ease;
+    display: none !important;
 }
 
 /* ========================================
@@ -4531,17 +4601,17 @@ html {
 
     /* Floating buttons spacing */
     .chatbot-button {
-        bottom: 120px;
+        bottom: 10px;
         width: 50px;
         height: 50px;
     }
 
-    .scroll-to-top {
-        bottom: 65px;
+    .whatsapp-float {
+        bottom: 70px;
     }
 
-    .whatsapp-float {
-        bottom: 10px;
+    .scroll-to-top {
+        bottom: 190px;
     }
 }
 
